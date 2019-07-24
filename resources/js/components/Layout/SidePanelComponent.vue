@@ -5,7 +5,7 @@
     }
     .navList{
         color: white;
-        /* font-size: 16px !important; */
+        font-size: 16px !important;
     }
    
     .navContent{
@@ -18,6 +18,7 @@
         border-color: white;
         position: relative;
         top: 24px;
+        padding: 12px
     }
 </style>
 
@@ -63,7 +64,7 @@ export default {
             items: [
                 { title: 'Dashboard'},
                 { title: 'System Users'},
-                { title: 'Customer Details & Proudct Ordered'},
+                { title: 'Tracking'},
                 { title: 'Collection Report'},
                 { title: 'Set Email Template'},
                 { title: 'Change Password'},

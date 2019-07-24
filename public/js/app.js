@@ -1755,6 +1755,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1763,7 +1764,7 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         title: 'System Users'
       }, {
-        title: 'Customer Details & Proudct Ordered'
+        title: 'Tracking'
       }, {
         title: 'Collection Report'
       }, {
@@ -6258,7 +6259,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.sidebarBackground[data-v-0b176d4c]{\n    background: black;\n    position: absolute;\n}\n.navList[data-v-0b176d4c]{\n    color: white;\n    /* font-size: 16px !important; */\n}\n.navContent[data-v-0b176d4c]{\n    border-top: 6px;\n    border-bottom: 0px;\n    border-left: 0px;\n    border-right: 0px;\n    margin-bottom: 0px !important;\n    border-style: solid;\n    border-color: white;\n    position: relative;\n    top: 24px;\n}\n", ""]);
+exports.push([module.i, "\n.sidebarBackground[data-v-0b176d4c]{\n    background: black;\n    position: absolute;\n}\n.navList[data-v-0b176d4c]{\n    color: white;\n    font-size: 16px !important;\n}\n.navContent[data-v-0b176d4c]{\n    border-top: 6px;\n    border-bottom: 0px;\n    border-left: 0px;\n    border-right: 0px;\n    margin-bottom: 0px !important;\n    border-style: solid;\n    border-color: white;\n    position: relative;\n    top: 24px;\n    padding: 12px\n}\n", ""]);
 
 // exports
 
