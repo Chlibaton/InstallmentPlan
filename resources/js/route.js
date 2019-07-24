@@ -1,4 +1,5 @@
 const adminDashboard = require('./components/AdminDashboard/DashboardComponent.vue').default;
+const systemUser = require('./components/AdminDashboard/SystemUserComponent.vue').default;
 const landingPage = require('./components/Landing/HomeComponent.vue').default;
 
 export default{
@@ -9,9 +10,14 @@ export default{
                 title: "Admin Dashboard" 
             } 
         },
-        { path: '/home', name:'home', component: landingPage, 
+        { path: '/vy-installment', name:'home', component: landingPage, 
         meta: { 
             title: "Home Page" 
+        }
+        }, 
+        { path: '/systemuser', name:'systemuser', component: systemUser, 
+        meta: { 
+            title: "System User" 
         } 
     },
     ]
