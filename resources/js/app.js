@@ -18,6 +18,7 @@ window.Vue = require('vue');
 
 
 Vue.component('dashboard-component', require('./components/AdminDashboard/DashboardComponent.vue').default);
+Vue.component('sidepanel-component', require('./components/Layout/SidePanelComponent.vue').default);
 Vue.component('home-component', require('./components/Landing/HomeComponent.vue').default);
 
 

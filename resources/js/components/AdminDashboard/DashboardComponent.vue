@@ -1,5 +1,5 @@
 <template>
     <div>
-        Test
+        <sidepanel-component></sidepanel-component>
     </div>
 </template>
