@@ -100253,8 +100253,8 @@ var landingPage = __webpack_require__(/*! ./components/Landing/HomeComponent.vue
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Rocker\Documents\SIGNITY\InstallmentPlan\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Rocker\Documents\SIGNITY\InstallmentPlan\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Jhun\Documents\signity\InstallmentPlan\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Jhun\Documents\signity\InstallmentPlan\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
