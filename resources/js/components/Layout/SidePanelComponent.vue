@@ -5,7 +5,19 @@
     }
     .navList{
         color: white;
-        font-size: 18px !important;
+        /* font-size: 16px !important; */
+    }
+   
+    .navContent{
+        border-top: 6px;
+        border-bottom: 0px;
+        border-left: 0px;
+        border-right: 0px;
+        margin-bottom: 0px !important;
+        border-style: solid;
+        border-color: white;
+        position: relative;
+        top: 24px;
     }
 </style>
 
@@ -14,7 +26,7 @@
 <template>
     <v-navigation-drawer  permanent class='sidebarBackground'>
       <v-list-item>
-        <v-list-item-content>
+        <v-list-item-content >
           <v-list-item-title class="title"> 
             Application
           </v-list-item-title>
@@ -34,11 +46,8 @@
           v-for="item in items"
           :key="item.title"
           link
+           class='navContent'
         >
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
-
           <v-list-item-content>
             <v-list-item-title class='navList'>{{ item.title }}</v-list-item-title>
           </v-list-item-content>
@@ -52,9 +61,14 @@ export default {
     data(){
         return {
             items: [
-                { title: 'Dashboard', icon: 'mdi-view-dashboard' },
-                { title: 'Photos', icon: 'mdi-image' },
-                { title: 'About', icon: 'mdi-help-box' },
+                { title: 'Dashboard'},
+                { title: 'System Users'},
+                { title: 'Customer Details & Proudct Ordered'},
+                { title: 'Collection Report'},
+                { title: 'Set Email Template'},
+                { title: 'Change Password'},
+                { title: 'History Logs'},
+                { title: 'Logout'},
             ],
             right: null,
             

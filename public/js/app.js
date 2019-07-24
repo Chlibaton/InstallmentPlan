@@ -1746,18 +1746,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       items: [{
-        title: 'Dashboard',
-        icon: 'mdi-view-dashboard'
+        title: 'Dashboard'
       }, {
-        title: 'Photos',
-        icon: 'mdi-image'
+        title: 'System Users'
       }, {
-        title: 'About',
-        icon: 'mdi-help-box'
+        title: 'Customer Details & Proudct Ordered'
+      }, {
+        title: 'Collection Report'
+      }, {
+        title: 'Set Email Template'
+      }, {
+        title: 'Change Password'
+      }, {
+        title: 'History Logs'
+      }, {
+        title: 'Logout'
       }],
       right: null
     };
@@ -6242,7 +6258,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.sidebarBackground[data-v-0b176d4c]{\n    background: black;\n    position: absolute;\n}\n.navList[data-v-0b176d4c]{\n    color: white;\n    font-size: 18px !important;\n}\n", ""]);
+exports.push([module.i, "\n.sidebarBackground[data-v-0b176d4c]{\n    background: black;\n    position: absolute;\n}\n.navList[data-v-0b176d4c]{\n    color: white;\n    /* font-size: 16px !important; */\n}\n.navContent[data-v-0b176d4c]{\n    border-top: 6px;\n    border-bottom: 0px;\n    border-left: 0px;\n    border-right: 0px;\n    margin-bottom: 0px !important;\n    border-style: solid;\n    border-color: white;\n    position: relative;\n    top: 24px;\n}\n", ""]);
 
 // exports
 
@@ -48916,14 +48932,8 @@ var render = function() {
         _vm._l(_vm.items, function(item) {
           return _c(
             "v-list-item",
-            { key: item.title, attrs: { link: "" } },
+            { key: item.title, staticClass: "navContent", attrs: { link: "" } },
             [
-              _c(
-                "v-list-item-icon",
-                [_c("v-icon", [_vm._v(_vm._s(item.icon))])],
-                1
-              ),
-              _vm._v(" "),
               _c(
                 "v-list-item-content",
                 [
@@ -100273,8 +100283,8 @@ var landingPage = __webpack_require__(/*! ./components/Landing/HomeComponent.vue
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Jhun\Documents\signity\InstallmentPlan\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Jhun\Documents\signity\InstallmentPlan\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Rocker\Documents\SIGNITY\InstallmentPlan\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Rocker\Documents\SIGNITY\InstallmentPlan\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
