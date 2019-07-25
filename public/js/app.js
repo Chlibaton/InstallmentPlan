@@ -1765,6 +1765,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -6268,7 +6279,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.sidebarBackground[data-v-28e66e50]{\n    background: black;\n    position: absolute;\n}\n.navList[data-v-28e66e50]{\n    color: white;\n    font-size: 16px !important;\n}\n.navContent[data-v-28e66e50]{\n    border-top: 6px;\n    border-bottom: 0px;\n    border-left: 0px;\n    border-right: 0px;\n    margin-bottom: 0px !important;\n    border-style: solid;\n    border-color: white;\n    position: relative;\n    top: 24px;\n    padding: 12px\n}\n", ""]);
+exports.push([module.i, "\n.sidebarBackground[data-v-28e66e50]{\n    background: black;\n    position: absolute;\n}\n.navList[data-v-28e66e50]{\n    color: white;\n    font-size: 16px !important;\n}\n.navContent[data-v-28e66e50]{\n    border-width: 6px 0px 0px 0px;\n    border-style: solid;\n    border-color: white;\n    margin-bottom: 0px !important;\n    position: relative;\n    top: 24px;\n    padding: 12px\n}\n.dashboard-header[data-v-28e66e50] {\n    color: black;\n    padding: 5px;\n    font-size: 35px;\n    position: relative;\n}\n.dash-head[data-v-28e66e50]{\n    top: 24px;\n    padding: 7px;\n    margin-bottom: 15px;\n    background: linear-gradient(to left, gray, black)\n}\n.bg[data-v-28e66e50]{\n  background-color: white;\n}\n\n", ""]);
 
 // exports
 
@@ -48873,21 +48884,8 @@ var render = function() {
         [
           _c(
             "v-list-item",
-            [
-              _c(
-                "v-list-item-content",
-                [
-                  _c("v-list-item-title", { staticClass: "title" }, [
-                    _vm._v(" \r\n            Application\r\n          ")
-                  ]),
-                  _vm._v(" "),
-                  _c("v-list-item-subtitle", [
-                    _vm._v("\r\n            subtext\r\n          ")
-                  ])
-                ],
-                1
-              )
-            ],
+            { staticClass: "bg" },
+            [_c("v-list-item-content")],
             1
           ),
           _vm._v(" "),
@@ -48926,7 +48924,15 @@ var render = function() {
       _vm._v(" "),
       _c(
         "v-content",
-        [_c("v-container", { attrs: { fluid: "" } }, [_c("router-view")], 1)],
+        [
+          _c("v-container", { attrs: { fluid: "" } }, [_c("router-view")], 1),
+          _vm._v(" "),
+          _c("div", { staticClass: "dashboard-header dash-head" }),
+          _vm._v(" "),
+          _c("div", { staticClass: "dashboard-header " }, [
+            _vm._v("DASHBOARD - SUPER ADMIN")
+          ])
+        ],
         1
       )
     ],
@@ -100321,8 +100327,8 @@ var landingPage = __webpack_require__(/*! ./components/Landing/HomeComponent.vue
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Jhun\Documents\signity\InstallmentPlan\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Jhun\Documents\signity\InstallmentPlan\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Rocker\Documents\SIGNITY\InstallmentPlan\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Rocker\Documents\SIGNITY\InstallmentPlan\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
