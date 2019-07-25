@@ -130,7 +130,7 @@
     mounted(){
         axios.get('/api/user')
         .then((response)=>{
-            this.dataItems = respons.data
+            this.dataItems = response.data
         })
     },
 

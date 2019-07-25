@@ -1965,7 +1965,7 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.get('/api/user').then(function (response) {
-      _this.dataItems = respons.data;
+      _this.dataItems = response.data;
     });
   },
   methods: {
