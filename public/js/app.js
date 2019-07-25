@@ -1901,10 +1901,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       dialog: false,
+      valid: false,
+      show1: false,
+      loading: true,
       headers: [{
         text: 'First Name',
         value: 'first_name'
@@ -1976,26 +1983,38 @@ __webpack_require__.r(__webpack_exports__);
       this.dialog = true;
     },
     deleteItem: function deleteItem(item) {
-      var index = this.desserts.indexOf(item);
-      confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1);
+      var _this2 = this;
+
+      var index = this.dataItems.indexOf(item);
+      confirm('Are you sure you want to delete this item?') && axios["delete"]('/api/userdelete/' + item.id).then(function () {
+        return _this2.dataItems.splice(index, 1);
+      });
     },
     close: function close() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.dialog = false;
       setTimeout(function () {
-        _this2.editedItem = Object.assign({}, _this2.defaultItem);
-        _this2.editedIndex = -1;
+        _this3.editedItem = Object.assign({}, _this3.defaultItem);
+        _this3.editedIndex = -1;
       }, 300);
     },
     save: function save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem);
-      } else {
-        this.desserts.push(this.editedItem);
-      }
+      var _this4 = this;
 
-      this.close();
+      if (this.$refs.form.validate()) {
+        if (this.editedIndex > -1) {
+          axios.put('/api/userupdate', this.editedItem).then(function () {
+            return Object.assign(_this4.dataItems[_this4.editedIndex], _this4.editedItem);
+          });
+        } else {
+          axios.post('/api/usercreate', this.editedItem).then(function () {
+            return _this4.dataItems.push(_this4.editedItem);
+          });
+        }
+
+        this.close();
+      }
     }
   }
 });
@@ -49570,60 +49589,67 @@ var render = function() {
     "v-card",
     [
       _c(
-        "v-data-table",
-        {
-          staticClass: "elevation-1",
-          attrs: { headers: _vm.headers, items: _vm.dataItems }
-        },
+        "v-toolbar",
+        { attrs: { flat: "", color: "white" } },
         [
+          _c("v-toolbar-title", [_vm._v("System Users")]),
+          _vm._v(" "),
+          _c("v-divider", {
+            staticClass: "mx-4",
+            attrs: { inset: "", vertical: "" }
+          }),
+          _vm._v(" "),
+          _c("v-spacer"),
+          _vm._v(" "),
           _c(
-            "v-toolbar",
-            { attrs: { flat: "", color: "white" } },
+            "v-dialog",
+            {
+              attrs: { "max-width": "500px" },
+              scopedSlots: _vm._u([
+                {
+                  key: "activator",
+                  fn: function(ref) {
+                    var on = ref.on
+                    return [
+                      _c(
+                        "v-btn",
+                        _vm._g(
+                          {
+                            staticClass: "mb-2",
+                            attrs: { color: "primary", dark: "" }
+                          },
+                          on
+                        ),
+                        [_vm._v("New Item")]
+                      )
+                    ]
+                  }
+                }
+              ]),
+              model: {
+                value: _vm.dialog,
+                callback: function($$v) {
+                  _vm.dialog = $$v
+                },
+                expression: "dialog"
+              }
+            },
             [
-              _c("v-toolbar-title", [_vm._v("System Users")]),
-              _vm._v(" "),
-              _c("v-divider", {
-                staticClass: "mx-4",
-                attrs: { inset: "", vertical: "" }
-              }),
-              _vm._v(" "),
-              _c("v-spacer"),
               _vm._v(" "),
               _c(
-                "v-dialog",
+                "v-form",
                 {
-                  attrs: { "max-width": "500px" },
-                  scopedSlots: _vm._u([
-                    {
-                      key: "activator",
-                      fn: function(ref) {
-                        var on = ref.on
-                        return [
-                          _c(
-                            "v-btn",
-                            _vm._g(
-                              {
-                                staticClass: "mb-2",
-                                attrs: { color: "primary", dark: "" }
-                              },
-                              on
-                            ),
-                            [_vm._v("New Item")]
-                          )
-                        ]
-                      }
-                    }
-                  ]),
+                  ref: "form",
+                  attrs: { "lazy-validation": "" },
                   model: {
-                    value: _vm.dialog,
+                    value: _vm.valid,
                     callback: function($$v) {
-                      _vm.dialog = $$v
+                      _vm.valid = $$v
                     },
-                    expression: "dialog"
+                    expression: "valid"
                   }
                 },
                 [
-                  _vm._v(" "),
                   _c(
                     "v-card",
                     [
@@ -49649,17 +49675,17 @@ var render = function() {
                                     { attrs: { xs12: "", sm6: "", md4: "" } },
                                     [
                                       _c("v-text-field", {
-                                        attrs: { label: "Dessert name" },
+                                        attrs: { label: "First name" },
                                         model: {
-                                          value: _vm.editedItem.name,
+                                          value: _vm.editedItem.first_name,
                                           callback: function($$v) {
                                             _vm.$set(
                                               _vm.editedItem,
-                                              "name",
+                                              "first_name",
                                               $$v
                                             )
                                           },
-                                          expression: "editedItem.name"
+                                          expression: "editedItem.first_name"
                                         }
                                       })
                                     ],
@@ -49671,17 +49697,17 @@ var render = function() {
                                     { attrs: { xs12: "", sm6: "", md4: "" } },
                                     [
                                       _c("v-text-field", {
-                                        attrs: { label: "Calories" },
+                                        attrs: { label: "Last name" },
                                         model: {
-                                          value: _vm.editedItem.calories,
+                                          value: _vm.editedItem.last_name,
                                           callback: function($$v) {
                                             _vm.$set(
                                               _vm.editedItem,
-                                              "calories",
+                                              "last_name",
                                               $$v
                                             )
                                           },
-                                          expression: "editedItem.calories"
+                                          expression: "editedItem.last_name"
                                         }
                                       })
                                     ],
@@ -49693,13 +49719,17 @@ var render = function() {
                                     { attrs: { xs12: "", sm6: "", md4: "" } },
                                     [
                                       _c("v-text-field", {
-                                        attrs: { label: "Fat (g)" },
+                                        attrs: { label: "Address" },
                                         model: {
-                                          value: _vm.editedItem.fat,
+                                          value: _vm.editedItem.address,
                                           callback: function($$v) {
-                                            _vm.$set(_vm.editedItem, "fat", $$v)
+                                            _vm.$set(
+                                              _vm.editedItem,
+                                              "address",
+                                              $$v
+                                            )
                                           },
-                                          expression: "editedItem.fat"
+                                          expression: "editedItem.address"
                                         }
                                       })
                                     ],
@@ -49711,17 +49741,17 @@ var render = function() {
                                     { attrs: { xs12: "", sm6: "", md4: "" } },
                                     [
                                       _c("v-text-field", {
-                                        attrs: { label: "Carbs (g)" },
+                                        attrs: { label: "Mobile No" },
                                         model: {
-                                          value: _vm.editedItem.carbs,
+                                          value: _vm.editedItem.mobileno,
                                           callback: function($$v) {
                                             _vm.$set(
                                               _vm.editedItem,
-                                              "carbs",
+                                              "mobileno",
                                               $$v
                                             )
                                           },
-                                          expression: "editedItem.carbs"
+                                          expression: "editedItem.mobileno"
                                         }
                                       })
                                     ],
@@ -49733,17 +49763,42 @@ var render = function() {
                                     { attrs: { xs12: "", sm6: "", md4: "" } },
                                     [
                                       _c("v-text-field", {
-                                        attrs: { label: "Protein (g)" },
+                                        attrs: { label: "Email" },
                                         model: {
-                                          value: _vm.editedItem.protein,
+                                          value: _vm.editedItem.email,
                                           callback: function($$v) {
                                             _vm.$set(
                                               _vm.editedItem,
-                                              "protein",
+                                              "email",
                                               $$v
                                             )
                                           },
-                                          expression: "editedItem.protein"
+                                          expression: "editedItem.email"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-flex",
+                                    { attrs: { xs12: "", sm6: "", md4: "" } },
+                                    [
+                                      _c("v-text-field", {
+                                        attrs: {
+                                          type: _vm.show1 ? "text" : "password",
+                                          label: "Password"
+                                        },
+                                        model: {
+                                          value: _vm.editedItem.password,
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.editedItem,
+                                              "password",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "editedItem.password"
                                         }
                                       })
                                     ],
@@ -49792,68 +49847,69 @@ var render = function() {
               )
             ],
             1
-          ),
-          _vm._v(" "),
-          _c("v-data-table", {
-            staticClass: "elevation-1",
-            attrs: { headers: _vm.headers, items: _vm.dataItems },
-            scopedSlots: _vm._u([
-              {
-                key: "items",
-                fn: function(props) {
-                  return [
-                    _c("td", [_vm._v(_vm._s(props.item.first_name))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(props.item.last_name))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(props.item.address))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(props.item.mobileno))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(props.item.email))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(props.item.password))]),
-                    _vm._v(" "),
-                    _c(
-                      "td",
-                      [
-                        _c(
-                          "v-icon",
-                          {
-                            staticClass: "mr-2",
-                            attrs: { small: "" },
-                            on: {
-                              click: function($event) {
-                                return _vm.editItem(_vm.item)
-                              }
-                            }
-                          },
-                          [_vm._v("\r\n                 edit\r\n            ")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "v-icon",
-                          {
-                            attrs: { small: "" },
-                            on: {
-                              click: function($event) {
-                                return _vm.deleteItem(_vm.item)
-                              }
-                            }
-                          },
-                          [_vm._v("\r\n                delete\r\n            ")]
-                        )
-                      ],
-                      1
-                    )
-                  ]
-                }
-              }
-            ])
-          })
+          )
         ],
         1
-      )
+      ),
+      _vm._v(" "),
+      _c("v-data-table", {
+        staticClass: "elevation-1",
+        attrs: { headers: _vm.headers, items: _vm.dataItems },
+        scopedSlots: _vm._u([
+          {
+            key: "items",
+            fn: function(props) {
+              return [
+                _c("td", [_vm._v(_vm._s(props.item.first_name))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(props.item.last_name))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(props.item.address))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(props.item.mobileno))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(props.item.email))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(props.item.password))]),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  { staticClass: "justify-center layout px-0" },
+                  [
+                    _c(
+                      "v-icon",
+                      {
+                        staticClass: "mr-2",
+                        attrs: { small: "" },
+                        on: {
+                          click: function($event) {
+                            return _vm.editItem(props.item)
+                          }
+                        }
+                      },
+                      [_vm._v("\r\n                 edit\r\n            ")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "v-icon",
+                      {
+                        attrs: { small: "" },
+                        on: {
+                          click: function($event) {
+                            return _vm.deleteItem(props.item)
+                          }
+                        }
+                      },
+                      [_vm._v("\r\n                delete\r\n            ")]
+                    )
+                  ],
+                  1
+                )
+              ]
+            }
+          }
+        ])
+      })
     ],
     1
   )

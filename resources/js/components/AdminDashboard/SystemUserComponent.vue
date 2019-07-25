@@ -9,7 +9,6 @@
 
 <template>
 <v-card>
-  <v-data-table :headers="headers" :items="dataItems"  class="elevation-1">
 
       <v-toolbar flat color="white">
         <v-toolbar-title>System Users</v-toolbar-title>
@@ -19,6 +18,7 @@
           <template v-slot:activator="{ on }">
             <v-btn color="primary" dark class="mb-2" v-on="on">New Item</v-btn>
           </template>
+          <v-form ref="form" v-model="valid" lazy-validation>
           <v-card>
             <v-card-title>
               <span class="headline">{{ formTitle }}</span>
@@ -28,19 +28,22 @@
               <v-container grid-list-md>
                 <v-layout wrap>
                   <v-flex xs12 sm6 md4>
-                    <v-text-field v-model="editedItem.name" label="Dessert name"></v-text-field>
+                    <v-text-field v-model="editedItem.first_name" label="First name"></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
-                    <v-text-field v-model="editedItem.calories" label="Calories"></v-text-field>
+                    <v-text-field v-model="editedItem.last_name" label="Last name"></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
-                    <v-text-field v-model="editedItem.fat" label="Fat (g)"></v-text-field>
+                    <v-text-field v-model="editedItem.address" label="Address"></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
-                    <v-text-field v-model="editedItem.carbs" label="Carbs (g)"></v-text-field>
+                    <v-text-field v-model="editedItem.mobileno" label="Mobile No"></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
-                    <v-text-field v-model="editedItem.protein" label="Protein (g)"></v-text-field>
+                    <v-text-field v-model="editedItem.email" label="Email"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
+                    <v-text-field v-model="editedItem.password" :type="show1 ? 'text': 'password'" label="Password"></v-text-field>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -52,7 +55,9 @@
               <v-btn color="blue darken-1" text @click="save">Save</v-btn>
             </v-card-actions>
           </v-card>
+             </v-form>
         </v-dialog>
+     
       </v-toolbar>
       <v-data-table :headers="headers" :items="dataItems"  class="elevation-1">
     <template v-slot:items="props">
@@ -63,18 +68,17 @@
         <td>{{props.item.mobileno}}</td>
         <td>{{props.item.email}}</td>
         <td>{{props.item.password}}</td>
-        <td>
-            <v-icon small class="mr-2" @click="editItem(item)">
+        <td class='justify-center layout px-0'>
+            <v-icon small class="mr-2" @click="editItem(props.item)">
                  edit
             </v-icon>
-            <v-icon small @click="deleteItem(item)">
+            <v-icon small @click="deleteItem(props.item)">
                 delete
             </v-icon>
         </td>
       
     </template>
 </v-data-table>
-  </v-data-table>
   </v-card>
 </template>
 
@@ -82,6 +86,9 @@
   export default {
     data: () => ({
       dialog: false,
+      valid:false,
+      show1:false,
+      loading:true,
       headers: [
         { text: 'First Name', value: 'first_name', },
         { text: 'Last Name', value: 'last_name', },
@@ -145,8 +152,8 @@
       },
 
       deleteItem (item) {
-        const index = this.desserts.indexOf(item)
-        confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
+        const index = this.dataItems.indexOf(item)
+        confirm('Are you sure you want to delete this item?') && axios.delete('/api/userdelete/'+item.id).then(()=>this.dataItems.splice(index, 1));
       },
 
       close () {
@@ -158,12 +165,15 @@
       },
 
       save () {
-        if (this.editedIndex > -1) {
-          Object.assign(this.desserts[this.editedIndex], this.editedItem)
-        } else {
-          this.desserts.push(this.editedItem)
+        if(this.$refs.form.validate()){
+              if (this.editedIndex > -1) {
+                 axios.put('/api/userupdate',this.editedItem).then(()=> Object.assign(this.dataItems[this.editedIndex], this.editedItem));
+                } else {
+                axios.post('/api/usercreate',this.editedItem).then(()=> this.dataItems.push(this.editedItem));
+                }
+                this.close()
         }
-        this.close()
+      
       },
     },
   }
