@@ -1910,24 +1910,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       dialog: false,
       valid: false,
+      search: '',
       show1: false,
       password: 'passowrd',
       headers: [{
@@ -1953,25 +1941,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         value: 'action',
         sortable: false
       }],
+      ruleRequired: [function (v) {
+        return !!v || 'Field is required';
+      }],
+      emailRules: [function (v) {
+        return !!v || 'Field is required';
+      }, function (v) {
+        return /.+@.+/.test(v) || 'E-mail must be valid';
+      }],
+      emailExist: '',
       dataItems: [],
       addedItems: [],
       editedIndex: -1,
-      editedItem: {
-        first_name: '',
-        last_name: '',
-        address: '',
-        mobileno: '',
-        email: '',
-        password: ''
-      },
-      defaultItem: {
-        first_name: '',
-        last_name: '',
-        address: '',
-        mobileno: '',
-        email: '',
-        password: ''
-      }
+      editedItem: {},
+      defaultItem: {}
     };
   },
   computed: {
@@ -2013,7 +1996,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return mounted;
   }(),
   methods: {
-    initialize: function initialize() {},
     editItem: function editItem(item) {
       this.editedIndex = this.dataItems.indexOf(item);
       this.editedItem = Object.assign({}, item);
@@ -50399,6 +50381,22 @@ var render = function() {
             attrs: { inset: "", vertical: "" }
           }),
           _vm._v(" "),
+          _c("v-text-field", {
+            attrs: {
+              "append-icon": "search",
+              label: "Search",
+              "single-line": "",
+              "hide-details": ""
+            },
+            model: {
+              value: _vm.search,
+              callback: function($$v) {
+                _vm.search = $$v
+              },
+              expression: "search"
+            }
+          }),
+          _vm._v(" "),
           _c("v-spacer"),
           _vm._v(" "),
           _c(
@@ -50475,7 +50473,10 @@ var render = function() {
                                     { attrs: { xs12: "", sm6: "", md4: "" } },
                                     [
                                       _c("v-text-field", {
-                                        attrs: { label: "First name" },
+                                        attrs: {
+                                          label: "First name",
+                                          rules: _vm.ruleRequired
+                                        },
                                         model: {
                                           value: _vm.editedItem.first_name,
                                           callback: function($$v) {
@@ -50497,7 +50498,10 @@ var render = function() {
                                     { attrs: { xs12: "", sm6: "", md4: "" } },
                                     [
                                       _c("v-text-field", {
-                                        attrs: { label: "Last name" },
+                                        attrs: {
+                                          label: "Last name",
+                                          rules: _vm.ruleRequired
+                                        },
                                         model: {
                                           value: _vm.editedItem.last_name,
                                           callback: function($$v) {
@@ -50519,7 +50523,10 @@ var render = function() {
                                     { attrs: { xs12: "", sm6: "", md4: "" } },
                                     [
                                       _c("v-text-field", {
-                                        attrs: { label: "Address" },
+                                        attrs: {
+                                          label: "Address",
+                                          rules: _vm.ruleRequired
+                                        },
                                         model: {
                                           value: _vm.editedItem.address,
                                           callback: function($$v) {
@@ -50541,7 +50548,10 @@ var render = function() {
                                     { attrs: { xs12: "", sm6: "", md4: "" } },
                                     [
                                       _c("v-text-field", {
-                                        attrs: { label: "Mobile No" },
+                                        attrs: {
+                                          label: "Mobile No",
+                                          rules: _vm.ruleRequired
+                                        },
                                         model: {
                                           value: _vm.editedItem.mobileno,
                                           callback: function($$v) {
@@ -50563,7 +50573,11 @@ var render = function() {
                                     { attrs: { xs12: "", sm6: "", md4: "" } },
                                     [
                                       _c("v-text-field", {
-                                        attrs: { label: "Email" },
+                                        attrs: {
+                                          rules:
+                                            _vm.emailRules && _vm.ruleRequired,
+                                          label: "Email"
+                                        },
                                         model: {
                                           value: _vm.editedItem.email,
                                           callback: function($$v) {
@@ -50654,7 +50668,11 @@ var render = function() {
       _vm._v(" "),
       _c("v-data-table", {
         staticClass: "elevation-1",
-        attrs: { headers: _vm.headers, items: _vm.dataItems },
+        attrs: {
+          headers: _vm.headers,
+          items: _vm.dataItems,
+          search: _vm.search
+        },
         scopedSlots: _vm._u([
           {
             key: "item.action",
@@ -50665,27 +50683,27 @@ var render = function() {
                   "v-icon",
                   {
                     staticClass: "mr-2",
-                    attrs: { small: "", color: "success" },
+                    attrs: { small: "" },
                     on: {
                       click: function($event) {
                         return _vm.editItem(item)
                       }
                     }
                   },
-                  [_vm._v("\r\n            edit\r\n          ")]
+                  [_vm._v(" edit ")]
                 ),
                 _vm._v(" "),
                 _c(
                   "v-icon",
                   {
-                    attrs: { small: "", color: "error" },
+                    attrs: { small: "" },
                     on: {
                       click: function($event) {
                         return _vm.deleteItem(item)
                       }
                     }
                   },
-                  [_vm._v("\r\n            delete\r\n          ")]
+                  [_vm._v(" delete ")]
                 )
               ]
             }

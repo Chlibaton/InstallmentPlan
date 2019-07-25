@@ -37,7 +37,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function UpdateUser(array $data,$id){
+    public function UpdateUser(array $data, $id){
         return User::where('id',$id)->update([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
@@ -95,8 +95,8 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
-        $result = $this -> UpdateUser($request->all(),$request->id);
-        return $request -> all();
+        $result = $this->UpdateUser($request->all(),$request->id);
+        return $request->all();
     }
 
     /**
