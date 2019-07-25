@@ -1954,7 +1954,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       addedItems: [],
       editedIndex: -1,
       editedItem: {},
-      defaultItem: {}
+      defaultItem: {},
+      toBeUpdated: {}
     };
   },
   computed: {
@@ -2030,13 +2031,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 if (this.$refs.form.validate()) {
                   if (this.editedIndex > -1) {
-                    axios.put('/api/userupdate', this.editedItem).then(function () {
-                      return Object.assign(_this4.dataItems[_this4.editedIndex], _this4.editedItem);
+                    this.toBeUpdated = this.dataItems[this.editedIndex];
+                    axios.put('/api/userupdate', this.editedItem).then(function (res) {
+                      return _this4.editedItem = Object.assign(_this4.toBeUpdated, res.data);
                     })["catch"](function (error) {
                       // handle error
                       console.log(error);
-                    });
-                    console.log(this.dataItems[this.editedIndex]);
+                    }); //  Object.assign(this.dataItems[this.editedIndex], this.editedItem)
                   } else {
                     this.addedItems = this.editedItem;
                     axios.post('/api/usercreate', this.editedItem).then(function () {
@@ -50439,6 +50440,11 @@ var render = function() {
                 {
                   ref: "form",
                   attrs: { "lazy-validation": "" },
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                    }
+                  },
                   model: {
                     value: _vm.valid,
                     callback: function($$v) {

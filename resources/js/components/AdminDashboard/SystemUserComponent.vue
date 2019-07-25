@@ -18,7 +18,7 @@
           <template v-slot:activator="{ on }">
             <v-btn color="primary" dark class="mb-2" v-on="on">New Item</v-btn>
           </template>
-          <v-form ref="form" v-model="valid" lazy-validation>
+          <v-form ref="form" v-model="valid" lazy-validation  @submit.prevent>
           <v-card>
             <v-card-title>
               <span class="headline">{{ formTitle }}</span>
@@ -97,8 +97,8 @@
       editedIndex: -1,
       editedItem: {
       },
-      defaultItem: {
-      },
+      defaultItem: {},
+      toBeUpdated:{}
     }),
 
     computed: {
@@ -143,14 +143,14 @@
      async save () {
         if(this.$refs.form.validate()){
               if (this.editedIndex > -1) {
-                  
+                  this.toBeUpdated = this.dataItems[this.editedIndex]
                  axios.put('/api/userupdate',this.editedItem)
-                 .then(()=>Object.assign(this.dataItems[this.editedIndex], this.editedItem))
+                 .then((res)=>this.editedItem = Object.assign(this.toBeUpdated, res.data))
                    .catch(function (error) {
                         // handle error
                         console.log(error);
                     })
-                console.log(this.dataItems[this.editedIndex])
+                    //  Object.assign(this.dataItems[this.editedIndex], this.editedItem)
 
                 } else {
                     this.addedItems = this.editedItem
