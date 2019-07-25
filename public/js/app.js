@@ -1774,75 +1774,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -49025,199 +48956,215 @@ var render = function() {
               _c("router-view")
             ],
             1
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "dashboard-header dash-head" }),
-          _vm._v(" "),
-          _c("div", { staticClass: "dashboard-header " }, [
-            _vm._v("DASHBOARD - SUPER ADMIN")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "container" }, [
-            _c("div", { staticClass: "row" }, [
-              _c(
-                "div",
-                { staticClass: "col-sm" },
-                [
-                  _c(
-                    "v-card",
-                    { staticClass: "dash-card", attrs: { "max-width": "344" } },
-                    [
-                      _c("v-img", {
-                        staticClass: "white--text",
-                        attrs: {
-                          height: "200px",
-                          src:
-                            "https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "v-card-actions",
-                        [_c("v-card-title", [_vm._v("System Users")])],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "col-sm" },
-                [
-                  _c(
-                    "v-card",
-                    { staticClass: "dash-card", attrs: { "max-width": "344" } },
-                    [
-                      _c("v-img", {
-                        staticClass: "white--text",
-                        attrs: {
-                          height: "200px",
-                          src:
-                            "https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "v-card-actions",
-                        [_c("v-card-title", [_vm._v("Collection Report")])],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "col-sm" },
-                [
-                  _c(
-                    "v-card",
-                    { staticClass: "dash-card", attrs: { "max-width": "344" } },
-                    [
-                      _c("v-img", {
-                        staticClass: "white--text",
-                        attrs: {
-                          height: "200px",
-                          src:
-                            "https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "v-card-actions",
-                        [_c("v-card-title", [_vm._v("Tracking")])],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _c(
-                "div",
-                { staticClass: "col-sm" },
-                [
-                  _c(
-                    "v-card",
-                    { staticClass: "dash-card", attrs: { "max-width": "344" } },
-                    [
-                      _c("v-img", {
-                        staticClass: "white--text",
-                        attrs: {
-                          height: "200px",
-                          src:
-                            "https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "v-card-actions",
-                        [_c("v-card-title", [_vm._v("Set Email Template")])],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "col-sm" },
-                [
-                  _c(
-                    "v-card",
-                    { staticClass: "dash-card", attrs: { "max-width": "344" } },
-                    [
-                      _c("v-img", {
-                        staticClass: "white--text",
-                        attrs: {
-                          height: "200px",
-                          src:
-                            "https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "v-card-actions",
-                        [_c("v-card-title", [_vm._v("History Logs")])],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "col-sm" },
-                [
-                  _c(
-                    "v-card",
-                    { staticClass: "dash-card", attrs: { "max-width": "344" } },
-                    [
-                      _c("v-img", {
-                        staticClass: "white--text",
-                        attrs: {
-                          height: "200px",
-                          src:
-                            "https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "v-card-actions",
-                        [_c("v-card-title", [_vm._v("Change Password")])],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ])
-          ])
+          )
         ],
         1
       )
     ],
     1
   )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AdminDashboard/SuperAdminComponent.vue?vue&type=template&id=303d746c&":
+/*!*************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AdminDashboard/SuperAdminComponent.vue?vue&type=template&id=303d746c& ***!
+  \*************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "dashboard-header " }, [
+      _vm._v("DASHBOARD - SUPER ADMIN")
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "container" }, [
+      _c("div", { staticClass: "row" }, [
+        _c(
+          "div",
+          { staticClass: "col-sm" },
+          [
+            _c(
+              "v-card",
+              { staticClass: "dash-card", attrs: { "max-width": "344" } },
+              [
+                _c("v-img", {
+                  staticClass: "white--text",
+                  attrs: {
+                    height: "200px",
+                    src: "https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "v-card-actions",
+                  [_c("v-card-title", [_vm._v("System Users")])],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "col-sm" },
+          [
+            _c(
+              "v-card",
+              { staticClass: "dash-card", attrs: { "max-width": "344" } },
+              [
+                _c("v-img", {
+                  staticClass: "white--text",
+                  attrs: {
+                    height: "200px",
+                    src: "https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "v-card-actions",
+                  [_c("v-card-title", [_vm._v("Collection Report")])],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "col-sm" },
+          [
+            _c(
+              "v-card",
+              { staticClass: "dash-card", attrs: { "max-width": "344" } },
+              [
+                _c("v-img", {
+                  staticClass: "white--text",
+                  attrs: {
+                    height: "200px",
+                    src: "https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "v-card-actions",
+                  [_c("v-card-title", [_vm._v("Tracking")])],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c(
+          "div",
+          { staticClass: "col-sm" },
+          [
+            _c(
+              "v-card",
+              { staticClass: "dash-card", attrs: { "max-width": "344" } },
+              [
+                _c("v-img", {
+                  staticClass: "white--text",
+                  attrs: {
+                    height: "200px",
+                    src: "https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "v-card-actions",
+                  [_c("v-card-title", [_vm._v("Set Email Template")])],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "col-sm" },
+          [
+            _c(
+              "v-card",
+              { staticClass: "dash-card", attrs: { "max-width": "344" } },
+              [
+                _c("v-img", {
+                  staticClass: "white--text",
+                  attrs: {
+                    height: "200px",
+                    src: "https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "v-card-actions",
+                  [_c("v-card-title", [_vm._v("History Logs")])],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "col-sm" },
+          [
+            _c(
+              "v-card",
+              { staticClass: "dash-card", attrs: { "max-width": "344" } },
+              [
+                _c("v-img", {
+                  staticClass: "white--text",
+                  attrs: {
+                    height: "200px",
+                    src: "https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "v-card-actions",
+                  [_c("v-card-title", [_vm._v("Change Password")])],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ])
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -100440,6 +100387,59 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/AdminDashboard/SuperAdminComponent.vue":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/AdminDashboard/SuperAdminComponent.vue ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _SuperAdminComponent_vue_vue_type_template_id_303d746c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SuperAdminComponent.vue?vue&type=template&id=303d746c& */ "./resources/js/components/AdminDashboard/SuperAdminComponent.vue?vue&type=template&id=303d746c&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+var script = {}
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  script,
+  _SuperAdminComponent_vue_vue_type_template_id_303d746c___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _SuperAdminComponent_vue_vue_type_template_id_303d746c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/AdminDashboard/SuperAdminComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/AdminDashboard/SuperAdminComponent.vue?vue&type=template&id=303d746c&":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/components/AdminDashboard/SuperAdminComponent.vue?vue&type=template&id=303d746c& ***!
+  \*******************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SuperAdminComponent_vue_vue_type_template_id_303d746c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./SuperAdminComponent.vue?vue&type=template&id=303d746c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AdminDashboard/SuperAdminComponent.vue?vue&type=template&id=303d746c&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SuperAdminComponent_vue_vue_type_template_id_303d746c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SuperAdminComponent_vue_vue_type_template_id_303d746c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/AdminDashboard/SystemUserComponent.vue":
 /*!************************************************************************!*\
   !*** ./resources/js/components/AdminDashboard/SystemUserComponent.vue ***!
@@ -100559,6 +100559,8 @@ var adminDashboard = __webpack_require__(/*! ./components/AdminDashboard/Dashboa
 
 var systemUser = __webpack_require__(/*! ./components/AdminDashboard/SystemUserComponent.vue */ "./resources/js/components/AdminDashboard/SystemUserComponent.vue")["default"];
 
+var superAdmin = __webpack_require__(/*! ./components/AdminDashboard/SuperAdminComponent.vue */ "./resources/js/components/AdminDashboard/SuperAdminComponent.vue")["default"];
+
 var landingPage = __webpack_require__(/*! ./components/Landing/HomeComponent.vue */ "./resources/js/components/Landing/HomeComponent.vue")["default"];
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -100583,6 +100585,13 @@ var landingPage = __webpack_require__(/*! ./components/Landing/HomeComponent.vue
     component: systemUser,
     meta: {
       title: "System User"
+    }
+  }, {
+    path: '/superadmin',
+    name: 'superadmin',
+    component: superAdmin,
+    meta: {
+      title: "DASHBOARD - SUPERADMIN"
     }
   }]
 });
