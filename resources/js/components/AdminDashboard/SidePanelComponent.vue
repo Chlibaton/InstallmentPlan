@@ -30,9 +30,44 @@
       </v-list-item>
       <v-divider></v-divider>
       <v-list dense nav>
-        <v-list-item v-for="item in items" :key="item.title" link class='navContent'>
+        <v-list-item class='navContent'>
           <v-list-item-content>
-            <v-list-item-title class='navList'>{{ item.title }}</v-list-item-title>
+            <v-list-item-title class='navList'>Dashboard</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item class='navContent'>
+          <v-list-item-content>
+            <v-list-item-title class='navList'>System Users</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+         <v-list-item class='navContent'>
+          <v-list-item-content>
+            <v-list-item-title class='navList'>Tracking</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item class='navContent'>
+          <v-list-item-content>
+            <v-list-item-title class='navList'>Collection Report</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item class='navContent'>
+          <v-list-item-content>
+            <v-list-item-title class='navList'>Set Email Template</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item class='navContent'>
+          <v-list-item-content>
+            <v-list-item-title class='navList'>Change Password</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item class='navContent'>
+          <v-list-item-content>
+            <v-list-item-title class='navList'>History Logs</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item class='navContent'>
+          <v-list-item-content>
+            <v-list-item-title class='navList'>Logout</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
