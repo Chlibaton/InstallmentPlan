@@ -49,7 +49,7 @@ class UserController extends Controller
     }
 
     public function register(Request $request){
-        $result = $this -> create($request->all());
+        $result = $this->create($request->all());
         return $result;
     }
 
@@ -95,8 +95,8 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
-        $result = $this -> UpdateUser($request->all(),$request ->id);
-        return $request -> all();
+        $result = $this->UpdateUser($request->all(),$request->id);
+        return $request->all();
     }
 
     /**
