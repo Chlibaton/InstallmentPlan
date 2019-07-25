@@ -9,7 +9,6 @@
 
 <template>
 <v-card>
-
       <v-toolbar flat color="white">
         <v-toolbar-title>System Users</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
@@ -60,25 +59,22 @@
      
       </v-toolbar>
       <v-data-table :headers="headers" :items="dataItems"  class="elevation-1">
-    <template v-slot:items="props">
-
-        <td>{{props.item.first_name}}</td>
-        <td>{{props.item.last_name}}</td>
-        <td>{{props.item.address}}</td>
-        <td>{{props.item.mobileno}}</td>
-        <td>{{props.item.email}}</td>
-        <td>{{props.item.password}}</td>
-        <td class='justify-center layout px-0'>
-            <v-icon small class="mr-2" @click="editItem(props.item)">
-                 edit
-            </v-icon>
-            <v-icon small @click="deleteItem(props.item)">
-                delete
-            </v-icon>
-        </td>
-      
-    </template>
-</v-data-table>
+      <template v-slot:item.action="{ item }">
+          <v-icon
+            small
+            class="mr-2"
+            @click="editItem(item)"
+          >
+            edit
+          </v-icon>
+          <v-icon
+            small
+            @click="deleteItem(item)"
+          >
+            delete
+          </v-icon>
+        </template>
+  </v-data-table>
   </v-card>
 </template>
 
@@ -88,6 +84,7 @@
       dialog: false,
       valid:false,
       show1:false,
+      password: 'Password',
       loading:true,
       headers: [
         { text: 'First Name', value: 'first_name', },
@@ -130,10 +127,6 @@
       },
     },
 
-    created () {
-      this.initialize()
-    },
-
     mounted(){
         axios.get('/api/user')
         .then((response)=>{
@@ -146,7 +139,7 @@
       },
 
       editItem (item) {
-        this.editedIndex = this.desserts.indexOf(item)
+        this.editedIndex = this.dataItems.indexOf(item)
         this.editedItem = Object.assign({}, item)
         this.dialog = true
       },
