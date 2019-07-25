@@ -1,7 +1,6 @@
 <style scoped>
     .sidebarBackground{
         background: black;
-        position: absolute;
     }
     .navList{
         color: white;
@@ -9,13 +8,10 @@
     }
    
     .navContent{
-        border-top: 6px;
-        border-bottom: 0px;
-        border-left: 0px;
-        border-right: 0px;
-        margin-bottom: 0px !important;
+        border-width: 6px 0px 0px 0px;
         border-style: solid;
         border-color: white;
+        margin-bottom: 0px !important;
         position: relative;
         top: 24px;
         padding: 12px
@@ -25,25 +21,14 @@
 }
 </style>
 
-
-
 <template>
 <v-app>
    
-    <v-navigation-drawer app v-model="drawer" class='sidebarBackground'>
-      <v-list-item>
-        <v-list-item-content >
-          <v-list-item-title class="title"> 
-            Application
-          </v-list-item-title>
-          <v-list-item-subtitle>
-            subtext
-          </v-list-item-subtitle>
-        </v-list-item-content>
+    <v-navigation-drawer v-model="drawer" app class='sidebarBackground'>
+      <v-list-item class='bg'>
+        <v-list-item-content ></v-list-item-content>
       </v-list-item>
-
       <v-divider></v-divider>
-
       <v-list dense nav>
         <v-list-item v-for="item in items" :key="item.title" link class='navContent'>
           <v-list-item-content>
