@@ -12,7 +12,8 @@
       <v-toolbar flat color="white">
         <v-toolbar-title>System Users</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
-        <v-spacer></v-spacer>
+        <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
+      <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="500px">
           <template v-slot:activator="{ on }">
             <v-btn color="primary" dark class="mb-2" v-on="on">New Item</v-btn>
@@ -27,19 +28,19 @@
               <v-container grid-list-md>
                 <v-layout wrap>
                   <v-flex xs12 sm6 md4>
-                    <v-text-field v-model="editedItem.first_name" label="First name"></v-text-field>
+                    <v-text-field v-model="editedItem.first_name" label="First name" :rules="ruleRequired"></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
-                    <v-text-field v-model="editedItem.last_name" label="Last name"></v-text-field>
+                    <v-text-field v-model="editedItem.last_name" label="Last name" :rules="ruleRequired"></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
-                    <v-text-field v-model="editedItem.address" label="Address"></v-text-field>
+                    <v-text-field v-model="editedItem.address" label="Address" :rules="ruleRequired"></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
-                    <v-text-field v-model="editedItem.mobileno" label="Mobile No"></v-text-field>
+                    <v-text-field v-model="editedItem.mobileno" label="Mobile No" :rules="ruleRequired"></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
-                    <v-text-field v-model="editedItem.email" label="Email"></v-text-field>
+                    <v-text-field v-model="editedItem.email" :rules="emailRules && ruleRequired" label="Email" ></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
                     <v-text-field v-model="editedItem.password" :type="show1 ? 'text': 'password'" label="Password"></v-text-field>
@@ -56,23 +57,11 @@
           </v-card>
              </v-form>
         </v-dialog>
-     
       </v-toolbar>
-      <v-data-table :headers="headers" :items="dataItems"  class="elevation-1">
+      <v-data-table :headers="headers" :items="dataItems" :search="search" class="elevation-1">
       <template v-slot:item.action="{ item }">
-          <v-icon
-            small
-            class="mr-2"
-            @click="editItem(item)"
-          >
-            edit
-          </v-icon>
-          <v-icon
-            small
-            @click="deleteItem(item)"
-          >
-            delete
-          </v-icon>
+          <v-icon small class="mr-2" @click="editItem(item)"> edit </v-icon>
+          <v-icon small @click="deleteItem(item)"> delete </v-icon>
         </template>
   </v-data-table>
   </v-card>
@@ -83,6 +72,7 @@
     data: () => ({
       dialog: false,
       valid:false,
+      search: '',
       show1:false,
       password: 'Password',
       loading:true,
@@ -95,23 +85,19 @@
         { text: 'Password', value: 'password', },
         { text: 'Actions', value: 'action', sortable: false },
       ],
+      ruleRequired: [
+        v => !!v || 'Field is required',
+      ],
+      emailRules: [
+        v => !!v || 'Field is required',
+        v => /.+@.+/.test(v) || 'E-mail must be valid'
+      ],
+      emailExist:'',
       dataItems:[],
       editedIndex: -1,
       editedItem: {
-        first_name: '',
-        last_name: '',
-        address: '',
-        mobileno: '',
-        email: '',
-        password:''
       },
       defaultItem: {
-        first_name: '',
-        last_name: '',
-        address: '',
-        mobileno: '',
-        email: '',
-        password:''
       },
     }),
 
@@ -127,7 +113,7 @@
       },
     },
 
-    mounted(){
+    async mounted(){
         axios.get('/api/user')
         .then((response)=>{
             this.dataItems = response.data
@@ -135,9 +121,6 @@
     },
 
     methods: {
-      initialize () {
-      },
-
       editItem (item) {
         this.editedIndex = this.dataItems.indexOf(item)
         this.editedItem = Object.assign({}, item)
