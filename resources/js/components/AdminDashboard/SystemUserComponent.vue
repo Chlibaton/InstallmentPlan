@@ -62,6 +62,7 @@
       <template v-slot:item.action="{ item }">
           <v-icon
             small
+            color='success'
             class="mr-2"
             @click="editItem(item)"
           >
@@ -69,6 +70,7 @@
           </v-icon>
           <v-icon
             small
+            color='error'
             @click="deleteItem(item)"
           >
             delete
@@ -84,8 +86,7 @@
       dialog: false,
       valid:false,
       show1:false,
-      password: 'Password',
-      loading:true,
+      password: 'passowrd',
       headers: [
         { text: 'First Name', value: 'first_name', },
         { text: 'Last Name', value: 'last_name', },
@@ -96,6 +97,7 @@
         { text: 'Actions', value: 'action', sortable: false },
       ],
       dataItems:[],
+      addedItems:[],
       editedIndex: -1,
       editedItem: {
         first_name: '',
@@ -127,13 +129,13 @@
       },
     },
 
-    mounted(){
+    async mounted(){
         axios.get('/api/user')
         .then((response)=>{
             this.dataItems = response.data
         })
     },
-
+    
     methods: {
       initialize () {
       },
@@ -157,12 +159,22 @@
         }, 300)
       },
 
-      save () {
+     async save () {
         if(this.$refs.form.validate()){
               if (this.editedIndex > -1) {
-                 axios.put('/api/userupdate',this.editedItem).then(()=> Object.assign(this.dataItems[this.editedIndex], this.editedItem));
+                  
+                 axios.put('/api/userupdate',this.editedItem)
+                 .then(()=>Object.assign(this.dataItems[this.editedIndex], this.editedItem))
+                   .catch(function (error) {
+                        // handle error
+                        console.log(error);
+                    })
+                console.log(this.dataItems[this.editedIndex])
+
                 } else {
-                axios.post('/api/usercreate',this.editedItem).then(()=> this.dataItems.push(this.editedItem));
+                    this.addedItems = this.editedItem
+                    axios.post('/api/usercreate',this.editedItem)
+                    .then(()=> this.dataItems.push(this.addedItems))
                 }
                 this.close()
         }
