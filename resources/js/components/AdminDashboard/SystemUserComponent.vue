@@ -9,8 +9,8 @@
 
 <template>
 <v-card>
-  <v-data-table :headers="headers" :items="desserts" sort-by="calories" class="elevation-1">
-    <template v-slot:top>
+  <v-data-table :headers="headers" :items="dataItems"  class="elevation-1">
+
       <v-toolbar flat color="white">
         <v-toolbar-title>System Users</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
@@ -54,25 +54,26 @@
           </v-card>
         </v-dialog>
       </v-toolbar>
+      <v-data-table :headers="headers" :items="dataItems"  class="elevation-1">
+    <template v-slot:items="props">
+
+        <td>{{props.item.first_name}}</td>
+        <td>{{props.item.last_name}}</td>
+        <td>{{props.item.address}}</td>
+        <td>{{props.item.mobileno}}</td>
+        <td>{{props.item.email}}</td>
+        <td>{{props.item.password}}</td>
+        <td>
+            <v-icon small class="mr-2" @click="editItem(item)">
+                 edit
+            </v-icon>
+            <v-icon small @click="deleteItem(item)">
+                delete
+            </v-icon>
+        </td>
+      
     </template>
-    <template v-slot:item.action="{ item }">
-      <v-icon
-        small
-        class="mr-2"
-        @click="editItem(item)"
-      >
-        edit
-      </v-icon>
-      <v-icon
-        small
-        @click="deleteItem(item)"
-      >
-        delete
-      </v-icon>
-    </template>
-    <template v-slot:no-data>
-      <v-btn color="primary" @click="initialize">Reset</v-btn>
-    </template>
+</v-data-table>
   </v-data-table>
   </v-card>
 </template>
@@ -90,7 +91,7 @@
         { text: 'Password', value: 'password', },
         { text: 'Actions', value: 'action', sortable: false },
       ],
-      desserts: [],
+      dataItems:[],
       editedIndex: -1,
       editedItem: {
         first_name: '',
@@ -124,6 +125,13 @@
 
     created () {
       this.initialize()
+    },
+
+    mounted(){
+        axios.get('/api/user')
+        .then((response)=>{
+            this.dataItems = respons.data
+        })
     },
 
     methods: {
