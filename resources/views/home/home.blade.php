@@ -14,7 +14,7 @@
 <body>
     <div id="app">
         @auth
-            <dashboard-component></dashboard-component>
+            <sidepanel-component></sidepanel-component>
         @else
             <home-component></home-component>
         @endauth

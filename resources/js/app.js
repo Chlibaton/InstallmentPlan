@@ -17,7 +17,7 @@ Vue.use(VeeValidate);
 window.Vue = require('vue');
 
 
-Vue.component('dashboard-component', require('./components/AdminDashboard/DashboardComponent.vue').default);
+Vue.component('sidepanel-component', require('./components/AdminDashboard/SidePanelComponent.vue').default);
 Vue.component('home-component', require('./components/Landing/HomeComponent.vue').default);
 
 

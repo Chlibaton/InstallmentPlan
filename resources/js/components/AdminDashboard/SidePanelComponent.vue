@@ -20,13 +20,17 @@
         top: 24px;
         padding: 12px
     }
+    .main-container {
+    padding: 0px !important;
+}
 </style>
 
 
 
 <template>
 <v-app>
-    <v-navigation-drawer app permanent class='sidebarBackground'>
+   
+    <v-navigation-drawer app v-model="drawer" class='sidebarBackground'>
       <v-list-item>
         <v-list-item-content >
           <v-list-item-title class="title"> 
@@ -40,16 +44,8 @@
 
       <v-divider></v-divider>
 
-      <v-list
-        dense
-        nav
-      >
-        <v-list-item
-          v-for="item in items"
-          :key="item.title"
-          link
-           class='navContent'
-        >
+      <v-list dense nav>
+        <v-list-item v-for="item in items" :key="item.title" link class='navContent'>
           <v-list-item-content>
             <v-list-item-title class='navList'>{{ item.title }}</v-list-item-title>
           </v-list-item-content>
@@ -58,9 +54,12 @@
     </v-navigation-drawer>
 
     <v-content>
-      <v-container fluid>
-        <router-view></router-view>
-      </v-container>
+    <v-container class="main-container" fluid>
+      <v-app-bar dark prominent>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      </v-app-bar>
+      <router-view></router-view>
+    </v-container>
     </v-content>
 
 </v-app>
@@ -81,7 +80,7 @@ export default {
                 { title: 'Logout'},
             ],
             right: null,
-            
+            drawer: true,
         }
     }
    
