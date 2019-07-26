@@ -1,6 +1,8 @@
 const sidePanel = require('./components/AdminDashboard/SidePanelComponent.vue').default;
 const systemUser = require('./components/AdminDashboard/SystemUserComponent.vue').default;
 const superAdmin = require('./components/AdminDashboard/SuperAdminComponent.vue').default;
+const tracking = require('./components/AdminDashboard/TrackingComponent.vue').default;
+
 const landingPage = require('./components/Landing/HomeComponent.vue').default;
 
 export default{
@@ -24,6 +26,11 @@ export default{
         { path: '/superadmin', name:'superadmin', component: superAdmin, 
         meta: { 
             title: "DASHBOARD - SUPERADMIN" 
+            } 
+        },
+        { path: '/tracking', name:'tracking', component: tracking, 
+        meta: { 
+            title: "Tracking of Payments" 
             } 
         }
     ]

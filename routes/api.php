@@ -17,7 +17,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+//system user
 Route::get('/user','UserController@index');
 Route::post('/usercreate','UserController@register');
 Route::put('/userupdate','UserController@update');
 Route::delete('/userdelete/{id}','UserController@destroy');
+
+// Tracking
+Route::get('/trackinginit','TrackingController@index');
+Route::post('/trackingcreate','TrackingController@create');
+Route::put('/trackingupdate','TrackingController@update');
+Route::delete('/trackingdelete/{id}','TrackingController@destroy');
