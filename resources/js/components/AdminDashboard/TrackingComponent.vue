@@ -25,7 +25,7 @@
       <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="500px">
           <template v-slot:activator="{ on }">
-            <v-btn color="primary" dark class="mb-2" v-on="on">Add Track</v-btn>
+            <v-btn color="primary" dark class="mb-2" v-on="on">Add Tracking</v-btn>
           </template>
           <v-form ref="form" v-model="valid" lazy-validation  @submit.prevent>
           <v-card>
@@ -40,19 +40,30 @@
                     <v-text-field v-model="editedItem.customer_details" label="Name/Contact/Address/Email" :rules="ruleRequired"></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
-                    <v-text-field v-model="editedItem.payment_date" label="Payment Date" ></v-text-field>
+                    <!-- <v-text-field v-model="editedItem.payment_date" label="Payment Date" ></v-text-field> -->
+                            <v-menu v-model="menu1"  :close-on-content-click="false" full-width max-width="290" offset-y >
+                              <template v-slot:activator="{ on }">
+                                <v-text-field clearable readonly label="Payment Date" v-on="on"  :value="date1"></v-text-field>
+                              </template>
+                              <v-date-picker v-model="date1" @change="menu1 = false">
+                              </v-date-picker>
+                            </v-menu>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
-                    <v-text-field v-model="editedItem.due_date" label="Due Date"></v-text-field>
+                    <!-- <v-text-field v-model="editedItem.due_date" label="Due Date"></v-text-field> -->
+                            <v-menu v-model="menu2"  :close-on-content-click="false" full-width max-width="290" offset-y >
+                              <template v-slot:activator="{ on }">
+                                <v-text-field clearable readonly label="Due Date" v-on="on"  :value="date2"></v-text-field>
+                              </template>
+                              <v-date-picker v-model="date2" @change="menu2 = false">
+                              </v-date-picker>
+                            </v-menu>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
-                    <v-text-field v-model="editedItem.total_price" label="Total Price"></v-text-field>
+                    <v-text-field v-model="editedItem.total_price" label="Total Price" v-mask="mask"></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
-                    <v-text-field v-model="editedItem.balance" label="Balance" ></v-text-field>
-                  </v-flex>
-                  <v-flex xs12 sm6 md4>
-                    <v-text-field v-model="editedItem.payment_percent"  label="Payment Percent" ></v-text-field>
+                    <v-text-field v-model="editedItem.balance" label="Balance" v-mask="mask"></v-text-field>
                   </v-flex>
                  
                 </v-layout>
@@ -70,29 +81,17 @@
       </v-toolbar>
       <v-data-table :headers="headers" :items="dataItems" :search="search" class="elevation-1" >
             <template v-slot:top>
-          <label class=" bg-warning textpads">40%-%50% TOTAL PAYMENTS</label>
-          <label class=' bg-danger textpads'>65%-75% TOTAL PAYMENTS</label>
+          <label class=" bg-warning textpads">50% - 74% TOTAL PAYMENTS</label>
+           <!-- <label class=' bg-info textpads'>51%-74% TOTAL PAYMENTS</label> -->
+          <label class=' bg-danger textpads'>75%-99% TOTAL PAYMENTS</label>
           <label class='bg-success textpads'>100% TOTAL PAYMENTS</label>
         </template>
           <template v-slot:item.payment_percent="{ item }" > 
             <v-chip :color="getColor(item.payment_percent)" > {{ item.payment_percent }}</v-chip> 
           </template>
-
-        <!-- <template v-slot:item="{ item }" :color="getColor(item.payment_percent)">
-          <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-
-          </tr>
-        </template> -->
-
       <template v-slot:item.action="{ item }">
-          <v-icon small class="mr-2" @click="editItem(item)"> edit </v-icon>
-          <v-icon small @click="deleteItem(item)"> delete </v-icon>
+          <v-icon small class="mr-2" @click="editItem(item)" > edit </v-icon>
+          <v-icon small  @click="deleteItem(item)" > delete </v-icon>
         </template>
   </v-data-table>
   </v-card>
@@ -105,6 +104,8 @@
       valid:false,
       search: '',
       show1:false,
+      menu1:false,
+      menu2:false,
       headers: [
         { text: 'Name/Contact/Address/Email', value: 'customer_details',  },
         { text: 'Payment Date', value: 'payment_date', },
@@ -129,16 +130,17 @@
       },
       defaultItem: {},
       toBeUpdated:{},
+      mask: '################',
+      date1:new Date().toISOString().substr(0, 10),
+      date2:new Date().toISOString().substr(0, 10),
     }),
+    
 
     computed: {
       formTitle () {
-        return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+        return this.editedIndex === -1 ? 'Add Tracking' : 'Edit Tracking'
       },
-      
-       
     },
-    
 
     watch: {
       dialog (val) {
@@ -150,10 +152,10 @@
         axios.get('/api/trackinginit')
         .then((response)=>{
             this.dataItems = response.data
-            // console.log(this.dataItems)
         })
     },
-    
+//methods
+
     methods: {
       editItem (item) {
           console.log( this.editedIndex)
@@ -177,6 +179,10 @@
 
      async save () {
         if(this.$refs.form.validate()){
+           this.editedItem.payment_date = this.date1
+           this.editedItem.due_date = this.date2
+          //get percentage
+            this.editedItem.payment_percent = Math.floor( (( this.editedItem.total_price - this.editedItem.balance ) / this.editedItem.total_price) * 100)+'%';
               if (this.editedIndex > -1) {
                   this.toBeUpdated = this.dataItems[this.editedIndex]
                  axios.put('/api/trackingupdate',this.editedItem)
@@ -188,6 +194,7 @@
                     //  Object.assign(this.dataItems[this.editedIndex], this.editedItem)
 
                 } else {
+                    console.log(this.editedItem)
                     this.addedItems = this.editedItem
                     axios.post('/api/trackingcreate',this.editedItem)
                     .then(()=> this.dataItems.push(this.addedItems))
@@ -195,15 +202,18 @@
                 this.close()
         }
       },
-       getColor (Percent) {
-           console.log(Percent)
-        if (Percent >= '40%' && Percent <= '59%' ) return '#ffed4a'
-        else if (Percent >= '60%' && Percent <= '99%') return 'red'
-        else if (Percent == '100%') return 'green'
+
+       getColor (a) {
+           const Percent = parseInt(a)
+        if (Percent >= 50 && Percent <= 74 ) return '#ffed4a'
+        // else if  (Percent >= 51 && Percent <= 74) return '#6cb2eb'
+        else if (Percent >= 75 && Percent <= 99) return 'red'
+        else if (Percent == 100) return 'green'
+        else return 'none'
         // else return 'green'
       },
-          
-      
+        
     },
+    
   }
 </script>

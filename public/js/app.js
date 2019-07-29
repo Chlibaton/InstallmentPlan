@@ -2183,7 +2183,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2191,6 +2190,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       valid: false,
       search: '',
       show1: false,
+      menu1: false,
+      menu2: false,
       headers: [{
         text: 'Name/Contact/Address/Email',
         value: 'customer_details'
@@ -2228,12 +2229,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       editedIndex: -1,
       editedItem: {},
       defaultItem: {},
-      toBeUpdated: {}
+      toBeUpdated: {},
+      mask: '################',
+      date1: new Date().toISOString().substr(0, 10),
+      date2: new Date().toISOString().substr(0, 10)
     };
   },
   computed: {
     formTitle: function formTitle() {
-      return this.editedIndex === -1 ? 'New Item' : 'Edit Item';
+      return this.editedIndex === -1 ? 'Add Tracking' : 'Edit Tracking';
     }
   },
   watch: {
@@ -2252,7 +2256,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           switch (_context.prev = _context.next) {
             case 0:
               axios.get('/api/trackinginit').then(function (response) {
-                _this.dataItems = response.data; // console.log(this.dataItems)
+                _this.dataItems = response.data;
               });
 
             case 1:
@@ -2269,6 +2273,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
     return mounted;
   }(),
+  //methods
   methods: {
     editItem: function editItem(item) {
       console.log(this.editedIndex);
@@ -2304,6 +2309,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 if (this.$refs.form.validate()) {
+                  this.editedItem.payment_date = this.date1;
+                  this.editedItem.due_date = this.date2; //get percentage
+
+                  this.editedItem.payment_percent = Math.floor((this.editedItem.total_price - this.editedItem.balance) / this.editedItem.total_price * 100) + '%';
+
                   if (this.editedIndex > -1) {
                     this.toBeUpdated = this.dataItems[this.editedIndex];
                     axios.put('/api/trackingupdate', this.editedItem).then(function (res) {
@@ -2312,6 +2322,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                       console.log(error);
                     }); //  Object.assign(this.dataItems[this.editedIndex], this.editedItem)
                   } else {
+                    console.log(this.editedItem);
                     this.addedItems = this.editedItem;
                     axios.post('/api/trackingcreate', this.editedItem).then(function () {
                       return _this4.dataItems.push(_this4.addedItems);
@@ -2335,9 +2346,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return save;
     }(),
-    getColor: function getColor(Percent) {
-      console.log(Percent);
-      if (Percent >= '40%' && Percent <= '59%') return '#ffed4a';else if (Percent >= '60%' && Percent <= '99%') return 'red';else if (Percent == '100%') return 'green'; // else return 'green'
+    getColor: function getColor(a) {
+      var Percent = parseInt(a);
+      if (Percent >= 50 && Percent <= 74) return '#ffed4a'; // else if  (Percent >= 51 && Percent <= 74) return '#6cb2eb'
+      else if (Percent >= 75 && Percent <= 99) return 'red';else if (Percent == 100) return 'green';else return 'none'; // else return 'green'
     }
   }
 });
@@ -39122,6 +39134,361 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
+/***/ "./node_modules/v-mask/dist/v-mask.esm.js":
+/*!************************************************!*\
+  !*** ./node_modules/v-mask/dist/v-mask.esm.js ***!
+  \************************************************/
+/*! exports provided: default, VueMaskDirective, VueMaskPlugin */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VueMaskDirective", function() { return directive; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VueMaskPlugin", function() { return plugin; });
+function _typeof(obj) {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
+var placeholderChar = '_';
+var strFunction = 'function';
+
+var emptyArray = [];
+function convertMaskToPlaceholder() {
+  var mask = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : emptyArray;
+  var placeholderChar$1 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : placeholderChar;
+
+  if (!isArray(mask)) {
+    throw new Error('Text-mask:convertMaskToPlaceholder; The mask property must be an array.');
+  }
+
+  if (mask.indexOf(placeholderChar$1) !== -1) {
+    throw new Error('Placeholder character must not be used as part of the mask. Please specify a character ' + 'that is not present in your mask as your placeholder character.\n\n' + "The placeholder character that was received is: ".concat(JSON.stringify(placeholderChar$1), "\n\n") + "The mask that was received is: ".concat(JSON.stringify(mask)));
+  }
+
+  return mask.map(function (char) {
+    return char instanceof RegExp ? placeholderChar$1 : char;
+  }).join('');
+}
+function isArray(value) {
+  return Array.isArray && Array.isArray(value) || value instanceof Array;
+}
+var strCaretTrap = '[]';
+function processCaretTraps(mask) {
+  var indexes = [];
+  var indexOfCaretTrap;
+
+  while (indexOfCaretTrap = mask.indexOf(strCaretTrap), indexOfCaretTrap !== -1) {
+    indexes.push(indexOfCaretTrap);
+    mask.splice(indexOfCaretTrap, 1);
+  }
+
+  return {
+    maskWithoutCaretTraps: mask,
+    indexes: indexes
+  };
+}
+
+var emptyArray$1 = [];
+var emptyString = '';
+function conformToMask() {
+  var rawValue = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : emptyString;
+  var mask = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : emptyArray$1;
+  var config = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+  if (!isArray(mask)) {
+    if (_typeof(mask) === strFunction) {
+      mask = mask(rawValue, config);
+      mask = processCaretTraps(mask).maskWithoutCaretTraps;
+    } else {
+      throw new Error('Text-mask:conformToMask; The mask property must be an array.');
+    }
+  }
+
+  var _config$guide = config.guide,
+      guide = _config$guide === void 0 ? true : _config$guide,
+      _config$previousConfo = config.previousConformedValue,
+      previousConformedValue = _config$previousConfo === void 0 ? emptyString : _config$previousConfo,
+      _config$placeholderCh = config.placeholderChar,
+      placeholderChar$1 = _config$placeholderCh === void 0 ? placeholderChar : _config$placeholderCh,
+      _config$placeholder = config.placeholder,
+      placeholder = _config$placeholder === void 0 ? convertMaskToPlaceholder(mask, placeholderChar$1) : _config$placeholder,
+      currentCaretPosition = config.currentCaretPosition,
+      keepCharPositions = config.keepCharPositions;
+  var suppressGuide = guide === false && previousConformedValue !== undefined;
+  var rawValueLength = rawValue.length;
+  var previousConformedValueLength = previousConformedValue.length;
+  var placeholderLength = placeholder.length;
+  var maskLength = mask.length;
+  var editDistance = rawValueLength - previousConformedValueLength;
+  var isAddition = editDistance > 0;
+  var indexOfFirstChange = currentCaretPosition + (isAddition ? -editDistance : 0);
+  var indexOfLastChange = indexOfFirstChange + Math.abs(editDistance);
+
+  if (keepCharPositions === true && !isAddition) {
+    var compensatingPlaceholderChars = emptyString;
+
+    for (var i = indexOfFirstChange; i < indexOfLastChange; i++) {
+      if (placeholder[i] === placeholderChar$1) {
+        compensatingPlaceholderChars += placeholderChar$1;
+      }
+    }
+
+    rawValue = rawValue.slice(0, indexOfFirstChange) + compensatingPlaceholderChars + rawValue.slice(indexOfFirstChange, rawValueLength);
+  }
+
+  var rawValueArr = rawValue.split(emptyString).map(function (char, i) {
+    return {
+      char: char,
+      isNew: i >= indexOfFirstChange && i < indexOfLastChange
+    };
+  });
+
+  for (var _i = rawValueLength - 1; _i >= 0; _i--) {
+    var char = rawValueArr[_i].char;
+
+    if (char !== placeholderChar$1) {
+      var shouldOffset = _i >= indexOfFirstChange && previousConformedValueLength === maskLength;
+
+      if (char === placeholder[shouldOffset ? _i - editDistance : _i]) {
+        rawValueArr.splice(_i, 1);
+      }
+    }
+  }
+
+  var conformedValue = emptyString;
+  var someCharsRejected = false;
+
+  placeholderLoop: for (var _i2 = 0; _i2 < placeholderLength; _i2++) {
+    var charInPlaceholder = placeholder[_i2];
+
+    if (charInPlaceholder === placeholderChar$1) {
+      if (rawValueArr.length > 0) {
+        while (rawValueArr.length > 0) {
+          var _rawValueArr$shift = rawValueArr.shift(),
+              rawValueChar = _rawValueArr$shift.char,
+              isNew = _rawValueArr$shift.isNew;
+
+          if (rawValueChar === placeholderChar$1 && suppressGuide !== true) {
+            conformedValue += placeholderChar$1;
+            continue placeholderLoop;
+          } else if (mask[_i2].test(rawValueChar)) {
+            if (keepCharPositions !== true || isNew === false || previousConformedValue === emptyString || guide === false || !isAddition) {
+              conformedValue += rawValueChar;
+            } else {
+              var rawValueArrLength = rawValueArr.length;
+              var indexOfNextAvailablePlaceholderChar = null;
+
+              for (var _i3 = 0; _i3 < rawValueArrLength; _i3++) {
+                var charData = rawValueArr[_i3];
+
+                if (charData.char !== placeholderChar$1 && charData.isNew === false) {
+                  break;
+                }
+
+                if (charData.char === placeholderChar$1) {
+                  indexOfNextAvailablePlaceholderChar = _i3;
+                  break;
+                }
+              }
+
+              if (indexOfNextAvailablePlaceholderChar !== null) {
+                conformedValue += rawValueChar;
+                rawValueArr.splice(indexOfNextAvailablePlaceholderChar, 1);
+              } else {
+                _i2--;
+              }
+            }
+
+            continue placeholderLoop;
+          } else {
+            someCharsRejected = true;
+          }
+        }
+      }
+
+      if (suppressGuide === false) {
+        conformedValue += placeholder.substr(_i2, placeholderLength);
+      }
+
+      break;
+    } else {
+      conformedValue += charInPlaceholder;
+    }
+  }
+
+  if (suppressGuide && isAddition === false) {
+    var indexOfLastFilledPlaceholderChar = null;
+
+    for (var _i4 = 0; _i4 < conformedValue.length; _i4++) {
+      if (placeholder[_i4] === placeholderChar$1) {
+        indexOfLastFilledPlaceholderChar = _i4;
+      }
+    }
+
+    if (indexOfLastFilledPlaceholderChar !== null) {
+      conformedValue = conformedValue.substr(0, indexOfLastFilledPlaceholderChar + 1);
+    } else {
+      conformedValue = emptyString;
+    }
+  }
+
+  return {
+    conformedValue: conformedValue,
+    meta: {
+      someCharsRejected: someCharsRejected
+    }
+  };
+}
+
+var NEXT_CHAR_OPTIONAL = {
+  __nextCharOptional__: true
+};
+function format (text, wholeMask) {
+  if (!wholeMask) return text;
+  var replacementMap = {
+    '#': /\d/,
+    A: /[a-z]/i,
+    N: /[a-z0-9]/i,
+    '?': NEXT_CHAR_OPTIONAL,
+    X: /./
+  };
+
+  var stringToRegexp = function stringToRegexp(str) {
+    var lastSlash = str.lastIndexOf('/');
+    return new RegExp(str.slice(1, lastSlash), str.slice(lastSlash + 1));
+  };
+
+  var makeRegexpOptional = function makeRegexpOptional(charRegexp) {
+    return stringToRegexp(charRegexp.toString().replace(/.(\/)[gmiyus]{0,6}$/, function (match) {
+      return match.replace('/', '?/');
+    }));
+  };
+
+  var escapeIfNeeded = function escapeIfNeeded(char) {
+    return '[\\^$.|?*+()'.split('').includes(char) ? "\\".concat(char) : char;
+  };
+
+  var charRegexp = function charRegexp(char) {
+    return new RegExp("/[".concat(escapeIfNeeded(char), "]/"));
+  };
+
+  var isRegexp = function isRegexp(entity) {
+    return entity instanceof RegExp;
+  };
+
+  var castToRegexp = function castToRegexp(char) {
+    return isRegexp(char) ? char : charRegexp(char);
+  };
+
+  var generatedMask = wholeMask.split('').map(function (char, index, array) {
+    var maskChar = replacementMap[char] || char;
+    var previousChar = array[index - 1];
+    var previousMaskChar = replacementMap[previousChar] || previousChar;
+
+    if (maskChar === NEXT_CHAR_OPTIONAL) {
+      return null;
+    }
+
+    if (previousMaskChar === NEXT_CHAR_OPTIONAL) {
+      var casted = castToRegexp(maskChar);
+      var optionalRegexp = makeRegexpOptional(casted);
+      return optionalRegexp;
+    }
+
+    return maskChar;
+  }).filter(Boolean);
+
+  var _conformToMask = conformToMask(text, generatedMask, {
+    guide: false
+  }),
+      conformedValue = _conformToMask.conformedValue;
+
+  return conformedValue;
+}
+
+var trigger = function trigger(el, type) {
+  var e = document.createEvent('HTMLEvents');
+  e.initEvent(type, true, true);
+  el.dispatchEvent(e);
+};
+var queryInputElementInside = function queryInputElementInside(el) {
+  return el instanceof HTMLInputElement ? el : el.querySelector('input') || el;
+};
+
+var inBrowser = typeof window !== 'undefined';
+var UA = inBrowser && window.navigator.userAgent.toLowerCase();
+var isEdge = UA && UA.indexOf('edge/') > 0;
+var isAndroid = UA && UA.indexOf('android') > 0;
+var isChrome = UA && /chrome\/\d+/.test(UA) && !isEdge;
+
+function updateValue(el) {
+  var force = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  var value = el.value,
+      _el$dataset = el.dataset,
+      _el$dataset$previousV = _el$dataset.previousValue,
+      previousValue = _el$dataset$previousV === void 0 ? '' : _el$dataset$previousV,
+      mask = _el$dataset.mask;
+
+  if (force || value && value !== previousValue && value.length > previousValue.length) {
+    el.value = format(value, mask);
+
+    if (isAndroid && isChrome) {
+      setTimeout(function () {
+        return trigger(el, 'input');
+      }, 0);
+    } else {
+      trigger(el, 'input');
+    }
+  }
+
+  el.dataset.previousValue = value;
+}
+
+function updateMask(el, mask) {
+  el.dataset.mask = mask;
+}
+
+var directive = {
+  bind: function bind(el, _ref) {
+    var value = _ref.value;
+    el = queryInputElementInside(el);
+    updateMask(el, value);
+    updateValue(el);
+  },
+  componentUpdated: function componentUpdated(el, _ref2) {
+    var value = _ref2.value,
+        oldValue = _ref2.oldValue;
+    el = queryInputElementInside(el);
+    var isMaskChanged = value !== oldValue;
+
+    if (isMaskChanged) {
+      updateMask(el, value);
+    }
+
+    updateValue(el, isMaskChanged);
+  }
+};
+
+var plugin = (function (Vue) {
+  Vue.directive('mask', directive);
+});
+
+/* harmony default export */ __webpack_exports__["default"] = (plugin);
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vee-validate/dist/vee-validate.esm.js":
 /*!************************************************************!*\
   !*** ./node_modules/vee-validate/dist/vee-validate.esm.js ***!
@@ -51119,7 +51486,7 @@ var render = function() {
                           },
                           on
                         ),
-                        [_vm._v("Add Track")]
+                        [_vm._v("Add Tracking")]
                       )
                     ]
                   }
@@ -51205,20 +51572,134 @@ var render = function() {
                                     "v-flex",
                                     { attrs: { xs12: "", sm6: "", md4: "" } },
                                     [
-                                      _c("v-text-field", {
-                                        attrs: { label: "Payment Date" },
-                                        model: {
-                                          value: _vm.editedItem.payment_date,
-                                          callback: function($$v) {
-                                            _vm.$set(
-                                              _vm.editedItem,
-                                              "payment_date",
-                                              $$v
-                                            )
+                                      _c(
+                                        "v-menu",
+                                        {
+                                          attrs: {
+                                            "close-on-content-click": false,
+                                            "full-width": "",
+                                            "max-width": "290",
+                                            "offset-y": ""
                                           },
-                                          expression: "editedItem.payment_date"
-                                        }
-                                      })
+                                          scopedSlots: _vm._u([
+                                            {
+                                              key: "activator",
+                                              fn: function(ref) {
+                                                var on = ref.on
+                                                return [
+                                                  _c(
+                                                    "v-text-field",
+                                                    _vm._g(
+                                                      {
+                                                        attrs: {
+                                                          clearable: "",
+                                                          readonly: "",
+                                                          label: "Payment Date",
+                                                          value: _vm.date1
+                                                        }
+                                                      },
+                                                      on
+                                                    )
+                                                  )
+                                                ]
+                                              }
+                                            }
+                                          ]),
+                                          model: {
+                                            value: _vm.menu1,
+                                            callback: function($$v) {
+                                              _vm.menu1 = $$v
+                                            },
+                                            expression: "menu1"
+                                          }
+                                        },
+                                        [
+                                          _vm._v(" "),
+                                          _c("v-date-picker", {
+                                            on: {
+                                              change: function($event) {
+                                                _vm.menu1 = false
+                                              }
+                                            },
+                                            model: {
+                                              value: _vm.date1,
+                                              callback: function($$v) {
+                                                _vm.date1 = $$v
+                                              },
+                                              expression: "date1"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-flex",
+                                    { attrs: { xs12: "", sm6: "", md4: "" } },
+                                    [
+                                      _c(
+                                        "v-menu",
+                                        {
+                                          attrs: {
+                                            "close-on-content-click": false,
+                                            "full-width": "",
+                                            "max-width": "290",
+                                            "offset-y": ""
+                                          },
+                                          scopedSlots: _vm._u([
+                                            {
+                                              key: "activator",
+                                              fn: function(ref) {
+                                                var on = ref.on
+                                                return [
+                                                  _c(
+                                                    "v-text-field",
+                                                    _vm._g(
+                                                      {
+                                                        attrs: {
+                                                          clearable: "",
+                                                          readonly: "",
+                                                          label: "Due Date",
+                                                          value: _vm.date2
+                                                        }
+                                                      },
+                                                      on
+                                                    )
+                                                  )
+                                                ]
+                                              }
+                                            }
+                                          ]),
+                                          model: {
+                                            value: _vm.menu2,
+                                            callback: function($$v) {
+                                              _vm.menu2 = $$v
+                                            },
+                                            expression: "menu2"
+                                          }
+                                        },
+                                        [
+                                          _vm._v(" "),
+                                          _c("v-date-picker", {
+                                            on: {
+                                              change: function($event) {
+                                                _vm.menu2 = false
+                                              }
+                                            },
+                                            model: {
+                                              value: _vm.date2,
+                                              callback: function($$v) {
+                                                _vm.date2 = $$v
+                                              },
+                                              expression: "date2"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
                                     ],
                                     1
                                   ),
@@ -51228,28 +51709,14 @@ var render = function() {
                                     { attrs: { xs12: "", sm6: "", md4: "" } },
                                     [
                                       _c("v-text-field", {
-                                        attrs: { label: "Due Date" },
-                                        model: {
-                                          value: _vm.editedItem.due_date,
-                                          callback: function($$v) {
-                                            _vm.$set(
-                                              _vm.editedItem,
-                                              "due_date",
-                                              $$v
-                                            )
-                                          },
-                                          expression: "editedItem.due_date"
-                                        }
-                                      })
-                                    ],
-                                    1
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "v-flex",
-                                    { attrs: { xs12: "", sm6: "", md4: "" } },
-                                    [
-                                      _c("v-text-field", {
+                                        directives: [
+                                          {
+                                            name: "mask",
+                                            rawName: "v-mask",
+                                            value: _vm.mask,
+                                            expression: "mask"
+                                          }
+                                        ],
                                         attrs: { label: "Total Price" },
                                         model: {
                                           value: _vm.editedItem.total_price,
@@ -51272,6 +51739,14 @@ var render = function() {
                                     { attrs: { xs12: "", sm6: "", md4: "" } },
                                     [
                                       _c("v-text-field", {
+                                        directives: [
+                                          {
+                                            name: "mask",
+                                            rawName: "v-mask",
+                                            value: _vm.mask,
+                                            expression: "mask"
+                                          }
+                                        ],
                                         attrs: { label: "Balance" },
                                         model: {
                                           value: _vm.editedItem.balance,
@@ -51283,29 +51758,6 @@ var render = function() {
                                             )
                                           },
                                           expression: "editedItem.balance"
-                                        }
-                                      })
-                                    ],
-                                    1
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "v-flex",
-                                    { attrs: { xs12: "", sm6: "", md4: "" } },
-                                    [
-                                      _c("v-text-field", {
-                                        attrs: { label: "Payment Percent" },
-                                        model: {
-                                          value: _vm.editedItem.payment_percent,
-                                          callback: function($$v) {
-                                            _vm.$set(
-                                              _vm.editedItem,
-                                              "payment_percent",
-                                              $$v
-                                            )
-                                          },
-                                          expression:
-                                            "editedItem.payment_percent"
                                         }
                                       })
                                     ],
@@ -51372,11 +51824,11 @@ var render = function() {
             fn: function() {
               return [
                 _c("label", { staticClass: " bg-warning textpads" }, [
-                  _vm._v("40%-%50% TOTAL PAYMENTS")
+                  _vm._v("50% - 74% TOTAL PAYMENTS")
                 ]),
                 _vm._v(" "),
                 _c("label", { staticClass: " bg-danger textpads" }, [
-                  _vm._v("65%-75% TOTAL PAYMENTS")
+                  _vm._v("75%-99% TOTAL PAYMENTS")
                 ]),
                 _vm._v(" "),
                 _c("label", { staticClass: "bg-success textpads" }, [
@@ -102468,9 +102920,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_axios__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var vuetify_dist_vuetify_min_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuetify/dist/vuetify.min.css */ "./node_modules/vuetify/dist/vuetify.min.css");
-/* harmony import */ var vuetify_dist_vuetify_min_css__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(vuetify_dist_vuetify_min_css__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _route__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./route */ "./resources/js/route.js");
+/* harmony import */ var v_mask__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! v-mask */ "./node_modules/v-mask/dist/v-mask.esm.js");
+/* harmony import */ var vuetify_dist_vuetify_min_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vuetify/dist/vuetify.min.css */ "./node_modules/vuetify/dist/vuetify.min.css");
+/* harmony import */ var vuetify_dist_vuetify_min_css__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(vuetify_dist_vuetify_min_css__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _route__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./route */ "./resources/js/route.js");
+
 
 
 
@@ -102486,6 +102940,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuetify__WEBPACK_IMPORTED_MODULE_
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_axios__WEBPACK_IMPORTED_MODULE_4___default.a, axios__WEBPACK_IMPORTED_MODULE_5___default.a);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_2__["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vee_validate__WEBPACK_IMPORTED_MODULE_3__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(v_mask__WEBPACK_IMPORTED_MODULE_6__["default"]);
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('sidepanel-component', __webpack_require__(/*! ./components/AdminDashboard/SidePanelComponent.vue */ "./resources/js/components/AdminDashboard/SidePanelComponent.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('home-component', __webpack_require__(/*! ./components/Landing/HomeComponent.vue */ "./resources/js/components/Landing/HomeComponent.vue")["default"]);
@@ -102493,7 +102948,7 @@ var vuetifyOptions = {};
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#app',
   vuetify: new vuetify__WEBPACK_IMPORTED_MODULE_1___default.a(vuetifyOptions),
-  router: new vue_router__WEBPACK_IMPORTED_MODULE_2__["default"](_route__WEBPACK_IMPORTED_MODULE_7__["default"])
+  router: new vue_router__WEBPACK_IMPORTED_MODULE_2__["default"](_route__WEBPACK_IMPORTED_MODULE_8__["default"])
 });
 
 /***/ }),

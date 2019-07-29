@@ -5,6 +5,7 @@ import VueRouter from 'vue-router'
 import VeeValidate from 'vee-validate';
 import VueAxios from 'vue-axios'
 import axios from 'axios';
+import VueMask from 'v-mask'
 
 import 'vuetify/dist/vuetify.min.css';
 
@@ -16,8 +17,10 @@ Vue.use(Vuetify);
 Vue.use(VueAxios, axios)
 Vue.use(VueRouter);
 Vue.use(VeeValidate);
+Vue.use(VueMask);
 
 window.Vue = require('vue');
+
 
 
 Vue.component('sidepanel-component', require('./components/AdminDashboard/SidePanelComponent.vue').default);
