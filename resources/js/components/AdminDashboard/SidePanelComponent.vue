@@ -1,6 +1,7 @@
 <style scoped>
     .sidebarBackground{
         background: black;
+        top: 128px !important
     }
     .navList{
         color: white;
@@ -17,35 +18,43 @@
         padding: 12px
     }
     .main-container {
-    padding: 0px !important;
-}
+        padding: 130px 0px 0px 0px !important;
+        
+    }
+    .v-header{
+      z-index:999;
+    }
+    
 </style>
 
 <template>
 <v-app>
-   
+    <v-app-bar class='v-header' dark prominent absolute src="img/logo.JPG" >
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      </v-app-bar>
+
     <v-navigation-drawer v-model="drawer" app class='sidebarBackground'>
       <v-list-item class='bg'>
         <v-list-item-content ></v-list-item-content>
       </v-list-item>
       <v-divider></v-divider>
       <v-list dense nav>
-        <v-list-item class='navContent'>
+        <v-list-item class='navContent' href='/superadmin'>
           <v-list-item-content>
             <v-list-item-title class='navList'>Dashboard</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item class='navContent'>
+        <v-list-item class='navContent' href='/systemuser'>
           <v-list-item-content>
             <v-list-item-title class='navList'>System Users</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-         <v-list-item class='navContent'>
+         <v-list-item class='navContent' href='/tracking'>
           <v-list-item-content>
             <v-list-item-title class='navList'>Tracking</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item class='navContent'>
+        <v-list-item class='navContent' href='/collectionreport'>
           <v-list-item-content>
             <v-list-item-title class='navList'>Collection Report</v-list-item-title>
           </v-list-item-content>
@@ -73,11 +82,9 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-content>
+    <v-content class="overflow-hidden">
     <v-container class="main-container" fluid>
-      <v-app-bar dark prominent>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      </v-app-bar>
+     
       <router-view></router-view>
     </v-container>
     </v-content>

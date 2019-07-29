@@ -1,6 +1,6 @@
 <template>
     <div>
-         <div class="dashboard-header ">DASHBOARD - SUPER ADMIN</div>
+         <v-toolbar-title>DASHBOARD - SUPER ADMIN</v-toolbar-title>
           
           <div class="container">
             <div class="row">
