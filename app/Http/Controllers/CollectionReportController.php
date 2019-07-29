@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Tracking;
 
-class TrackingController extends Controller
+class CollectionReportController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class TrackingController extends Controller
      */
     public function index()
     {
-        $result = Tracking::orderBy('id','desc')->get()->all();
+        $result = Tracking::where('payment_percent','100%')->orderBy('id', 'desc')->get()->all();
         return $result;
     }
 
@@ -25,12 +25,10 @@ class TrackingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-        $result = Tracking::create($request->all());
-        return $result;
+        //
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -72,10 +70,9 @@ class TrackingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        $result = Tracking::where('id', $request->id)->update($request->all());
-        return $request->all();
+        //
     }
 
     /**
@@ -86,7 +83,6 @@ class TrackingController extends Controller
      */
     public function destroy($id)
     {
-        $result = Tracking::where('id',$id)->delete();
-        return 'Deleted';
+        //
     }
 }
