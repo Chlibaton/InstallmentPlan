@@ -32,3 +32,6 @@ Route::delete('/trackingdelete/{id}','TrackingController@destroy');
 
 // collection Report
 Route::get('/reportInit','CollectionReportController@index');
+
+//logout 
+// Route::post('/logout','UserController@logout');

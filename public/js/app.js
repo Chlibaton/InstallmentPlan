@@ -2068,6 +2068,15 @@ __webpack_require__.r(__webpack_exports__);
       right: null,
       drawer: true
     };
+  },
+  methods: {// logout(){
+    //    axios.get('/api/getlogout',this.editedItem)
+    //            .then((res)=>this.editedItem = Object.assign(this.toBeUpdated, res.data))
+    //              .catch(function (error) {
+    //                   // handle error
+    //                   console.log(error);
+    //               })
+    // }
   }
 });
 
@@ -51225,7 +51234,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "v-list-item",
-                { staticClass: "navContent" },
+                { staticClass: "navContent", attrs: { href: "/logout" } },
                 [
                   _c(
                     "v-list-item-content",

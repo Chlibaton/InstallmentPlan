@@ -76,7 +76,7 @@
             <v-list-item-title class='navList'>History Logs</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item class='navContent'>
+        <v-list-item class='navContent' href='/logout'>
           <v-list-item-content>
             <v-list-item-title class='navList'>Logout</v-list-item-title>
           </v-list-item-content>
