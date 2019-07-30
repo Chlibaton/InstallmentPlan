@@ -53,13 +53,16 @@
       menu1:false,
       menu2:false,
       headers: [
-        { text: 'Name/Contact/Address/Email', value: 'customer_details',  },
+        { text: 'Name', value: 'name',  },
+        { text: 'Contact', value: 'contact',  },
+        { text: 'Address', value: 'address',  },
+        { text: 'Email', value: 'email',  },
         { text: 'Payment Date', value: 'payment_date', },
         { text: 'Due Date', value: 'due_date', },
         { text: 'Total Price', value: 'total_price', },
         { text: 'Balance', value: 'balance', },
         { text: 'Payment Percent', value: 'payment_percent', },
-        { text: 'Actions', value: 'action', sortable: false },
+        // { text: 'Actions', value: 'action', sortable: false },
       ],
       ruleRequired: [
         v => !!v || 'Field is required',

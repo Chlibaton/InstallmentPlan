@@ -1,7 +1,8 @@
 <style scoped>
     .sidebarBackground{
         background: black;
-        top: 128px !important
+        top: 142px !important;
+        overflow: auto;
     }
     .navList{
         color: white;
@@ -15,21 +16,22 @@
         margin-bottom: 0px !important;
         position: relative;
         top: 24px;
-        padding: 12px
+        padding: 10px
     }
     .main-container {
-        padding: 130px 0px 0px 0px !important;
+        padding: 142px 0px 0px 0px !important;
         
     }
     .v-header{
-      z-index:999;
+        color: #fff;
+        background: linear-gradient( 75deg, black, #716161 20%, #fd0c0c 20%, #ffc800 100%)
     }
     
 </style>
 
 <template>
 <v-app>
-    <v-app-bar class='v-header' dark prominent absolute src="img/logo.JPG" >
+       <v-app-bar class='v-header' dark prominent absolute >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       </v-app-bar>
 

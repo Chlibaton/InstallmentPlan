@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $result = User::get()->all();
+        $result = User::where('role','0')->get()->all();
         return $result;
     }
 

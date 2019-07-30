@@ -1772,8 +1772,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       menu1: false,
       menu2: false,
       headers: [{
-        text: 'Name/Contact/Address/Email',
-        value: 'customer_details'
+        text: 'Name',
+        value: 'name'
+      }, {
+        text: 'Contact',
+        value: 'contact'
+      }, {
+        text: 'Address',
+        value: 'address'
+      }, {
+        text: 'Email',
+        value: 'email'
       }, {
         text: 'Payment Date',
         value: 'payment_date'
@@ -1789,10 +1798,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }, {
         text: 'Payment Percent',
         value: 'payment_percent'
-      }, {
-        text: 'Actions',
-        value: 'action',
-        sortable: false
       }],
       ruleRequired: [function (v) {
         return !!v || 'Field is required';
@@ -1944,6 +1949,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -2425,6 +2432,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2435,8 +2451,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       menu1: false,
       menu2: false,
       headers: [{
-        text: 'Name/Contact/Address/Email',
-        value: 'customer_details'
+        text: 'Name',
+        value: 'name'
+      }, {
+        text: 'Contact',
+        value: 'contact'
+      }, {
+        text: 'Address',
+        value: 'address'
+      }, {
+        text: 'Email',
+        value: 'email'
       }, {
         text: 'Payment Date',
         value: 'payment_date'
@@ -2473,6 +2498,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       defaultItem: {},
       toBeUpdated: {},
       mask: '################',
+      contact: '###########',
       date1: new Date().toISOString().substr(0, 10),
       date2: new Date().toISOString().substr(0, 10)
     };
@@ -7093,7 +7119,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.sidebarBackground[data-v-23545dc2]{\n    background: black;\n    top: 128px !important\n}\n.navList[data-v-23545dc2]{\n    color: white;\n    font-size: 16px !important;\n}\n.navContent[data-v-23545dc2]{\n    border-width: 6px 0px 0px 0px;\n    border-style: solid;\n    border-color: white;\n    margin-bottom: 0px !important;\n    position: relative;\n    top: 24px;\n    padding: 12px\n}\n.main-container[data-v-23545dc2] {\n    padding: 130px 0px 0px 0px !important;\n}\n.v-header[data-v-23545dc2]{\n  z-index:999;\n}\n\n", ""]);
+exports.push([module.i, "\n.sidebarBackground[data-v-23545dc2]{\n    background: black;\n    top: 142px !important;\n    overflow: auto;\n}\n.navList[data-v-23545dc2]{\n    color: white;\n    font-size: 16px !important;\n}\n.navContent[data-v-23545dc2]{\n    border-width: 6px 0px 0px 0px;\n    border-style: solid;\n    border-color: white;\n    margin-bottom: 0px !important;\n    position: relative;\n    top: 24px;\n    padding: 10px\n}\n.main-container[data-v-23545dc2] {\n    padding: 142px 0px 0px 0px !important;\n}\n.v-header[data-v-23545dc2]{\n    color: #fff;\n    background: linear-gradient( 75deg, black, #716161 20%, #fd0c0c 20%, #ffc800 100%)\n}\n\n", ""]);
 
 // exports
 
@@ -51082,7 +51108,7 @@ var render = function() {
         "v-app-bar",
         {
           staticClass: "v-header",
-          attrs: { dark: "", prominent: "", absolute: "", src: "img/logo.JPG" }
+          attrs: { dark: "", prominent: "", absolute: "" }
         },
         [
           _c("v-app-bar-nav-icon", {
@@ -51998,21 +52024,96 @@ var render = function() {
                                     [
                                       _c("v-text-field", {
                                         attrs: {
-                                          label: "Name/Contact/Address/Email",
+                                          label: "Name",
                                           rules: _vm.ruleRequired
                                         },
                                         model: {
-                                          value:
-                                            _vm.editedItem.customer_details,
+                                          value: _vm.editedItem.name,
                                           callback: function($$v) {
                                             _vm.$set(
                                               _vm.editedItem,
-                                              "customer_details",
+                                              "name",
                                               $$v
                                             )
                                           },
-                                          expression:
-                                            "editedItem.customer_details"
+                                          expression: "editedItem.name"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-flex",
+                                    { attrs: { xs12: "", sm6: "", md4: "" } },
+                                    [
+                                      _c("v-text-field", {
+                                        directives: [
+                                          {
+                                            name: "mask",
+                                            rawName: "v-mask",
+                                            value: _vm.contact,
+                                            expression: "contact"
+                                          }
+                                        ],
+                                        attrs: { label: "Contact" },
+                                        model: {
+                                          value: _vm.editedItem.contact,
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.editedItem,
+                                              "contact",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "editedItem.contact"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-flex",
+                                    { attrs: { xs12: "", sm6: "", md4: "" } },
+                                    [
+                                      _c("v-text-field", {
+                                        attrs: {
+                                          label: "Address",
+                                          rules: _vm.ruleRequired
+                                        },
+                                        model: {
+                                          value: _vm.editedItem.address,
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.editedItem,
+                                              "address",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "editedItem.address"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-flex",
+                                    { attrs: { xs12: "", sm6: "", md4: "" } },
+                                    [
+                                      _c("v-text-field", {
+                                        attrs: { label: "Email" },
+                                        model: {
+                                          value: _vm.editedItem.email,
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.editedItem,
+                                              "email",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "editedItem.email"
                                         }
                                       })
                                     ],
