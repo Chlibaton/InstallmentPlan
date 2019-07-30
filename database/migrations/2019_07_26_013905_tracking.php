@@ -15,7 +15,10 @@ class Tracking extends Migration
     {
         Schema::create('tracking', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('customer_details')->nullable();
+            $table->string('name')->nullable();
+            $table->string('contact')->nullable();
+            $table->string('address')->nullable();
+            $table->string('email')->nullable();
             $table->string('payment_date')->nullable();
             $table->string('due_date')->nullable();
             $table->string('total_price');

@@ -37,7 +37,16 @@
               <v-container grid-list-md>
                 <v-layout wrap>
                   <v-flex xs12 sm6 md4>
-                    <v-text-field v-model="editedItem.customer_details" label="Name/Contact/Address/Email" :rules="ruleRequired"></v-text-field>
+                    <v-text-field v-model="editedItem.name" label="Name" :rules="ruleRequired"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
+                    <v-text-field v-model="editedItem.contact" label="Contact" v-mask="contact"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
+                    <v-text-field v-model="editedItem.address" label="Address" :rules="ruleRequired"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm6 md4>
+                    <v-text-field v-model="editedItem.email" label="Email" ></v-text-field>
                   </v-flex>
                   <v-flex xs12 sm6 md4>
                     <!-- <v-text-field v-model="editedItem.payment_date" label="Payment Date" ></v-text-field> -->
@@ -107,7 +116,10 @@
       menu1:false,
       menu2:false,
       headers: [
-        { text: 'Name/Contact/Address/Email', value: 'customer_details',  },
+        { text: 'Name', value: 'name',  },
+        { text: 'Contact', value: 'contact',  },
+        { text: 'Address', value: 'address',  },
+        { text: 'Email', value: 'email',  },
         { text: 'Payment Date', value: 'payment_date', },
         { text: 'Due Date', value: 'due_date', },
         { text: 'Total Price', value: 'total_price', },
@@ -131,6 +143,7 @@
       defaultItem: {},
       toBeUpdated:{},
       mask: '################',
+      contact:'###########',
       date1:new Date().toISOString().substr(0, 10),
       date2:new Date().toISOString().substr(0, 10),
     }),

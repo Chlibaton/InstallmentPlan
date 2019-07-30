@@ -18,6 +18,7 @@ class TrackingController extends Controller
     {
         $result = Tracking::orderBy('id','desc')->get()->all();
         return $result;
+        
     }
 
     /**
@@ -30,6 +31,7 @@ class TrackingController extends Controller
         $result = Tracking::create($request->all());
         return $result;
     }
+    
 
 
     /**
