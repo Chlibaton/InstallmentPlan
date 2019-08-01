@@ -2045,6 +2045,106 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2068,15 +2168,6 @@ __webpack_require__.r(__webpack_exports__);
       right: null,
       drawer: true
     };
-  },
-  methods: {// logout(){
-    //    axios.get('/api/getlogout',this.editedItem)
-    //            .then((res)=>this.editedItem = Object.assign(this.toBeUpdated, res.data))
-    //              .catch(function (error) {
-    //                   // handle error
-    //                   console.log(error);
-    //               })
-    // }
   }
 });
 
@@ -7128,7 +7219,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.sidebarBackground[data-v-23545dc2]{\n    background: black;\n    top: 142px !important;\n    overflow: auto;\n}\n.navList[data-v-23545dc2]{\n    color: white;\n    font-size: 16px !important;\n}\n.navContent[data-v-23545dc2]{\n    border-width: 6px 0px 0px 0px;\n    border-style: solid;\n    border-color: white;\n    margin-bottom: 0px !important;\n    position: relative;\n    top: 24px;\n    padding: 10px\n}\n.main-container[data-v-23545dc2] {\n    padding: 142px 0px 0px 0px !important;\n}\n.v-header[data-v-23545dc2]{\n    color: #fff;\n    background: linear-gradient( 75deg, black, #716161 20%, #fd0c0c 20%, #ffc800 100%)\n}\n\n", ""]);
+exports.push([module.i, "\n.sidebarBackground[data-v-23545dc2]{\n        background: black;\n        top: 214px !important;\n        overflow: auto;\n}\n.navList[data-v-23545dc2]{\n        color: white;\n        font-size: 16px !important;\n}\n.navContent[data-v-23545dc2]{\n        border-width: 6px 0px 0px 0px;\n        border-style: solid;\n        border-color: white;\n        margin-bottom: 0px !important;\n        position: relative;\n        top: 24px;\n        padding: 10px\n}\n.main-container[data-v-23545dc2] {\n        padding: 0px 0px 0px 0px !important;\n}\n    /* LOGO */\n.main-header.wrap[data-v-23545dc2] {\n       background-image: linear-gradient(to right, #fff138 30%, #e83530);\n}\n.header-img[data-v-23545dc2] {\n    display: inline-flex;\n}\n.header-img>div>img[data-v-23545dc2] {\n        width: 300px;\n        max-width: 100%;\n        float: left;\n}\n.header-title[data-v-23545dc2] {\n        font-family: Century;\n        margin-top: 15px;\n}\n.hdr-main-title[data-v-23545dc2] {\n        font-family: Century;\n        font-size: 40px;\n        text-transform: uppercase;\n}\n.hdr-main-subtitle[data-v-23545dc2] {\n        font-family: Century;\n        font-size: 20px;\n        font-weight: 400;\n        text-transform: uppercase;\n}\n.hdr-main-subtitle-1[data-v-23545dc2] {\n        font-weight: bold;\n}\n@media only screen and (max-width: 792px) {\n.hdr-main-title[data-v-23545dc2] {\n        font-size: 35px;\n}\n.hdr-main-subtitle[data-v-23545dc2] {\n        font-size: 18px;\n}\n}\n@media only screen and (max-width: 762px) {\n.hdr-main-title[data-v-23545dc2] {\n        font-size: 28px;\n}\n.hdr-main-subtitle[data-v-23545dc2] {\n        font-size: 15px;\n}\n}\n@media only screen and (max-width: 562px) {\n.hdr-main-title[data-v-23545dc2] {\n        font-size: 20px;\n}\n.hdr-main-subtitle[data-v-23545dc2] {\n        font-size: 10px;\n}\n.header-img>div>img[data-v-23545dc2] {\n        width: 200px\n}\n.hdr-main-subtitle-1[data-v-23545dc2] {\n        font-size: 8px;\n}\n}\n@media only screen and (max-width: 426px) {\n.hdr-main-title[data-v-23545dc2] {\n        font-size: 18px;\n}\n.hdr-main-subtitle[data-v-23545dc2] {\n        font-size: 10px;\n}\n.header-img>div>img[data-v-23545dc2] {\n        width: 200px\n}\n.hdr-main-subtitle-1[data-v-23545dc2] {\n        font-size: 8px;\n}\n}\n@media only screen and (max-width: 354px) {\n.hdr-main-title[data-v-23545dc2] {\n        font-size: 14px;\n}\n.hdr-main-subtitle[data-v-23545dc2] {\n        font-size: 8px;\n}\n.header-img>div>img[data-v-23545dc2] {\n        width: 200px\n}\n.hdr-main-subtitle-1[data-v-23545dc2] {\n        font-size: 8px;\n}\n}\n        \n", ""]);
 
 // exports
 
@@ -51114,20 +51205,36 @@ var render = function() {
     "v-app",
     [
       _c(
-        "v-app-bar",
-        {
-          staticClass: "v-header",
-          attrs: { dark: "", prominent: "", absolute: "" }
-        },
+        "v-layout",
+        { staticClass: "main-header", attrs: { wrap: "" } },
         [
-          _c("v-app-bar-nav-icon", {
-            on: {
-              click: function($event) {
-                $event.stopPropagation()
-                _vm.drawer = !_vm.drawer
-              }
-            }
-          })
+          _c("v-flex", { staticClass: "header-img" }, [
+            _c("div", [
+              _c("img", {
+                attrs: { src: "img/vy-logo-header.png", alt: "" },
+                on: {
+                  click: function($event) {
+                    $event.stopPropagation()
+                    _vm.drawer = !_vm.drawer
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "header-title" }, [
+              _c("div", { staticClass: "hdr-main-title" }, [
+                _vm._v("V.Y Domingo Jewellers")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "hdr-main-subtitle" }, [
+                _vm._v("Manufacturer • Wholesaler • Designers")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "hdr-main-subtitle-1" }, [
+                _vm._v("Factory Since 1928")
+              ])
+            ])
+          ])
         ],
         1
       ),
@@ -103730,6 +103837,38 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/AdminDashboard/HistoryLogsComponent.vue":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/AdminDashboard/HistoryLogsComponent.vue ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+var render, staticRenderFns
+var script = {}
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
+  script,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+component.options.__file = "resources/js/components/AdminDashboard/HistoryLogsComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/AdminDashboard/SidePanelComponent.vue":
 /*!***********************************************************************!*\
   !*** ./resources/js/components/AdminDashboard/SidePanelComponent.vue ***!
@@ -104134,6 +104273,8 @@ var tracking = __webpack_require__(/*! ./components/AdminDashboard/TrackingCompo
 
 var collectionReport = __webpack_require__(/*! ./components/AdminDashboard/CollectionReportComponent.vue */ "./resources/js/components/AdminDashboard/CollectionReportComponent.vue")["default"];
 
+var historyLogs = __webpack_require__(/*! ./components/AdminDashboard/HistoryLogsComponent.vue */ "./resources/js/components/AdminDashboard/HistoryLogsComponent.vue")["default"];
+
 var landingPage = __webpack_require__(/*! ./components/Landing/HomeComponent.vue */ "./resources/js/components/Landing/HomeComponent.vue")["default"];
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -104180,6 +104321,13 @@ var landingPage = __webpack_require__(/*! ./components/Landing/HomeComponent.vue
     meta: {
       title: "Collections of Report"
     }
+  }, {
+    path: '/historylog',
+    name: 'historylog',
+    component: historyLogs,
+    meta: {
+      title: "History Logs"
+    }
   }]
 });
 
@@ -104203,8 +104351,8 @@ var landingPage = __webpack_require__(/*! ./components/Landing/HomeComponent.vue
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Jhun\Documents\signity\InstallmentPlan\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Jhun\Documents\signity\InstallmentPlan\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Rocker\Documents\SIGNITY\InstallmentPlan\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Rocker\Documents\SIGNITY\InstallmentPlan\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

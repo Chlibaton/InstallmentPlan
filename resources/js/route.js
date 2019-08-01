@@ -3,6 +3,7 @@ const systemUser = require('./components/AdminDashboard/SystemUserComponent.vue'
 const superAdmin = require('./components/AdminDashboard/SuperAdminComponent.vue').default;
 const tracking = require('./components/AdminDashboard/TrackingComponent.vue').default;
 const collectionReport = require('./components/AdminDashboard/CollectionReportComponent.vue').default;
+const historyLogs = require('./components/AdminDashboard/HistoryLogsComponent.vue').default;
 
 const landingPage = require('./components/Landing/HomeComponent.vue').default;
 
@@ -38,6 +39,11 @@ export default{
         meta: { 
             title: "Collections of Report" 
             } 
-        }
+        },
+        { path: '/historylog', name:'historylog', component: historyLogs, 
+        meta: { 
+            title: "History Logs" 
+            } 
+        },
     ]
 }

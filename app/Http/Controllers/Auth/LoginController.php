@@ -54,14 +54,17 @@ class LoginController extends Controller
      * @return mixed
      */
     protected function authenticated(Request $request, $historylogs)
-    {
-        $fullname = Auth::user()->first_name .' '. Auth::user()->last_name;
-        $history=HistoryLogs::create([
-            'user_id'=>Auth::user()->id,
-            'name' => $fullname ,
-            'last_login_at' => Carbon::now()->toDateTimeString(),
-            'last_login_ip' => $request->getClientIp(),
-        ]);
+    {   
+        if(Auth::user()->role == 0){
+            $fullname = Auth::user()->first_name .' '. Auth::user()->last_name;
+            $history=HistoryLogs::create([
+                'user_id'=>Auth::user()->id,
+                'name' => $fullname ,
+                'last_login_at' => Carbon::now()->toDateTimeString(),
+                'last_login_ip' => $request->getClientIp(),
+            ]);
+        }
+       
      
     }
 }
