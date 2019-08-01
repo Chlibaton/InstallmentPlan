@@ -56,16 +56,17 @@ class UserController extends Controller
     }
 
     public function logout(Request $request){
-        // $result = HistoryLogs::where('id', Auth::user()->id)->update($request->all());
-        HistoryLogs::where('user_id', Auth::user()->id)
-        ->orderby('id', 'desc')
-        ->take(1)
-        ->update([
-            'last_logout_at' => Carbon::now()->toDateTimeString()
-            ]);
+        if(Auth::user()->role == 0){
+            HistoryLogs::where('user_id', Auth::user()->id)
+            ->orderby('id', 'desc')
+            ->take(1)
+            ->update([
+                'last_logout_at' => Carbon::createFromFormat('Y-m-d H:i:s', now())->setTimezone('Asia/Singapore')
+                ]);
+        }
         Auth::logout();
         return redirect('/home');
-     }
+    }
 
 
     /**

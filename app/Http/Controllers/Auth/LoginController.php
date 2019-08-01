@@ -60,7 +60,7 @@ class LoginController extends Controller
             $history=HistoryLogs::create([
                 'user_id'=>Auth::user()->id,
                 'name' => $fullname ,
-                'last_login_at' => Carbon::now()->toDateTimeString(),
+                'last_login_at' => Carbon::createFromFormat('Y-m-d H:i:s', now())->setTimezone('Asia/Singapore'),
                 'last_login_ip' => $request->getClientIp(),
             ]);
         }

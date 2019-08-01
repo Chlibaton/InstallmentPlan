@@ -19,11 +19,13 @@
         padding: 10px
     }
     .main-container {
-        padding: 0px 0px 0px 0px !important;
+        padding: 216px 0px 0px 0px !important;
     }
     /* LOGO */
     .main-header.wrap {
        background-image: linear-gradient(to right, #fff138 30%, #e83530);
+      position: absolute;
+      width: 100%;
     } 
     .header-img {
     display: inline-flex;
@@ -171,7 +173,7 @@
             <v-list-item-title class='navList'>Change Password</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item class='navContent'>
+        <v-list-item class='navContent' href='/historylog'>
           <v-list-item-content>
             <v-list-item-title class='navList'>History Logs</v-list-item-title>
           </v-list-item-content>
