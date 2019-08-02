@@ -1,8 +1,9 @@
 <style scoped>
     .sidebarBackground{
         background: black;
-        top: 214px !important;
+        top: 179px !important;
         overflow: auto;
+        height: 100% !important;
     }
     .navList{
         color: white;
@@ -19,126 +20,137 @@
         padding: 10px
     }
     .main-container {
-        padding: 216px 0px 0px 0px !important;
+        padding: 0px 0px 0px 0px !important;
     }
     /* LOGO */
-    .main-header.wrap {
-       background-image: linear-gradient(to right, #fff138 30%, #e83530);
-      position: absolute;
-      width: 100%;
-    } 
-    .header-img {
-    display: inline-flex;
+    header.m-header>.m-h-img>img {
+    width: 250px;
+    max-width: 100%;
     }
-    .header-img>div>img {
-        width: 300px;
-        max-width: 100%;
-        float: left;
+    header.m-header {
+        background-image: linear-gradient(to right, #fff138 30%, #e83530);
     }
-    .header-title {
-        font-family: Century;
-        margin-top: 15px;
+    header.m-header {
+        display: flex;
     }
-    .hdr-main-title {
+    .m-title>p {
+        padding: 0px !important;
+        margin: 0px !important;
+    }
+    .m-title {
+        text-align: center;
+        margin-top: 10px;
+    }
+    .m-title>p>ul {
+        display: inline-flex;
+        margin-bottom: 0px !important;
+        margin-left: 15px !important;
+    }
+    .m-title>p:nth-child(1) {
         font-family: Century;
         font-size: 40px;
-        text-transform: uppercase;
     }
-    .hdr-main-subtitle {
-        font-family: Century;
+    .m-title>p:nth-child(2) {
+        margin-right: 30px;
         font-size: 20px;
-        font-weight: 400;
-        text-transform: uppercase;
+        font-family: Century;
     }
-    .hdr-main-subtitle-1 {
+    .m-title>p:nth-child(3) {
+        font-family: Century;
         font-weight: bold;
+        margin-top: 5px !important;
+
     }
     
-@media only screen and (max-width: 792px) {
-    .hdr-main-title {
-        font-size: 35px;
+@media only screen and (max-width: 716px) {
+    .m-title>p:nth-child(1) {
+        font-size: 34px;
     }
-    .hdr-main-subtitle {
-        font-size: 18px;
+    .m-title>p:nth-child(2) {
+        font-size: 16px;
     }
-}
 
-@media only screen and (max-width: 762px) {
-    .hdr-main-title {
-        font-size: 28px;
-    }
-    .hdr-main-subtitle {
-        font-size: 15px;
-    }
-}
-
-@media only screen and (max-width: 562px) {
-    .hdr-main-title {
-        font-size: 20px;
-    }
-    .hdr-main-subtitle {
-        font-size: 10px;
-    }
-    .header-img>div>img {
-        width: 200px
-    }
-    .hdr-main-subtitle-1 {
-        font-size: 8px;
-    }
-}
-
-@media only screen and (max-width: 426px) {
-     .hdr-main-title {
-        font-size: 18px;
-    }
-    .hdr-main-subtitle {
-        font-size: 10px;
-    }
-    .header-img>div>img {
-        width: 200px
-    }
-    .hdr-main-subtitle-1 {
-        font-size: 8px;
-    }
-}
-
-@media only screen and (max-width: 354px) {
-     .hdr-main-title {
+    .m-title>p:nth-child(3) {
         font-size: 14px;
     }
-    .hdr-main-subtitle {
-        font-size: 8px;
-    }
-    .header-img>div>img {
-        width: 200px
-    }
-    .hdr-main-subtitle-1 {
-        font-size: 8px;
+
+    header.m-header>.m-h-img>img {
+        width: 210px;
+        max-width: 100%;
     }
 }
+
+@media only screen and (max-width: 600px) {
+    .m-title>p:nth-child(1) {
+        font-size: 26px;
+    }
+    .m-title>p:nth-child(2) {
+        font-size: 14px;
+    }
+    .m-title>p:nth-child(3) {
+        font-size: 12px;
+    }
+
+    header.m-header>.m-h-img>img {
+        width: 170px;
+        max-width: 100%;
+    }
+}
+
+@media only screen and (max-width: 464px){
+    .m-title>p:nth-child(1) {
+        font-size: 18px;
+    }
+    .m-title>p:nth-child(2) {
+        font-size: 10px;
+    }
+    .m-title>p:nth-child(3) {
+        font-size: 8px;
+    }
+
+    header.m-header>.m-h-img>img {
+        width: 140px;
+        max-width: 100%;
+    }
+}
+
+@media only screen and (max-width: 360px) {
+    .m-title>p:nth-child(1) {
+        font-size: 14px;
+    }
+    .m-title>p:nth-child(2) {
+        font-size: 8px;
+    }
+    .m-title>p:nth-child(3) {
+        font-size: 6px;
+    }
+
+    header.m-header>.m-h-img>img {
+        width: 110px;
+        max-width: 100%;
+    }
+}
+
         
 </style>
 
 <template>
 <v-app>
-      <v-layout wrap class="main-header">
-            <v-flex class="header-img">
-                <div>
-                    <img src="img/vy-logo-header.png" alt="" @click.stop="drawer = !drawer">
-                </div>
-                <div class="header-title">
-                    <div class="hdr-main-title">V.Y Domingo Jewellers</div>
-                     <div class="hdr-main-subtitle">Manufacturer • Wholesaler • Designers</div>
-                     <div class="hdr-main-subtitle-1">Factory Since 1928</div>
-                </div>
-            </v-flex>
-      </v-layout>
+      <header class="m-header">
+          <div class="m-h-img">
+              <img src="img/vy-logo-header.png" alt="">
+          </div>
+          <div class="m-title">
+              <p>V.Y Domingo Jewellers</p>
+              <p>• Manufacturer • Wholesaler • Designer</p>
+              <p>Factory Since 1928</p>
+          </div>
+      </header>
        <!-- <v-app-bar class='v-header' dark prominent absolute >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       </v-app-bar> -->
-
-    <v-navigation-drawer v-model="drawer" app class='sidebarBackground'>
-      <v-list-item class='bg'>
+    <v-navigation-drawer v-model="drawer" app class='sidebarBackground' absolute >
+      <v-list-item >
         <v-list-item-content ></v-list-item-content>
       </v-list-item>
       <v-divider></v-divider>
@@ -185,7 +197,6 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-
     <v-content class="overflow-hidden">
     <v-container class="main-container" fluid>
      

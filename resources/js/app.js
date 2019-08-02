@@ -1,5 +1,6 @@
 
 import Vue from 'vue';
+import Vuex from 'vuex'
 import BootstrapVue from 'bootstrap-vue'
 import Vuetify from 'vuetify'
 import VueRouter from 'vue-router'

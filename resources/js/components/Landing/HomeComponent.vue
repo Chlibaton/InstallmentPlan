@@ -241,6 +241,10 @@ p.l-row-address>span:nth-child(2) {
     margin: auto;
 }
 
+.help-block{
+    color: #e83530;
+}
+
 </style>
 
 
@@ -300,13 +304,19 @@ p.l-row-address>span:nth-child(2) {
 
                         <b-modal hide-footer id="modal-1" title="Login">
                             <div class="form-group">
-                                <input type="email" class="form-control" placeholder="Email ">
+                                <input v-model="loginDetails.email" type="email" class="form-control" placeholder="Email ">
+                                <span class="help-block" v-if="errorsEmail">
+                                        {{emailError}}
+                                </span>
                             </div>
                             <div class="form-group">
-                                <input type="password" class="form-control" placeholder="Password">
+                                <input v-model="loginDetails.password" type="password" class="form-control" placeholder="Password">
+                                <span class="help-block" v-if="errorsPassword">
+                                    {{passwordError}}
+                                </span>
                             </div>
                                 <label for="forgot-password">Forgot Password?</label>
-                            <b-button class="mt-3" block @click="$bvModal.hide('bv-modal-example')">Login</b-button>
+                            <b-button class="mt-3" block @click="login()">Login</b-button>
                         </b-modal>
                     </form>
                 </b-col>
@@ -370,3 +380,52 @@ p.l-row-address>span:nth-child(2) {
         </b-container>
     </div>
 </template>
+
+<script>
+export default {
+   data() {
+        return {
+            loginDetails: {
+                email: '',
+                password: '',
+                remember: false
+            },
+            errorsEmail: false,
+            errorsPassword: false,
+            emailError: null,
+            passwordError: null
+        }
+    },
+    methods: {
+        login(){
+            let _self = this;
+            axios.post('/login', _self.loginDetails)
+            .then((response) => {
+                location.href = "/superadmin";
+            })
+            .catch((error) => {
+                var errors = error.response;
+                
+
+                _self.errorsEmail = false;
+                _self.errorsPassword = false;
+
+                if(errors.statusText === "Unprocessable Entity" || errors.status === 422){
+                    if(errors.data.errors) {
+                        
+                        if(errors.data.errors.email) {
+                            _self.errorsEmail = true;
+                            _self.emailError = _.isArray(errors.data.errors.email) ? errors.data.errors.email[0]: errors.data.errors.email;
+                           console.log(errors.data.errors.email) 
+                        }
+                        if(errors.data.errors.password) {
+                            _self.errorsPassword = true;
+                            _self.passwordError = _.isArray(errors.data.errors.password) ? errors.data.errors.password[0]: errors.data.errors.password;
+                        }
+                    }
+                }
+            });
+        }
+    }
+}
+</script>
