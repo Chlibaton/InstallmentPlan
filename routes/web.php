@@ -15,5 +15,7 @@
 
 Auth::routes();
 
+Route::get('/logout ', 'UserController@logout');
+
 Route::get('/home ', 'HomeController@index')->name('home');
 Route::get('/{vue?}', function () { return view('/home/home'); })->where('vue', '[\/\w\.-]*');

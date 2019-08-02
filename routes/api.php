@@ -30,5 +30,8 @@ Route::post('/trackingcreate','TrackingController@create');
 Route::put('/trackingupdate','TrackingController@update');
 Route::delete('/trackingdelete/{id}','TrackingController@destroy');
 
-// collection Report
+// collection Report 
 Route::get('/reportInit','CollectionReportController@index');
+
+// history logs
+Route::get('/historyinit','HistoryLogsController@index');

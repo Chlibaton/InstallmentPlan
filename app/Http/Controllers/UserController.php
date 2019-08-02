@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+
+use Carbon\Carbon;
 use App\User;
+use App\HistoryLogs;
 
 class UserController extends Controller
 {
@@ -52,6 +54,20 @@ class UserController extends Controller
         $result = $this->create($request->all());
         return $result;
     }
+
+    public function logout(Request $request){
+        if(Auth::user()->role == 0){
+            HistoryLogs::where('user_id', Auth::user()->id)
+            ->orderby('id', 'desc')
+            ->take(1)
+            ->update([
+                'last_logout_at' => Carbon::createFromFormat('Y-m-d H:i:s', now())->setTimezone('Asia/Singapore')
+                ]);
+        }
+        Auth::logout();
+        return redirect('/home');
+    }
+
 
     /**
      * Store a newly created resource in storage.
