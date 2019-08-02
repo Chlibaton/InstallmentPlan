@@ -11,7 +11,7 @@
     },
     "devDependencies": {
         "axios": "^0.18.1",
-        "bootstrap": "^4.1.0",
+        "bootstrap": "^4.3.1",
         "cross-env": "^5.1",
         "jquery": "^3.2",
         "laravel-mix": "^4.0.7",
@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "bootstrap-vue": "^2.0.0-rc.27",
         "moment": "^2.24.0",
         "v-mask": "^2.0.1",
         "vee-validate": "^2.2.13",

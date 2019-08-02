@@ -1,5 +1,6 @@
 
 import Vue from 'vue';
+import BootstrapVue from 'bootstrap-vue'
 import Vuetify from 'vuetify'
 import VueRouter from 'vue-router'
 import VeeValidate from 'vee-validate';
@@ -8,12 +9,15 @@ import axios from 'axios';
 import VueMask from 'v-mask'
 
 import 'vuetify/dist/vuetify.min.css';
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import routers from './route';
 
 require('./bootstrap');
 
 Vue.use(Vuetify);
+Vue.use(BootstrapVue)
 Vue.use(VueAxios, axios)
 Vue.use(VueRouter);
 Vue.use(VeeValidate);
