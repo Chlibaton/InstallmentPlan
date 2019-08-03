@@ -21,6 +21,8 @@
     }
     .main-container {
         padding: 0px 0px 0px 0px !important;
+        margin: 0px;
+        max-width: 100%;
     }
     /* LOGO */
     header.m-header>.m-h-img>img {

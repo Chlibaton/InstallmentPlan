@@ -284,6 +284,9 @@ p.l-row-address>span:nth-child(2) {
                             </div>
                         </div>
                         <div class="form-group">
+                            <input type="text" v-model="signUpDetails.organization_name" class="form-control" placeholder="Orgranization Name">
+                        </div>
+                        <div class="form-group">
                             <input type="text" v-model="signUpDetails.address" class="form-control" placeholder="Address">
                         </div>
                         <div class="form-group">
@@ -399,6 +402,7 @@ export default {
               signUpDetails:{
                 first_name: '',
                 last_name: '',
+                organization_name:'',
                 address: '',
                 mobileno: '',
                 email: '',

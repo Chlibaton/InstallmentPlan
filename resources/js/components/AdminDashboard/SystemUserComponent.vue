@@ -34,6 +34,9 @@
                     <v-text-field v-model="editedItem.last_name" label="Last name" :rules="ruleRequired"></v-text-field>
                   </v-flex>
                   <v-flex xs12>
+                    <v-text-field v-model="editedItem.organization_name" label="Organization Name" :rules="ruleRequired"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12>
                     <v-text-field v-model="editedItem.address" label="Address" :rules="ruleRequired"></v-text-field>
                   </v-flex>
                   <v-flex xs12>
@@ -79,6 +82,7 @@
       headers: [
         { text: 'First Name', value: 'first_name', },
         { text: 'Last Name', value: 'last_name', },
+        { text: 'Organization Name', value: 'organization_name', },
         { text: 'Address', value: 'address', },
         { text: 'Mobile No.', value: 'mobileno', },
         { text: 'Email', value: 'email', },
@@ -155,6 +159,7 @@
 
                 } else {
                     this.addedItems = this.editedItem
+                    this.addedItems.password = ''
                     axios.post('/api/usercreate',this.editedItem)
                     .then(()=> this.dataItems.push(this.addedItems))
                 }

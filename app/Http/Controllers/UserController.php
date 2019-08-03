@@ -32,6 +32,7 @@ class UserController extends Controller
         return User::create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
+            'organization_name' => $data['organization_name'],
             'address' => $data['address'],
             'mobileno' => $data['mobileno'],
             'email' => $data['email'],
@@ -43,6 +44,7 @@ class UserController extends Controller
         return User::where('id',$id)->update([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
+            'organization_name' => $data['organization_name'],
             'address' => $data['address'],
             'mobileno' => $data['mobileno'],
             'email' => $data['email'],

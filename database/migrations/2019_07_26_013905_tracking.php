@@ -19,11 +19,15 @@ class Tracking extends Migration
             $table->string('contact')->nullable();
             $table->string('address')->nullable();
             $table->string('email')->nullable();
+            $table->string('ordered_product')->nullable();
             $table->string('payment_date')->nullable();
             $table->string('due_date')->nullable();
             $table->string('total_price');
             $table->string('balance');
             $table->string('payment_percent');
+            $table->string('remittance_details')->nullable();
+            $table->string('payment_proof')->nullable();
+            $table->string('remarks')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

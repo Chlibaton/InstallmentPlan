@@ -17,7 +17,7 @@
 
 
 <template>
-<v-card>
+<div>
       <v-toolbar flat color="white">
         <v-toolbar-title>Tracking</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
@@ -37,24 +37,27 @@
               <v-container grid-list-md>
                 <v-layout wrap>
                   <v-flex xs12>
-                    <v-text-field v-model="editedItem.name" label="Name" :rules="ruleRequired"></v-text-field>
+                    <v-select v-model="selectedEmail" label="Email" :items="userEmails" @change="displayDetails" item-text="email" item-value="email"></v-select>
                   </v-flex>
                   <v-flex xs12>
-                    <v-text-field v-model="editedItem.contact" label="Contact" v-mask="contact"></v-text-field>
+                    <v-text-field v-model="editedItem.name" label="Name" readonly></v-text-field>
                   </v-flex>
                   <v-flex xs12>
-                    <v-text-field v-model="editedItem.address" label="Address" :rules="ruleRequired"></v-text-field>
+                    <v-text-field v-model="editedItem.contact" label="Contact" readonly></v-text-field>
                   </v-flex>
                   <v-flex xs12>
-                    <v-text-field v-model="editedItem.email" label="Email" ></v-text-field>
+                    <v-text-field v-model="editedItem.address" label="Address" readonly></v-text-field>
+                  </v-flex>
+                   <v-flex xs12>
+                    <v-text-field v-model="editedItem.ordered_product" label="Ordered Product" :rules="ruleRequired"></v-text-field>
                   </v-flex>
                   <v-flex xs6>
                     <!-- <v-text-field v-model="editedItem.payment_date" label="Payment Date" ></v-text-field> -->
-                            <v-menu v-model="menu1"  :close-on-content-click="false" full-width max-width="290" offset-y >
+                            <v-menu v-model="menu1" :close-on-content-click="false" full-width max-width="290" offset-y >
                               <template v-slot:activator="{ on }">
                                 <v-text-field clearable readonly label="Payment Date" v-on="on"  :value="date1"></v-text-field>
                               </template>
-                              <v-date-picker v-model="date1" @change="menu1 = false">
+                              <v-date-picker v-model="date1"  @change="test()">
                               </v-date-picker>
                             </v-menu>
                   </v-flex>
@@ -68,11 +71,20 @@
                               </v-date-picker>
                             </v-menu>
                   </v-flex>
-                  <v-flex xs12>
-                    <v-text-field v-model="editedItem.total_price" label="Total Price" v-mask="mask"></v-text-field>
+                  <v-flex xs6>
+                    <v-text-field v-model="editedItem.total_price" label="Total Price" v-mask="mask" :rules="ruleRequired"></v-text-field>
+                  </v-flex>
+                  <v-flex xs6>
+                    <v-text-field v-model="editedItem.balance" label="Balance" v-mask="mask" :rules="ruleRequired"></v-text-field>
                   </v-flex>
                   <v-flex xs12>
-                    <v-text-field v-model="editedItem.balance" label="Balance" v-mask="mask"></v-text-field>
+                    <v-text-field v-model="editedItem.remittance_details" label="Remittance Details" :rules="ruleRequired" ></v-text-field>
+                  </v-flex>
+                  <v-flex xs12>
+                    <v-text-field v-model="editedItem.payment_proof" label="Proof of Payment" :rules="ruleRequired"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12>
+                    <v-text-field v-model="editedItem.remarks" label="Remarks" :rules="ruleRequired" ></v-text-field>
                   </v-flex>
                  
                 </v-layout>
@@ -103,7 +115,7 @@
           <v-icon small  @click="deleteItem(item)" > delete </v-icon>
         </template>
   </v-data-table>
-  </v-card>
+  </div>
 </template>
 
 <script>
@@ -117,14 +129,18 @@
       menu2:false,
       headers: [
         { text: 'Name', value: 'name',  },
-        { text: 'Contact', value: 'contact',  },
         { text: 'Address', value: 'address',  },
+        { text: 'Contact', value: 'contact',  },
         { text: 'Email', value: 'email',  },
+        { text: 'Ordered Product', value: 'ordered_product',  },
         { text: 'Payment Date', value: 'payment_date', },
         { text: 'Due Date', value: 'due_date', },
         { text: 'Total Price', value: 'total_price', },
         { text: 'Balance', value: 'balance', },
         { text: 'Payment Percent', value: 'payment_percent', },
+        { text: 'Remittance Details', value: 'remittance_details',  },
+        { text: 'Proof of Payment', value: 'payment_proof',  },
+        { text: 'Remarks', value: 'remarks',  },
         { text: 'Actions', value: 'action', sortable: false },
       ],
       ruleRequired: [
@@ -137,15 +153,17 @@
       emailExist:'',
       dataItems:[],
       addedItems:[],
+      userEmails:[],
       editedIndex: -1,
       editedItem: {
       },
       defaultItem: {},
       toBeUpdated:{},
       mask: '################',
-      contact:'###########',
       date1:new Date().toISOString().substr(0, 10),
-      date2:new Date().toISOString().substr(0, 10),
+      // date2:new Date().toISOString().substr(0, 10),
+      date2:new Date(new Date().getTime()+(120*24*60*60*1000)).toISOString().substr(0, 10),
+      selectedEmail:'',
     }),
     
 
@@ -165,6 +183,10 @@
         axios.get('/api/trackinginit')
         .then((response)=>{
             this.dataItems = response.data
+        })
+        axios.get('/api/user')
+        .then((response)=>{
+            this.userEmails = response.data
         })
     },
 //methods
@@ -225,8 +247,19 @@
         else return 'none'
         // else return 'green'
       },
-        
+      displayDetails(){
+        var selectedId = this.userEmails.findIndex(x => x.email === this.selectedEmail)
+        this.editedItem.name = this.userEmails[selectedId].first_name + ' ' + this.userEmails[selectedId].last_name
+        this.editedItem.contact = this.userEmails[selectedId].mobileno
+        this.editedItem.address = this.userEmails[selectedId].address
+        this.editedItem.email = this.userEmails[selectedId].email
+      },
+      test(event){
+         this.date2 = new Date(new Date(this.date1).getTime()+(120*24*60*60*1000)).toISOString().substr(0, 10)
+      }
+       
     },
+   
     
   }
 </script>
