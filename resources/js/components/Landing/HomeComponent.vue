@@ -277,29 +277,35 @@ p.l-row-address>span:nth-child(2) {
                         <div class="form-header">Create an account to apply for Jewelry Easy Installment Plan</div>
                         <div class="form-row">
                             <div class="col">
-                                <input type="text" class="form-control" placeholder="First name">
+                                <input type="text" v-model="signUpDetails.first_name" class="form-control" placeholder="First name">
                             </div> 
                             <div class="col">
-                                <input type="text" class="form-control" placeholder="Last name">
+                                <input type="text" v-model="signUpDetails.last_name" class="form-control" placeholder="Last name">
                             </div>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Address">
+                            <input type="text" v-model="signUpDetails.address" class="form-control" placeholder="Address">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Mobile Number">
+                            <input type="text" v-model="signUpDetails.mobileno" class="form-control" placeholder="Mobile Number">
                         </div>
                         <div class="form-group">
-                           <input type="email" class="form-control" placeholder="Email">
+                           <input type="email" v-model="signUpDetails.email" class="form-control" placeholder="Email">
+                           <span class="help-block" v-if="RegisterEmailErr">
+                                    {{RegisterEmailMsg}}
+                            </span>
                         </div>
                         <div class="form-group">
-                           <input type="password" class="form-control" placeholder="Password">
+                           <input type="password" v-model="signUpDetails.password" class="form-control" placeholder="Password">
+                           <span class="help-block" v-if="RegisterPasswordErr">
+                                    {{RegisterPasswordMsg}}
+                            </span>
                         </div>
                         <div class="form-group">
-                           <input type="password" class="form-control" placeholder="Confirm Password">
+                           <input type="password" v-model="signUpDetails.password_confirmation" class="form-control" placeholder="Confirm Password">
                         </div>
                         <div class="form-group">
-                            <b-button class="mt-3" block @click="$bvModal.hide('bv-modal-example')">Register</b-button>
+                            <b-button class="mt-3" block @click="signUpPost()">Register</b-button>
                         </div>
 
                         <b-modal hide-footer id="modal-1" title="Login">
@@ -350,7 +356,7 @@ p.l-row-address>span:nth-child(2) {
                                 <textarea class="form-control" placeholder="Message" rows="10"></textarea>
                             </div>
                             <div class="form-group">
-                                <b-button class="mt-3" block @click="$bvModal.hide('bv-modal-example')">Register</b-button>
+                                <b-button class="mt-3" block @click="$bvModal.hide('bv-modal-example')">Submit</b-button>
                             </div>
                          </form>
                     </div>
@@ -390,10 +396,22 @@ export default {
                 password: '',
                 remember: false
             },
+              signUpDetails:{
+                first_name: '',
+                last_name: '',
+                address: '',
+                mobileno: '',
+                email: '',
+                password: '',
+            },
             errorsEmail: false,
             errorsPassword: false,
             emailError: null,
-            passwordError: null
+            passwordError: null,
+            RegisterEmailErr: false,
+            RegisterPasswordErr: false,
+            RegisterEmailMsg: false,
+            RegisterPasswordMsg: false,
         }
     },
     methods: {
@@ -405,8 +423,6 @@ export default {
             })
             .catch((error) => {
                 var errors = error.response;
-                
-
                 _self.errorsEmail = false;
                 _self.errorsPassword = false;
 
@@ -421,6 +437,33 @@ export default {
                         if(errors.data.errors.password) {
                             _self.errorsPassword = true;
                             _self.passwordError = _.isArray(errors.data.errors.password) ? errors.data.errors.password[0]: errors.data.errors.password;
+                        }
+                    }
+                }
+            });
+        },
+         signUpPost() {
+            let _self = this;
+            axios.post('/register', _self.signUpDetails)
+            .then((response) => {
+                location.reload();
+            })
+            .catch((error)=> {
+                var errors = error.response;
+
+                _self.RegisterEmailErr = false;
+                _self.RegisterPasswordErr = false;
+                
+                if(errors.statusText === 'Unprocessable Entity' || errors.status === 422) {
+                    if(errors.data.errors) {
+                        
+                        if(errors.data.errors.email) {
+                            _self.RegisterEmailErr = true;
+                            _self.RegisterEmailMsg = _.isArray(errors.data.errors.email) ? errors.data.errors.email[0]: errors.data.errors.email;
+                        }
+                        if(errors.data.errors.password) {
+                            _self.RegisterPasswordErr = true;
+                            _self.RegisterPasswordMsg = _.isArray(errors.data.errors.password) ? errors.data.errors.password[0]: errors.data.errors.password;
                         }
                     }
                 }
