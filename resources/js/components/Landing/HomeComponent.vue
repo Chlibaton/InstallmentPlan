@@ -171,7 +171,7 @@ input.form-control {
     border-radius: 20px;
 }
 
-.row.t-row>.col-md-4.offset-md-8>p:hover {
+.row.t-row>.col-md-5.offset-md-7>p:hover {
     color: black;
     background: white;
     border: 1px solid #FCBD11;
