@@ -27,22 +27,22 @@
             <v-card-text>
               <v-container grid-list-md>
                 <v-layout wrap>
-                  <v-flex xs12 sm6 md4>
+                  <v-flex xs6>
                     <v-text-field v-model="editedItem.first_name" label="First name" :rules="ruleRequired"></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
+                  <v-flex xs6>
                     <v-text-field v-model="editedItem.last_name" label="Last name" :rules="ruleRequired"></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
+                  <v-flex xs12>
                     <v-text-field v-model="editedItem.address" label="Address" :rules="ruleRequired"></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
+                  <v-flex xs12>
                     <v-text-field v-model="editedItem.mobileno" label="Mobile No" :rules="ruleRequired"></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
+                  <v-flex xs12>
                     <v-text-field v-model="editedItem.email" :rules="emailRules && ruleRequired" label="Email" ></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
+                  <v-flex xs12>
                     <v-text-field v-model="editedItem.password" :type="show1 ? 'text': 'password'" label="Password"></v-text-field>
                   </v-flex>
                 </v-layout>
@@ -74,6 +74,7 @@
       valid:false,
       search: '',
       show1:false,
+      inset: false,
       password: 'passowrd',
       headers: [
         { text: 'First Name', value: 'first_name', },
@@ -103,7 +104,7 @@
 
     computed: {
       formTitle () {
-        return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+        return this.editedIndex === -1 ? 'Add User' : 'Edit User'
       },
     },
 
