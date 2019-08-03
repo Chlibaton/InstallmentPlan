@@ -36,19 +36,19 @@
             <v-card-text>
               <v-container grid-list-md>
                 <v-layout wrap>
-                  <v-flex xs12 sm6 md4>
+                  <v-flex xs12>
                     <v-text-field v-model="editedItem.name" label="Name" :rules="ruleRequired"></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
+                  <v-flex xs12>
                     <v-text-field v-model="editedItem.contact" label="Contact" v-mask="contact"></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
+                  <v-flex xs12>
                     <v-text-field v-model="editedItem.address" label="Address" :rules="ruleRequired"></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
+                  <v-flex xs12>
                     <v-text-field v-model="editedItem.email" label="Email" ></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
+                  <v-flex xs6>
                     <!-- <v-text-field v-model="editedItem.payment_date" label="Payment Date" ></v-text-field> -->
                             <v-menu v-model="menu1"  :close-on-content-click="false" full-width max-width="290" offset-y >
                               <template v-slot:activator="{ on }">
@@ -58,7 +58,7 @@
                               </v-date-picker>
                             </v-menu>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
+                  <v-flex xs6>
                     <!-- <v-text-field v-model="editedItem.due_date" label="Due Date"></v-text-field> -->
                             <v-menu v-model="menu2"  :close-on-content-click="false" full-width max-width="290" offset-y >
                               <template v-slot:activator="{ on }">
@@ -68,10 +68,10 @@
                               </v-date-picker>
                             </v-menu>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
+                  <v-flex xs12>
                     <v-text-field v-model="editedItem.total_price" label="Total Price" v-mask="mask"></v-text-field>
                   </v-flex>
-                  <v-flex xs12 sm6 md4>
+                  <v-flex xs12>
                     <v-text-field v-model="editedItem.balance" label="Balance" v-mask="mask"></v-text-field>
                   </v-flex>
                  
