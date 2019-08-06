@@ -20,6 +20,16 @@ class TrackingController extends Controller
         return $result;
         
     }
+    public function usertracking(Request $request){
+        // $result = Tracking::where('user_id',Auth::user()->id)->get()->all();
+        // return $result;
+        return Auth::user();
+    }
+    //user side Data
+    public function customertracking($id){
+        $result = Tracking::where('user_id',$id)->orderBy('id','desc')->get()->all();
+        return $result;
+    }
 
     /**
      * Show the form for creating a new resource.

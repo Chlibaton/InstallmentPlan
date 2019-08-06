@@ -157,39 +157,45 @@
       </v-list-item>
       <v-divider></v-divider>
       <v-list dense nav>
-        <v-list-item class='navContent' href='/superadmin'>
+        <v-list-item v-if="role==1"  class='navContent' href='/superadmin'>
           <v-list-item-content>
             <v-list-item-title class='navList'>Dashboard</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item class='navContent' href='/systemuser'>
+         
+        <v-list-item v-if="role==1"  class='navContent' href='/systemuser'>
           <v-list-item-content>
             <v-list-item-title class='navList'>System Users</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-         <v-list-item class='navContent' href='/tracking'>
+         <v-list-item v-if="role==1"  class='navContent' href='/tracking'>
           <v-list-item-content>
             <v-list-item-title class='navList'>Tracking</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item class='navContent' href='/collectionreport'>
+        <v-list-item v-if="role==1"  class='navContent' href='/collectionreport'>
           <v-list-item-content>
             <v-list-item-title class='navList'>Collection Report</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item class='navContent'>
+        <v-list-item v-if="role==1"  class='navContent'>
           <v-list-item-content>
             <v-list-item-title class='navList'>Set Email Template</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item class='navContent'>
+        <v-list-item v-if="role==1"  class='navContent'>
           <v-list-item-content>
             <v-list-item-title class='navList'>Change Password</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item class='navContent' href='/historylog'>
+        <v-list-item v-if="role==1" class='navContent' href='/historylog'>
           <v-list-item-content>
             <v-list-item-title class='navList'>History Logs</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item v-if="role==0" class='navContent' href='/mytracking'>
+          <v-list-item-content>
+            <v-list-item-title class='navList'>My Tracking</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item class='navContent' href='/logout'>
@@ -225,8 +231,15 @@ export default {
             ],
             right: null,
             drawer: true,
+            role:'',
         }
-    }
+    },
+     async mounted(){
+        axios.get('/userrole')
+        .then((response)=>{
+              this.role = response.data.role
+        })
+     }
    
 }
 </script>

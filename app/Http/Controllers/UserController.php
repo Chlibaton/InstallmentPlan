@@ -56,7 +56,9 @@ class UserController extends Controller
         $result = $this->create($request->all());
         return $result;
     }
-
+    public function userrole(Request $request){
+        return Auth::user();
+    }
     public function logout(Request $request){
         if(Auth::user()->role == 0){
             HistoryLogs::where('user_id', Auth::user()->id)
@@ -69,7 +71,7 @@ class UserController extends Controller
         Auth::logout();
         return redirect('/');
     }
-
+   
 
     /**
      * Store a newly created resource in storage.

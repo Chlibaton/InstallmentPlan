@@ -15,11 +15,14 @@
 
 Auth::routes();
 
-// Route::post('/login', 'Auth\LoginController@login');
+Route::post('/login', 'Auth\LoginController@login');
 // Route::post('/logout', 'Auth\LoginController@logout');
 // Route::post('/register', 'Auth\RegisterController@register');
 
 Route::get('/logout ', 'UserController@logout');
+//get user tracking 
+Route::get('/usertracking ', 'TrackingController@usertracking');
+Route::get('/userrole ', 'UserController@userrole');
 
 Route::get('/home ', 'HomeController@index')->name('home');
 Route::get('/{vue?}', function () { return view('/home/home'); })->where('vue', '[\/\w\.-]*');

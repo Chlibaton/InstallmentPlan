@@ -5,6 +5,8 @@ const tracking = require('./components/AdminDashboard/TrackingComponent.vue').de
 const collectionReport = require('./components/AdminDashboard/CollectionReportComponent.vue').default;
 const historyLogs = require('./components/AdminDashboard/HistoryLogsComponent.vue').default;
 
+const usertracking = require('./components/UserSide/UserTrackingComponent.vue').default;
+
 const landingPage = require('./components/Landing/HomeComponent.vue').default;
 
 export default{
@@ -43,6 +45,11 @@ export default{
         { path: '/historylog', name:'historylog', component: historyLogs, 
         meta: { 
             title: "History Logs" 
+            } 
+        },
+        { path: '/mytracking', name:'mytracking', component: usertracking, 
+        meta: { 
+            title: "Tracking" 
             } 
         },
     ]
