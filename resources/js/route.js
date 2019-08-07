@@ -4,9 +4,7 @@ const superAdmin = require('./components/AdminDashboard/SuperAdminComponent.vue'
 const tracking = require('./components/AdminDashboard/TrackingComponent.vue').default;
 const collectionReport = require('./components/AdminDashboard/CollectionReportComponent.vue').default;
 const historyLogs = require('./components/AdminDashboard/HistoryLogsComponent.vue').default;
-
 const usertracking = require('./components/UserSide/UserTrackingComponent.vue').default;
-
 const landingPage = require('./components/Landing/HomeComponent.vue').default;
 
 export default{
@@ -27,9 +25,9 @@ export default{
             title: "System User" 
             }
         },
-        { path: '/superadmin', name:'superadmin', component: superAdmin, 
+        { path: '/', name:'superadmin', component: superAdmin, 
         meta: { 
-            title: "DASHBOARD - SUPERADMIN" 
+            title: "Dashboard" 
             } 
         },
         { path: '/tracking', name:'tracking', component: tracking, 
@@ -52,5 +50,6 @@ export default{
             title: "Tracking" 
             } 
         },
+        
     ]
 }

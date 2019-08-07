@@ -1,10 +1,20 @@
 <template>
     <div>
-         <v-toolbar-title>DASHBOARD - SUPER ADMIN</v-toolbar-title>
+         <v-toolbar-title>DASHBOARD</v-toolbar-title>
           
           <div class="container">
             <div class="row">
-              <div class="col-sm">
+              <div v-if="role==0" class="col-sm" >
+                 <v-card max-width="344" class="dash-card">
+               <v-img class="white--text" height="200px" src="https://cdn.vuetifyjs.com/images/cards/docks.jpg">
+              </v-img>
+                <v-card-actions>
+                <v-card-title >My Tracking</v-card-title>
+                </v-card-actions>
+                </v-card>
+              </div>
+
+              <div v-if="role==1" class="col-sm">
                  <v-card max-width="344" class="dash-card">
                <v-img class="white--text" height="200px" src="https://cdn.vuetifyjs.com/images/cards/docks.jpg">
               </v-img>
@@ -14,10 +24,10 @@
               </v-card>
               </div>
 
-              <div class="col-sm">
+              <div v-if="role==1" class="col-sm">
                 <v-card max-width="344" class="dash-card">
                  <v-img class="white--text" height="200px" src="https://cdn.vuetifyjs.com/images/cards/docks.jpg">
-              </v-img>
+                </v-img>
                 <v-card-actions>
                 <v-card-title>Collection Report</v-card-title>
                 </v-card-actions>
@@ -25,7 +35,7 @@
                 </v-card>
               </div>
              
-              <div class="col-sm">
+              <div  v-if="role==1" class="col-sm">
               <v-card max-width="344" class="dash-card">
                <v-img class="white--text" height="200px" src="https://cdn.vuetifyjs.com/images/cards/docks.jpg">
               </v-img>
@@ -36,7 +46,7 @@
               </div>
             </div>
 
-              <div class="row">
+              <div v-if="role==1" class="row">
               <div class="col-sm">
                  <v-card max-width="344" class="dash-card">
                <v-img class="white--text" height="200px" src="https://cdn.vuetifyjs.com/images/cards/docks.jpg">
@@ -48,7 +58,7 @@
               </v-card>
               </div>
 
-              <div class="col-sm">
+              <div v-if="role==1" class="col-sm">
                 <v-card max-width="344" class="dash-card">
                 <v-img class="white--text" height="200px" src="https://cdn.vuetifyjs.com/images/cards/docks.jpg">
               </v-img>
@@ -58,7 +68,7 @@
                 </v-card>
               </div>
              
-              <div class="col-sm">
+              <div v-if="role==1" class="col-sm">
               <v-card max-width="344" class="dash-card">
                 <v-img class="white--text" height="200px" src="https://cdn.vuetifyjs.com/images/cards/docks.jpg">
               </v-img>
@@ -71,3 +81,21 @@
           </div>
     </div>
 </template>
+
+<<script>
+export default {
+    data(){
+        return {
+            role:'',
+        }
+    },
+     async mounted(){
+        axios.get('/userrole')
+        .then((response)=>{
+              this.role = response.data.role
+              console.log(response.data.role)
+        })
+     }
+   
+}
+</script>
