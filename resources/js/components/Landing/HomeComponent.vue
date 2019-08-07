@@ -423,7 +423,14 @@ export default {
             let _self = this;
             axios.post('/login', _self.loginDetails)
             .then((response) => {
-                location.href = "/superadmin";
+                axios.get('/userrole')
+                .then((response) => {
+                    if(response.data.role == 1){
+                        location.href = "/superadmin";
+                    }else{
+                        location.href = "/mytracking";
+                    }
+                })
             })
             .catch((error) => {
                 var errors = error.response;

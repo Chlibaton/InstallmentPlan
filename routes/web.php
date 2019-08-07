@@ -24,6 +24,6 @@ Route::get('/logout ', 'UserController@logout');
 Route::get('/usertracking ', 'TrackingController@usertracking');
 Route::get('/userrole ', 'UserController@userrole');
 
-Route::get('/home ', 'HomeController@index')->name('home');
+// Route::get('/home ', 'HomeController@index')->name('home');
 Route::get('/{vue?}', function () { return view('/home/home'); })->where('vue', '[\/\w\.-]*');
 
