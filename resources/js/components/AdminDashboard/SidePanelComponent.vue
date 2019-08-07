@@ -157,7 +157,7 @@
       </v-list-item>
       <v-divider></v-divider>
       <v-list dense nav>
-        <v-list-item v-if="role==1"  class='navContent' href='/superadmin'>
+        <v-list-item v-if="role==1"  class='navContent' href='/'>
           <v-list-item-content>
             <v-list-item-title class='navList'>Dashboard</v-list-item-title>
           </v-list-item-content>
@@ -207,7 +207,6 @@
     </v-navigation-drawer>
     <v-content class="overflow-hidden">
     <v-container class="main-container" fluid>
-     
       <router-view></router-view>
     </v-container>
     </v-content>
