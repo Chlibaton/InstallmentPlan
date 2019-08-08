@@ -426,7 +426,7 @@ export default {
                 axios.get('/userrole')
                 .then((response) => {
                     if(response.data.role == 1){
-                        location.href = "/superadmin";
+                        location.href = "/";
                     }else{
                         location.href = "/mytracking";
                     }

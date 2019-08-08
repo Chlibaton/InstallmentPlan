@@ -4,6 +4,7 @@
         top: 179px !important;
         overflow: auto;
         height: 100% !important;
+        position: fixed;
     }
     .navList{
         color: white;
@@ -178,14 +179,9 @@
             <v-list-item-title class='navList'>Collection Report</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item v-if="role==1"  class='navContent'>
+        <v-list-item v-if="role==1"  class='navContent' href='/emailtemplate'>
           <v-list-item-content>
             <v-list-item-title class='navList'>Set Email Template</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item v-if="role==1"  class='navContent'>
-          <v-list-item-content>
-            <v-list-item-title class='navList'>Change Password</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item v-if="role==1" class='navContent' href='/historylog'>
@@ -196,6 +192,11 @@
         <v-list-item v-if="role==0" class='navContent' href='/mytracking'>
           <v-list-item-content>
             <v-list-item-title class='navList'>My Tracking</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item v-if="role==0" class='navContent' href="/changepassword">
+          <v-list-item-content>
+            <v-list-item-title class='navList'>Change Password</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item class='navContent' href='/logout'>

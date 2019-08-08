@@ -28,10 +28,42 @@ class TrackingPaymentsController extends Controller
      */
     public function create(Request $request)
     {
-        $result = TrackingPayments::create($request->all());
+        if($request->upload_pic !== null) {
+            $exploded = explode(',',$request->upload_pic);
+            $decoded = base64_decode($exploded[1]);
+            if(str_contains($exploded[0],'jpeg'))
+            {
+                $extension = 'jpg';
+            }
+            else
+            {
+                $extension = 'png';
+            }
+
+            if(TrackingPayments::where('upload_pic', $request->upload_pic)->exists())
+                $result = false;
+            else {
+                //generate random strings
+                $length= 10;
+                $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                $charactersLength = strlen($characters);
+                $randomString = '';
+                for ($i = 0; $i < $length; $i++) {
+                    $randomString .= $characters[rand(0, $charactersLength - 1)];
+                }
+                // set all details
+                $filename = $randomString.'.'.$extension;
+                $path = public_path().'/img/pay_rcpt/'.$filename;
+                file_put_contents($path,$decoded);    
+                $result = TrackingPayments::create($request->except('upload_pic') + ['upload_pic' => $filename]);
+            }
+        }
+        else {
+            $result = TrackingPayments::create($request->all());
+        }
         return $result;
     }
-
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -97,4 +129,5 @@ class TrackingPaymentsController extends Controller
     {
         //
     }
+    
 }

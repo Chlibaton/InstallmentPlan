@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 use Carbon\Carbon;
 use App\User;
@@ -59,6 +60,37 @@ class UserController extends Controller
     public function userrole(Request $request){
         return Auth::user();
     }
+    public function changepass(Request $request,$id){
+        if(Auth::Check())
+        {
+            $request_data = $request->All();
+            switch($id){
+                case 1:
+                    $current_password = Auth::User()->password;           
+                    if(Hash::check($request_data['current_password'], $current_password))
+                    {           
+                    return 'Confirmed';
+                    }
+                    else
+                    {           
+                    $error =  'Please enter correct current password';
+                    return $error ;  
+                    }
+                break;
+                case 2:
+                    $user_id = Auth::User()->id;                       
+                    $obj_user = User::find($user_id);
+                    $obj_user->password = Hash::make($request_data['newpass']);;
+                    $obj_user->save(); 
+                    return 'Change Password Confirmed';
+                break;
+            }
+           
+
+        }
+          
+    }
+
     public function logout(Request $request){
         if(Auth::user()->role == 0){
             HistoryLogs::where('user_id', Auth::user()->id)

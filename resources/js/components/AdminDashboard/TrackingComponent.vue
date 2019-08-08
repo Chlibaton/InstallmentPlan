@@ -12,6 +12,20 @@
 .bg-warning{
   color:black !important;
 }
+.v_img{
+  cursor: pointer !important;
+}
+.file-upload-form, .image-preview {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    padding: 20px;
+}
+img.preview {
+    width: 200px;
+    background-color: white;
+    border: 1px solid #DDD;
+    padding: 5px;
+}
+
 
 </style>
 
@@ -130,11 +144,15 @@
                            <v-flex xs12>
                             <v-text-field v-model="editedPaymentItems.remittance_details" label="Remittance Details"></v-text-field>
                          </v-flex>
-                           <v-flex xs12>
-                            <v-text-field v-model="editedPaymentItems.upload_pic" label="Proof of Payment"></v-text-field>
-                         </v-flex>
-                           <v-flex xs12>
-                            <v-text-field v-model="editedPaymentItems.remarks" label="Remarks"></v-text-field>
+                        <!-- <v-flex xs12>
+                          <v-text-field v-model="editedPaymentItems.upload_pic" label="Proof of Payment"></v-text-field>
+                        </v-flex> -->
+                        <v-flex xs12>
+                            <v-label>Upload Photo</v-label>
+                            <input type="file" @change="uploadImage" accept="image/*">
+                        </v-flex>
+                        <v-flex xs12>
+                          <v-text-field v-model="editedPaymentItems.remarks" label="Remarks"></v-text-field>
                          </v-flex>
                       </v-layout>
                     </v-container>
@@ -147,15 +165,23 @@
               </v-form>
             </v-dialog>
             <!-- END MODAL FOR TRACKING DETAILS -->
-
+            <v-dialog v-model="preview_image" light>
+                  <!-- <div class="image-preview" v-if="imageData.length > 0"> -->
+                    <div class="image-preview" >
+                    <v-img 
+                    :src="dataImage"
+                    class="grey lighten-2 preview"
+                  ></v-img>
+                  <v-btn color="blue darken-1" text @click="close(3)">Close</v-btn>
+                </div>
+            </v-dialog>
             <v-data-table :headers="paymentHeader" :items="paymentItems" class="elevation-1" loading="true">
                <template v-slot:item.balance="{ item }" > 
                 <v-chip :color="getColor(item.payment_percent)" > {{ item.balance }}</v-chip> 
               </template>
-               <!-- <template v-slot:item.action="{ item }">
-                <v-icon small class="mr-2" @click="editItem(item,2)" > edit </v-icon>
-                <v-icon small  @click="deleteItem(item,2)" > delete </v-icon>
-              </template> -->
+               <template v-slot:item.upload_pic="{ item }" > 
+                 <label small class="mr-2 v_img" @click="preview_receipt(item)" >  View Receipt </label>
+              </template>
             </v-data-table>
         </v-dialog>
       <!-- END MODAL FOR PAYMENT TRACKING -->
@@ -188,6 +214,7 @@
       dialog: false,
       tracking:false,
       trackingAdd:false,
+      preview_image:false,
       valid:false,
       search: '',
       show1:false,
@@ -239,6 +266,7 @@
       date2:new Date(new Date().getTime()+(120*24*60*60*1000)).toISOString().substr(0, 10),
       date3:new Date().toISOString().substr(0, 10),
       selectedEmail:'',
+      dataImage:'',
     }),
     
     computed: {
@@ -294,15 +322,43 @@
               this.paymentItems = response.data
           })
       },
+      preview_receipt(item){
+        this.preview_image = true
+        console.log(item)
+        this.dataImage = '/img/pay_rcpt/'+item.upload_pic
+      },
       getbalance(){
         //auto compute balance 
         // this.item_balance= this.editedPaymentItems.balance - this.editedPaymentItems.partial_payment
         this.item_balance= this.editedPaymentItems.balance - this.down_payment
       },
+      uploadImage(){
+             // Reference to the DOM input element
+            var input = event.target;
+            // Ensure that you have a file before attempting to read it
+            if (input.files && input.files[0]) {
+                // create a new FileReader to read this image and convert to base64 format
+                var reader = new FileReader();
+                // Define a callback function to run, when FileReader finishes its job
+                reader.onload = (e) => {
+                    // Note: arrow function used here, so that "this.imageData" refers to the imageData of Vue component
+                    // Read image as base64 and set to imageData
+
+                    // this.imageData = e.target.result;
+                    this.editedPaymentItems.upload_pic = e.target.result;
+
+                }
+                console.log(this.editedPaymentItems)
+                // Start the reader job - read file as a data url (base64 format)
+                reader.readAsDataURL(input.files[0]);
+            }
+      },
       close (a) {
         if(a == 2){
           this.trackingAdd = false
           this.paymentItems=[]
+        }else if(a==3){
+           this.preview_image = false
         }else{
           this.dialog = false
           this.selectedEmail=''
@@ -324,7 +380,7 @@
               //add items
                 this.addedItems = this.editedPaymentItems
                   axios.post('/api/trackingpaymentcreate',this.addedItems)
-                  .then(()=>{
+                  .then((res)=>{
                        axios.get('/api/trackingpaymentinit/'+this.editedPaymentItems.tracking_id)
                         .then((response)=>{
                             this.paymentItems = response.data
@@ -360,7 +416,13 @@
                   console.log(this.editedItem)
                   this.addedItems = this.editedItem
                   axios.post('/api/trackingcreate',this.editedItem)
-                  .then(()=> this.dataItems.push(this.addedItems))
+                    .then(()=>{  
+                      axios.get('/api/trackinginit')
+                        .then((response)=>{
+                            this.dataItems = response.data
+                        })
+                      // this.dataItems.push(this.addedItems)
+                      })
               }
                this.close()
           }

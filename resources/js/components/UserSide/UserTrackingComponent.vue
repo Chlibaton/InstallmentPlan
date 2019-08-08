@@ -22,6 +22,15 @@
     padding-left: 10px;
 }
 
+.v_img{
+  cursor: pointer !important;
+}
+.preview_image {
+     background: white !important;
+    /* border: 1px solid #DDD; 
+    padding: 5px; */
+}
+
 </style>
 
 
@@ -34,9 +43,31 @@
       <v-spacer></v-spacer>
         <!-- MODAL FOR PAYMENT TRACKING -->
         <v-dialog v-model="tracking">
+           <v-dialog v-model="preview_image" class="preview_image">
+                    <div class="container">
+                        <div class="row">
+                          <div class="col-sm">
+                          </div>
+                          <div class="col-sm">
+                            <v-img max-height="500px"
+                              :src="dataImage"
+                              class="grey lighten-2"></v-img>
+                          </div>
+                          <div class="col-sm">
+                          </div>
+                        </div>
+                    </div>
+                  <v-card-actions >
+                  <v-spacer></v-spacer>
+                  <v-btn color="blue darken-1" text @click="close(2)">Close</v-btn>
+                </v-card-actions>
+            </v-dialog>
             <v-data-table :headers="paymentHeader" :items="paymentItems" class="elevation-1" loading="true">
                <template v-slot:item.balance="{ item }" > 
                 <v-chip :color="getColor(item.payment_percent)" > {{ item.balance }}</v-chip> 
+              </template>
+               <template v-slot:item.upload_pic="{ item }" > 
+                 <label small class="mr-2 v_img" @click="preview_receipt(item)" >  View Receipt </label>
               </template>
             </v-data-table>
         </v-dialog>
@@ -47,32 +78,7 @@
           <label class=' bg-danger textpads'>75%-99% TOTAL PAYMENTS</label>
           <label class='bg-success textpads'>100% TOTAL PAYMENTS</label>
         </div>
-        <!-- Customer Display -->
-        <!-- <div class="row ">
-            <div class="col-6 col-md-4 c-main">
-                <label>{{customerDetails.name}}</label>
-            </div>
-            <div class="col text-right">
-            Date of Order:
-            </div>
-        </div>
-        <div class="row ">
-            <div class="col-6 col-md-4 c-sub">
-                <label>{{customerDetails.contact}}</label>
-            </div>
-            <div class="col text-right">
-            Date of Order:
-            </div>
-        </div>
-        <div class="row ">
-            <div class="col-6 col-md-4 c-sub">
-                <label>{{customerDetails.address}}</label>
-            </div>
-            <div class="col text-right">
-            Date of Order:
-            </div>
-        </div> -->
-        <!-- END Customer Display -->
+        
       <v-data-table :headers="headers" :items="dataItems" :search="search" class="elevation-1" >
         <template v-slot:item.payment_percent="{ item }" > 
           <v-chip :color="getColor(item.payment_percent)" > {{ item.payment_percent }}</v-chip> 
@@ -88,6 +94,8 @@
   export default {
     data: () => ({
       tracking:false,
+      preview_image:false,
+      dataImage:'',
       search: '',
       headers: [
         { text: 'Ordered Product', value: 'ordered_product',},
@@ -149,9 +157,18 @@
               this.paymentItems = response.data
           })
       },
-      close () {
+       preview_receipt(item){
+        this.preview_image = true
+        this.dataImage = '/img/pay_rcpt/'+item.upload_pic
+      },
+      close (a) {
+        if(a==2){
+        this.preview_image = false
+        }else{
         this.tracking = false
         this.paymentItems=[]
+        }
+      
       },
        getColor (a) {
           const Percent = parseInt(a)
