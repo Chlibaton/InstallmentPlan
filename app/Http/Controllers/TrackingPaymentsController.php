@@ -104,19 +104,77 @@ class TrackingPaymentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $result = TrackingPayments::where('id', $request->id)->update($request->all());
+        return $request->all();
     }
-    public function updatebalance(Request $request){
-             Tracking::where('id', $request->tracking_id)
+    
+    public function updatebalance(Request $request,$id){
+        switch($id){
+            case'1':
+            Tracking::where('id', $request->tracking_id)
+            ->orderby('id', 'desc')
+            ->take(1)
+            ->update([
+                'pre_balance' =>$request->balance,
+                ]);
+            break;
+
+            case '2':
+            Tracking::where('id', $request->tracking_id)
             ->orderby('id', 'desc')
             ->take(1)
             ->update([
                 'balance' =>$request->balance,
                 'payment_percent' =>$request->payment_percent,
                 ]);
+            TrackingPayments::where('id', $request->id)
+            ->orderby('id', 'desc')
+            ->take(1)
+            ->update([
+                'approve_pay' => 1,
+                ]);
+            break;
+        }
         return 'success';
+    }
+    public function updateImage(Request $request){
+        if($request->upload_pic !== null) {
+            $exploded = explode(',',$request->upload_pic);
+            $decoded = base64_decode($exploded[1]);
+            if(str_contains($exploded[0],'jpeg'))
+            {
+                $extension = 'jpg';
+            }
+            else
+            {
+                $extension = 'png';
+            }
+
+            if(TrackingPayments::where('upload_pic', $request->upload_pic)->exists())
+                $result = false;
+            else {
+                //generate random strings
+                $length= 10;
+                $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                $charactersLength = strlen($characters);
+                $randomString = '';
+                for ($i = 0; $i < $length; $i++) {
+                    $randomString .= $characters[rand(0, $charactersLength - 1)];
+                }
+                // set all details
+                $filename = $randomString.'.'.$extension;
+                $path = public_path().'/img/pay_rcpt/'.$filename;
+                file_put_contents($path,$decoded);    
+                $result = TrackingPayments::where('id', $request->id)->
+                update([
+                    'upload_pic' => $filename,
+                ]);
+                return $filename;
+            }
+        }
+
     }
 
     /**

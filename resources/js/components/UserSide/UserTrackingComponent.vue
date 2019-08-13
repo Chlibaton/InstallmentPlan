@@ -43,6 +43,7 @@
       <v-spacer></v-spacer>
         <!-- MODAL FOR PAYMENT TRACKING -->
         <v-dialog v-model="tracking">
+          <!-- MODAL VIEW RECEIPT -->
            <v-dialog v-model="preview_image" class="preview_image">
                     <div class="container">
                         <div class="row">
@@ -56,19 +57,29 @@
                           <div class="col-sm">
                           </div>
                         </div>
+                        
                     </div>
                   <v-card-actions >
                   <v-spacer></v-spacer>
+                  <input type="file" ref="file" style="display:none" @change="updateImage" accept="image/*"  />
+                  <v-btn v-if="payment_status==0" color="blue darken-1" text @click="$refs.file.click()" >Change Image</v-btn>
                   <v-btn color="blue darken-1" text @click="close(2)">Close</v-btn>
                 </v-card-actions>
             </v-dialog>
+           <!-- END MODAL VIEW RECEIPT -->
             <v-data-table :headers="paymentHeader" :items="paymentItems" class="elevation-1" loading="true">
                <template v-slot:item.balance="{ item }" > 
                 <v-chip :color="getColor(item.payment_percent)" > {{ item.balance }}</v-chip> 
               </template>
                <template v-slot:item.upload_pic="{ item }" > 
-                 <label small class="mr-2 v_img" @click="preview_receipt(item)" >  View Receipt </label>
+                 <input v-if="item.upload_pic==null"  @change="updateImage(item)" type="file" ref="file" style="display:none" accept="image/*"/>
+                 <v-icon v-if="item.upload_pic==null"  @click="editedItems.id=item.id,$refs.file.click()" dark color="blue">add_a_photo</v-icon>
+                 <label v-else small class="mr-2 v_img" @click="preview_receipt(item)" >  View Receipt </label>
               </template>
+                   <template v-slot:item.approve_pay="{ item }">
+                  <v-icon v-if="item.approve_pay==0" dark color="red">block</v-icon>
+                  <v-icon v-else color="green" class="mr-2">check_circle</v-icon>
+          </template>
             </v-data-table>
         </v-dialog>
       <!-- END MODAL FOR PAYMENT TRACKING -->
@@ -86,16 +97,19 @@
         <template v-slot:item.payment_tracking="{ item }">
           <v-icon small class="mr-2" @click="trackingPayment(item)" > View</v-icon>
         </template>
+     
       </v-data-table>
   </div>
 </template>
 
 <script>
+import { setTimeout } from 'timers';
   export default {
     data: () => ({
       tracking:false,
       preview_image:false,
       dataImage:'',
+      payment_status:'',
       search: '',
       headers: [
         { text: 'Ordered Product', value: 'ordered_product',},
@@ -115,6 +129,7 @@
         { text: 'Remittance Details', value: 'remittance_details', },
         { text: 'Proof of Payment', value: 'upload_pic', },
         { text: 'Remarks', value: 'remarks', },
+        { text: 'Approval Status', value: 'approve_pay', },
       ],
       dataItems:[],
       paymentItems:[],
@@ -124,6 +139,10 @@
         address:'',
         user_id:'',
       },
+      editedItems:{
+        id:'',
+        upload_pic:''
+      }
     }),
     
     watch: {
@@ -159,7 +178,13 @@
       },
        preview_receipt(item){
         this.preview_image = true
-        this.dataImage = '/img/pay_rcpt/'+item.upload_pic
+        this.payment_status=item.approve_pay
+        this.editedItems.id =item.id
+        if(item.upload_pic == null){
+          this.dataImage = '/img/no-image.jpg'
+        }else{
+          this.dataImage = '/img/pay_rcpt/'+item.upload_pic
+        }
       },
       close (a) {
         if(a==2){
@@ -178,6 +203,32 @@
         else if (Percent == 100) return 'green'
         else return 'none'
       },
+      updateImage(item){
+        console.log('image will be updated')
+            var input = event.target;
+            if (input.files && input.files[0]) {
+                  var reader = new FileReader();
+                  reader.onload = (e) => {
+                  this.editedItems.upload_pic = e.target.result;
+                    axios.put('/api/u_u_receipt',this.editedItems)
+                    .then((res)=>{
+                      if(this.preview_image){
+                        this.dataImage = '/img/pay_rcpt/'+res.data
+                      }else{
+                           axios.get('/api/trackingpaymentinit/'+item.tracking_id)
+                          .then((response)=>{
+                              this.paymentItems = response.data
+                          })
+                      }
+                    
+                    })
+                      .catch(function (error) {
+                          console.log(error);
+                      })
+                }
+                reader.readAsDataURL(input.files[0]);
+          }
+      }
        
     },
     

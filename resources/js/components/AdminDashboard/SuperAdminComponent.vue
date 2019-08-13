@@ -13,6 +13,7 @@
     <div>
          <v-toolbar-title></v-toolbar-title>
         <div class='container' v-if="role==0" v-cloak>
+            <div class="row">
               <div class="col-sm" >
                 <v-card max-width="344" class="dash-card">
                   <v-img class="white--text" height="200px" src="img/tracking.png">
@@ -25,6 +26,9 @@
                   </v-img>
                 </v-card>
               </div>
+               <div class="col-sm">
+               </div>
+            </div>
         </div>
         <div class="container" v-if="role==1" v-cloak>
           <div class="row" >

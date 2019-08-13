@@ -20,19 +20,15 @@
 
       <v-stepper-content step="1">
          <v-card flat height="100px" class="mb-12">
-            <v-form>
             <v-text-field v-model="login.current_password" prepend-icon="lock" name="Password" label="Enter Current Password" type="password"></v-text-field>
-            </v-form>
           </v-card>
         <v-btn color="primary" @click="verifylogin"> Verify</v-btn>
       </v-stepper-content>
 
       <v-stepper-content step="2">
          <v-card flat height="100px" class="mb-12">
-            <v-form>
             <v-text-field prepend-icon="lock" v-model="editedPassword.newpass" name="Password" label="New Password" type="password"></v-text-field>
             <v-text-field prepend-icon="lock" v-model="editedPassword.confirm_password" name="Password" label="Confirm New Password" type="password"></v-text-field>
-            </v-form>
           </v-card>
         <v-btn color="primary" @click="changepassword" >Change Password</v-btn>
       </v-stepper-content>

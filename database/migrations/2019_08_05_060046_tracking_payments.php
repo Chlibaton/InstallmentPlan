@@ -25,6 +25,7 @@ class TrackingPayments extends Migration
             $table->string('remittance_details')->nullable();
             $table->string('upload_pic')->nullable();
             $table->string('remarks');
+            $table->string('approve_pay')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

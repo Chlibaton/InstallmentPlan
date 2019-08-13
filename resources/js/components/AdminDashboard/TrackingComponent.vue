@@ -182,6 +182,17 @@ img.preview {
                <template v-slot:item.upload_pic="{ item }" > 
                  <label small class="mr-2 v_img" @click="preview_receipt(item)" >  View Receipt </label>
               </template>
+              
+                <template v-slot:item.approve_pay="{ item }">
+                  <v-icon v-if="item.created_at==true" dark color="red">block</v-icon>
+                  <label v-if="item.created_at==true" class="text-danger">Previous Payment not Settled</label>
+                  <v-icon v-else :color="ApproveColor(item.approve_pay)" class="mr-2" @click="approve_payment(item)" >check_circle</v-icon>
+                </template>
+
+                 <template v-slot:item.pay_action="{ item }">
+                  <v-icon v-if="item.approve_pay==0" small class="mr-2" @click="editItem(item,2)"> edit </v-icon>
+                  <!-- <v-icon v-if="item.approve_pay==0" small> delete </v-icon> -->
+                </template>
             </v-data-table>
         </v-dialog>
       <!-- END MODAL FOR PAYMENT TRACKING -->
@@ -244,7 +255,8 @@ img.preview {
         { text: 'Remittance Details', value: 'remittance_details', },
         { text: 'Proof of Payment', value: 'upload_pic', },
         { text: 'Remarks', value: 'remarks', },
-        // { text: 'Actions', value: 'action', sortable: false },
+        { text: 'Approve Payment', value: 'approve_pay', },
+        { text: 'Actions', value: 'pay_action', sortable: false },
       ],
       ruleRequired: [
         v => !!v || 'Field is required',
@@ -300,10 +312,23 @@ img.preview {
 //methods
 
     methods: {
-      editItem (item) {
-        this.editedIndex = this.dataItems.indexOf(item)
-        this.editedItem = Object.assign({}, item)
-        this.dialog = true
+      editItem (item,a) {
+        if(a==2){
+          this.editedIndex = this.paymentItems.indexOf(item)
+          if(this.editedIndex == 0){
+          this.item_balance = item.product_price
+          console.log(this.editedPaymentItems)
+          }else{
+            this.item_balance = this.paymentItems[this.editedIndex-1].balance
+          }
+          this.editedPaymentItems = Object.assign({}, item)
+          this.trackingAdd = true
+        }else{
+          this.editedIndex = this.dataItems.indexOf(item)
+          this.editedItem = Object.assign({}, item)
+          this.dialog = true
+        }
+       
       },
       deleteItem (item,a) {
         const index = this.dataItems.indexOf(item)
@@ -313,7 +338,7 @@ img.preview {
          this.tracking = true
          this.editedPaymentItems.tracking_id = item.id
          this.editedPaymentItems.ordered_product = item.ordered_product
-         this.editedPaymentItems.balance = item.balance
+         this.editedPaymentItems.balance = item.pre_balance
          this.editedPaymentItems.product_price = item.total_price
          //holder of balance
          this.item_balance = this.editedPaymentItems.balance
@@ -330,7 +355,13 @@ img.preview {
       getbalance(){
         //auto compute balance 
         // this.item_balance= this.editedPaymentItems.balance - this.editedPaymentItems.partial_payment
-        this.item_balance= this.editedPaymentItems.balance - this.down_payment
+        if(this.editedIndex == 0){
+          this.item_balance= this.editedPaymentItems.product_price - this.down_payment
+        }else if(this.editedIndex > 0){
+          this.item_balance= this.paymentItems[this.editedIndex-1].balance - this.down_payment
+        }else{
+          this.item_balance= this.editedPaymentItems.balance - this.down_payment
+        }
       },
       uploadImage(){
              // Reference to the DOM input element
@@ -356,7 +387,7 @@ img.preview {
       close (a) {
         if(a == 2){
           this.trackingAdd = false
-          this.paymentItems=[]
+          this.down_payment=''
         }else if(a==3){
            this.preview_image = false
         }else{
@@ -369,7 +400,7 @@ img.preview {
         }, 300)
       },
 
-     async save (a) {
+    async save (a) {
         if(this.$refs.form.validate()){
           if(a == 2){
             // SAVE TRACKING PAYMENTS
@@ -377,32 +408,58 @@ img.preview {
               this.editedPaymentItems.partial_payment = this.down_payment
               this.editedPaymentItems.date_of_payment = this.date3
               this.editedPaymentItems.payment_percent = Math.floor( (( this.editedPaymentItems.product_price - this.editedPaymentItems.balance ) / this.editedPaymentItems.product_price) * 100)+'%';
-              //add items
-                this.addedItems = this.editedPaymentItems
-                  axios.post('/api/trackingpaymentcreate',this.addedItems)
-                  .then((res)=>{
-                       axios.get('/api/trackingpaymentinit/'+this.editedPaymentItems.tracking_id)
-                        .then((response)=>{
-                            this.paymentItems = response.data
+                  if (this.editedIndex > -1) {
+                      var indx = this.editedIndex+1,
+                      newBalance = this.item_balance,
+                      costHolder = 0
+
+                        axios.put('/api/trackingpaymentupdate',this.editedPaymentItems)
+                      .then((res)=>{
+                        console.log(res)})
+                        .catch(function (error) {
+                            console.log(error);
                         })
-                  })
-                    axios.post('/api/updatebalance',this.editedPaymentItems)
-                  .then(()=>{
-                      axios.get('/api/trackinginit')
-                        .then((response)=>{
-                            this.dataItems = response.data
+                    for(var x = indx; x<this.paymentItems.length; x++){
+                          this.editedPaymentItems = this.paymentItems[x]
+                          costHolder += parseInt(this.editedPaymentItems.partial_payment)
+                          this.editedPaymentItems.balance = parseInt(newBalance) - costHolder
+
+                           axios.put('/api/trackingpaymentupdate',this.editedPaymentItems)
+                          .then((res)=>{
+                            console.log(res)
+                          })
+                          .catch(function (error) {
+                              console.log(error);
+                          })
+                      }
+                      axios.get('/api/trackingpaymentinit/'+this.editedPaymentItems.tracking_id)
+                              .then((response)=>{
+                                  this.paymentItems = response.data
+                              })
+                  }else{
+                   
+                    //add items
+                      this.addedItems = this.editedPaymentItems
+                        axios.post('/api/trackingpaymentcreate',this.addedItems)
+                        .then((res)=>{
+                            axios.post('/api/updatebalance/1',this.editedPaymentItems)
+                              .then(()=>{
+                                console.log('test')
+                              })
+                            axios.get('/api/trackingpaymentinit/'+this.editedPaymentItems.tracking_id)
+                              .then((response)=>{
+                                  this.paymentItems = response.data
+                              })
                         })
-                   })
-                  .catch(error => {
-                    console.log(error.message);
-                  })
-              this.down_payment=''
+                    this.down_payment=''
+                  }
               this.close(2)
           }else{
             // UPDATE/SAVE TRACKING
               this.editedItem.payment_date = this.date1
               this.editedItem.due_date = this.date2
               this.editedItem.balance =this.editedItem.total_price
+              this.editedItem.pre_balance =this.editedItem.total_price
               //get percentage
               this.editedItem.payment_percent = Math.floor( (( this.editedItem.total_price - this.editedItem.balance ) / this.editedItem.total_price) * 100)+'%';
               if (this.editedIndex > -1) {
@@ -448,9 +505,75 @@ img.preview {
       },
       generateDate(event){
          this.date2 = new Date(new Date(this.date1).getTime()+(120*24*60*60*1000)).toISOString().substr(0, 10)
-      }
+      },
+      approve_payment(item){
+        if(item.approve_pay == 0){
+          const checkPrevPayment = (this.paymentItems.findIndex(x => x.id === item.id)) - 1
+          var getApprovePay
+          if(checkPrevPayment == -1 ){
+            //first item in the table
+            axios.post('/api/updatebalance/2',item)
+            .then(()=>{
+                axios.get('/api/trackinginit')
+                  .then((response)=>{
+                      this.dataItems = response.data
+                  })
+                  axios.get('/api/trackingpaymentinit/'+item.tracking_id)
+                  .then((response)=>{
+                      this.paymentItems = response.data
+                  })
+              })
+            .catch(error => {
+              console.log(error.message);
+            })
+
+          }else{
+            //second to last item in the table
+            getApprovePay = this.paymentItems[checkPrevPayment].approve_pay
+            switch(getApprovePay){
+              case '0':
+                  console.log('previous payment is not yet settled')
+                  item.created_at=true
+                  console.log(item)
+                  console.log(this.paymentItems)
+                  
+                break;
+              case '1':
+                  console.log('proceed for apporval')
+                  axios.post('/api/updatebalance/2',item)
+                          .then(()=>{
+                              axios.get('/api/trackinginit')
+                                .then((response)=>{
+                                    this.dataItems = response.data
+                                })
+                                axios.get('/api/trackingpaymentinit/'+item.tracking_id)
+                                .then((response)=>{
+                                    this.paymentItems = response.data
+                                })
+                            })
+                          .catch(error => {
+                            console.log(error.message);
+                          })
+                break;
+            }
+          }
+         
+          
+        }
+      },
+      ApproveColor(a){
+        switch(a){
+            case '0':
+              return 'gray'
+            break;
+            case '1':
+              return 'green'
+            break
+        }
+      },
        
     },
+   
    
     
   }

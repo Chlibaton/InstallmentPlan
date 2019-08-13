@@ -33,10 +33,12 @@ Route::delete('/trackingdelete/{id}','TrackingController@destroy');
 // Tracking of Payments
 Route::get('/trackingpaymentinit/{id}','TrackingPaymentsController@index');
 Route::post('/trackingpaymentcreate','TrackingPaymentsController@create');
-Route::post('/updatebalance','TrackingPaymentsController@updatebalance');
+Route::put('/trackingpaymentupdate','TrackingPaymentsController@update');
+Route::post('/updatebalance/{id}','TrackingPaymentsController@updatebalance');
 
 //customer tracking
 Route::get('/customertracking/{id}','TrackingController@customertracking');
+Route::put('/u_u_receipt','TrackingPaymentsController@updateImage');
 
 // collection Report 
 Route::get('/reportInit','CollectionReportController@index');

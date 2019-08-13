@@ -25,6 +25,7 @@ class Tracking extends Migration
             $table->string('due_date')->nullable();
             $table->string('total_price');
             $table->string('balance');
+            $table->string('pre_balance')->nullable();
             $table->string('payment_percent');
             $table->rememberToken();
             $table->timestamps();

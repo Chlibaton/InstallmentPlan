@@ -87,7 +87,7 @@ class TrackingController extends Controller
     public function update(Request $request)
     {
         $result = Tracking::where('id', $request->id)->update($request->all());
-        return $request->all();
+        return 'success';
     }
 
     /**
