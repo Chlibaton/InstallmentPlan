@@ -28,6 +28,7 @@ img.preview {
 .image-preview {
     width: 100%;
     max-width: 600px;
+    margin: auto;
 }
 
 

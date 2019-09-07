@@ -27,10 +27,12 @@
 }
 .preview_image {
      background: white !important;
-    /* border: 1px solid #DDD; 
-    padding: 5px; */
 }
-
+.image-preview {
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+}
 </style>
 
 
@@ -45,26 +47,25 @@
         <v-dialog v-model="tracking">
           <!-- MODAL VIEW RECEIPT -->
            <v-dialog v-model="preview_image" class="preview_image">
-                    <div class="container">
-                        <div class="row">
+                    <div class="container" align="center" justify="center">
+                        <div class="row" >
                           <div class="col-sm">
                           </div>
-                          <div class="col-sm">
-                            <v-img max-height="500px"
+                          <div class="col-sm image-preview" >
+                            <v-img
                               :src="dataImage"
-                              class="grey lighten-2"></v-img>
+                              class="grey lighten-2" ></v-img>
                           </div>
                           <div class="col-sm">
                           </div>
                         </div>
                         
-                    </div>
-                  <v-card-actions >
                   <v-spacer></v-spacer>
                   <input type="file" ref="file" style="display:none" @change="updateImage" accept="image/*"  />
                   <v-btn v-if="payment_status==0" color="blue darken-1" text @click="$refs.file.click()" >Change Image</v-btn>
-                  <v-btn color="blue darken-1" text @click="close(2)">Close</v-btn>
-                </v-card-actions>
+                  <v-btn color="white darken-1" text @click="close(2)" >Close</v-btn>
+                    </div>
+
             </v-dialog>
            <!-- END MODAL VIEW RECEIPT -->
             <v-data-table :headers="paymentHeader" :items="paymentItems" class="elevation-1" loading="true">
@@ -72,8 +73,11 @@
                 <v-chip :color="getColor(item.payment_percent)" > {{ item.balance }}</v-chip> 
               </template>
                <template v-slot:item.upload_pic="{ item }" > 
-                 <input v-if="item.upload_pic==null"  @change="updateImage(item)" type="file" ref="file" style="display:none" accept="image/*"/>
-                 <v-icon v-if="item.upload_pic==null"  @click="editedItems.id=item.id,$refs.file.click()" dark color="blue">add_a_photo</v-icon>
+                 <div v-if="item.approve_pay==0">
+                  <input v-if="item.upload_pic==null"  @change="updateImage(item)" type="file" ref="file" style="display:none" accept="image/*"/>
+                  <v-icon v-if="item.upload_pic==null"  @click="editedItems.id=item.id,$refs.file.click()" dark color="blue">add_a_photo</v-icon>
+                  <label v-else small class="mr-2 v_img" @click="preview_receipt(item)" >  View Receipt </label>
+                 </div>
                  <label v-else small class="mr-2 v_img" @click="preview_receipt(item)" >  View Receipt </label>
               </template>
                    <template v-slot:item.approve_pay="{ item }">
