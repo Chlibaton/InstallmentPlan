@@ -25,6 +25,10 @@ img.preview {
     border: 1px solid #DDD;
     padding: 5px;
 }
+.image-preview {
+    width: 100%;
+    max-width: 600px;
+}
 
 
 </style>
@@ -167,7 +171,7 @@ img.preview {
             <!-- END MODAL FOR TRACKING DETAILS -->
             <v-dialog v-model="preview_image" light>
                   <!-- <div class="image-preview" v-if="imageData.length > 0"> -->
-                    <div class="image-preview" >
+                    <div class="image-preview" align="center" justify="center" >
                     <v-img 
                     :src="dataImage"
                     class="grey lighten-2 preview"

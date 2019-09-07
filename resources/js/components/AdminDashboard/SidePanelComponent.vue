@@ -158,12 +158,12 @@
       </v-list-item>
       <v-divider></v-divider>
       <v-list dense nav>
+        <div v-if="seen">
         <v-list-item v-if="role==1"  class='navContent' href='/'>
           <v-list-item-content>
             <v-list-item-title class='navList'>Dashboard</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-         
         <v-list-item v-if="role==1"  class='navContent' href='/systemuser'>
           <v-list-item-content>
             <v-list-item-title class='navList'>System Users</v-list-item-title>
@@ -174,12 +174,12 @@
             <v-list-item-title class='navList'>Tracking</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item v-if="role==1"  class='navContent' href='/collectionreport'>
+        <v-list-item v-if="role==1"   class='navContent' href='/collectionreport'>
           <v-list-item-content>
             <v-list-item-title class='navList'>Collection Report</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item v-if="role==1"  class='navContent' href='/emailtemplate'>
+        <v-list-item v-if="role==1" class='navContent' href='/emailtemplate'>
           <v-list-item-content>
             <v-list-item-title class='navList'>Set Email Template</v-list-item-title>
           </v-list-item-content>
@@ -204,6 +204,7 @@
             <v-list-item-title class='navList'>Logout</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        </div>
       </v-list>
     </v-navigation-drawer>
     <v-content class="overflow-hidden">
@@ -232,12 +233,14 @@ export default {
             right: null,
             drawer: true,
             role:'',
+            seen:false
         }
     },
-     async mounted(){
+      async mounted(){
         axios.get('/userrole')
         .then((response)=>{
               this.role = response.data.role
+              this.seen = true
         })
      }
    
