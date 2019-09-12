@@ -340,6 +340,7 @@ img.preview {
         confirm('Are you sure you want to delete this item?') && axios.delete('/api/trackingdelete/'+item.id).then(()=>this.dataItems.splice(index, 1));
       },
       trackingPayment(item){
+        console.log(item)
          this.tracking = true
          this.editedPaymentItems.tracking_id = item.id
          this.editedPaymentItems.ordered_product = item.ordered_product
@@ -447,14 +448,19 @@ img.preview {
                       this.addedItems = this.editedPaymentItems
                         axios.post('/api/trackingpaymentcreate',this.addedItems)
                         .then((res)=>{
-                            axios.post('/api/updatebalance/1',this.editedPaymentItems)
-                              .then(()=>{
-                                console.log('test')
-                              })
                             axios.get('/api/trackingpaymentinit/'+this.editedPaymentItems.tracking_id)
                               .then((response)=>{
                                   this.paymentItems = response.data
                               })
+                            axios.post('/api/updatebalance/1',this.editedPaymentItems)
+                              .then(()=>{
+                                  axios.get('/api/trackinginit')
+                                  .then((response)=>{
+                                    console.log(response)
+                                      this.dataItems = response.data
+                                  })
+                              })
+                          
                         })
                     this.down_payment=''
                   }
