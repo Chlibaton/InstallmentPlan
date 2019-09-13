@@ -47,10 +47,6 @@
           <template v-slot:item.payment_percent="{ item }" > 
             <v-chip :color="getColor(item.payment_percent)" > {{ item.payment_percent }}</v-chip> 
           </template>
-      <template v-slot:item.action="{ item }">
-          <!-- <v-icon small class="mr-2" @click="editItem(item)" > edit </v-icon> -->
-          <!-- <v-icon small  @click="deleteItem(item)" > delete </v-icon> -->
-        </template>
   </v-data-table>
   <div class="foot-balance">
     <span class="_balance"> Balance:<b> {{balance}} </b></span>
@@ -88,7 +84,6 @@
         { text: 'Total Price', value: 'total_price', },
         { text: 'Balance', value: 'balance', },
         { text: 'Payment Percent', value: 'payment_percent', },
-        // { text: 'Actions', value: 'action', sortable: false },
       ],
       ruleRequired: [
         v => !!v || 'Field is required',
@@ -217,11 +212,11 @@
             break;
           case 70:
               this.dataItems = this.checkboxesData.box70
-               this.balance =  this.checkboxesBalance.box70
+              this.balance =  this.checkboxesBalance.box70
             break;
           case 100:
               this.dataItems = this.checkboxesData.box100
-               this.balance =  this.checkboxesBalance.box100
+              this.balance =  this.checkboxesBalance.box100
             break;
         }
       }
