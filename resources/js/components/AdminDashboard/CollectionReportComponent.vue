@@ -17,6 +17,10 @@
     max-width: 60%;
     margin: auto;
 }
+.radiOPTS{
+  padding-left:15px;
+  padding-top:15px;
+}
 
 </style>
 
@@ -31,10 +35,11 @@
       </v-toolbar>
       <v-data-table :headers="headers" :items="dataItems" :search="search" class="elevation-1" >
             <template v-slot:top>
-          <!-- <label class=" bg-warning textpads">50% - 74% TOTAL PAYMENTS</label> -->
-          <input type="radio" name="optradio" v-on:click="displayData(50)" checked><label class=" bg-warning textpads">50%-74% TOTAL PAYMENTS</label>
-          <input type="radio" name="optradio" v-on:click="displayData(70)"><label class=' bg-danger textpads'>75%-99% TOTAL PAYMENTS</label>
-          <input type="radio" name="optradio" v-on:click="displayData(100)"> <label class='bg-success textpads'>100% TOTAL PAYMENTS</label>
+          <div class="radiOPTS">
+            <input type="radio" name="optradio" v-on:click="displayData(50)" checked><label class=" bg-warning textpads">50%-74% TOTAL PAYMENTS</label>
+            <input type="radio" name="optradio" v-on:click="displayData(70)"><label class=' bg-danger textpads'>75%-99% TOTAL PAYMENTS</label>
+            <input type="radio" name="optradio" v-on:click="displayData(100)"> <label class='bg-success textpads'>100% TOTAL PAYMENTS</label>
+          </div>
         </template>
           <template v-slot:item.payment_percent="{ item }" > 
             <v-chip :color="getColor(item.payment_percent)" > {{ item.payment_percent }}</v-chip> 
