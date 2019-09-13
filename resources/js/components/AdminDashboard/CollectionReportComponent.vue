@@ -17,6 +17,9 @@
     max-width: 60%;
     margin: auto;
 }
+._balance{
+  font-size: 25px;
+}
 .radiOPTS{
   padding-left:15px;
   padding-top:15px;
@@ -28,7 +31,7 @@
 <template>
 <v-card>
       <v-toolbar flat color="white">
-        <v-toolbar-title>Collections Report / 100% / Fully Paid</v-toolbar-title>
+        <v-toolbar-title>Collections Reports</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
       <v-spacer></v-spacer>
@@ -50,7 +53,7 @@
         </template>
   </v-data-table>
   <div class="foot-balance">
-    <span for=""> Balance: {{balance}}</span>
+    <span class="_balance"> Balance:<b> {{balance}} </b></span>
   </div>
   </v-card>
 </template>
@@ -206,6 +209,7 @@
       },
 
       displayData(a){
+        //radio button when clicked. shows only data needed
         switch(a){
           case 50:
               this.dataItems = this.checkboxesData.box50
