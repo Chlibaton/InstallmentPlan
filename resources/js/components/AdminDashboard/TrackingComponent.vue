@@ -460,7 +460,6 @@ img.preview {
                                       this.dataItems = response.data
                                   })
                               })
-                          
                         })
                     this.down_payment=''
                   }

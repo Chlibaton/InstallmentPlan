@@ -12,6 +12,11 @@
 .bg-warning{
   color:black !important;
 }
+.foot-balance {
+    text-align: right;
+    max-width: 60%;
+    margin: auto;
+}
 
 </style>
 
@@ -23,14 +28,13 @@
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
       <v-spacer></v-spacer>
-
       </v-toolbar>
       <v-data-table :headers="headers" :items="dataItems" :search="search" class="elevation-1" >
             <template v-slot:top>
           <!-- <label class=" bg-warning textpads">50% - 74% TOTAL PAYMENTS</label> -->
-           <!-- <label class=' bg-info textpads'>51%-74% TOTAL PAYMENTS</label> -->
-          <!-- <label class=' bg-danger textpads'>75%-99% TOTAL PAYMENTS</label> -->
-          <label class='bg-success textpads'>100% TOTAL PAYMENTS</label>
+          <input type="radio" name="optradio" v-on:click="displayData(50)" checked><label class=" bg-warning textpads">50%-74% TOTAL PAYMENTS</label>
+          <input type="radio" name="optradio" v-on:click="displayData(70)"><label class=' bg-danger textpads'>75%-99% TOTAL PAYMENTS</label>
+          <input type="radio" name="optradio" v-on:click="displayData(100)"> <label class='bg-success textpads'>100% TOTAL PAYMENTS</label>
         </template>
           <template v-slot:item.payment_percent="{ item }" > 
             <v-chip :color="getColor(item.payment_percent)" > {{ item.payment_percent }}</v-chip> 
@@ -40,6 +44,9 @@
           <!-- <v-icon small  @click="deleteItem(item)" > delete </v-icon> -->
         </template>
   </v-data-table>
+  <div class="foot-balance">
+    <span for=""> Balance: {{balance}}</span>
+  </div>
   </v-card>
 </template>
 
@@ -48,6 +55,17 @@
     data: () => ({
       dialog: false,
       valid:false,
+      checkboxesData:{
+        box50:[],
+        box70:[],
+        box100:[]
+      },
+      checkboxesBalance:{
+        box50:0,
+        box70:0,
+        box100:0
+      },
+      balance:'',
       search: '',
       show1:false,
       menu1:false,
@@ -98,9 +116,29 @@
     },
 
     async mounted(){
-        axios.get('/api/reportInit')
+        axios.get('/api/trackinginit')
         .then((response)=>{
+          if(response.data.length > 0){
+                for(var a = 0; a<response.data.length; a++){
+                var b = response.data[a]['payment_percent'].split('%')[0]
+                if(b >= 50 && b <= 74){
+                  this.checkboxesData.box50.push(response.data[a])
+                  this.checkboxesBalance.box50+=parseInt(response.data[a]['balance'])
+                }else if(b >= 75 && b <= 99){
+                  this.checkboxesData.box70.push(response.data[a])
+                  this.checkboxesBalance.box70+=parseInt(response.data[a]['balance'])
+                }else if(b == 100){
+                  this.checkboxesData.box100.push(response.data[a])
+                   this.checkboxesBalance.box100+=parseInt(response.data[a]['balance'])
+                }
+              }
+              this.balance =  this.checkboxesBalance.box50
+              this.dataItems =  this.checkboxesData.box50
+          }else{
             this.dataItems = response.data
+          }
+          
+
         })
     },
 //methods
@@ -161,6 +199,23 @@
         else return 'none'
         // else return 'green'
       },
+
+      displayData(a){
+        switch(a){
+          case 50:
+              this.dataItems = this.checkboxesData.box50
+              this.balance =  this.checkboxesBalance.box50
+            break;
+          case 70:
+              this.dataItems = this.checkboxesData.box70
+               this.balance =  this.checkboxesBalance.box70
+            break;
+          case 100:
+              this.dataItems = this.checkboxesData.box100
+               this.balance =  this.checkboxesBalance.box100
+            break;
+        }
+      }
         
     },
     
