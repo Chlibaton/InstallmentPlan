@@ -33,6 +33,14 @@
                   </v-img>
                 </v-card>
               </div>
+
+              <div class="col-sm">
+                <v-card max-width="344" class="dash-card">
+                  <v-img class="white--text" height="200px" src="/img/for_delivery.jpg">
+                  </v-img>
+                </v-card>
+              </div>
+
             </div>
         </div>
   </div>
