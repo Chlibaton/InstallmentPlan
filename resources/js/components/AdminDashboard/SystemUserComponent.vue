@@ -46,7 +46,7 @@
                     <v-text-field v-model="editedItem.email" :rules="emailRules && ruleRequired" label="Email" ></v-text-field>
                   </v-flex>
                   <v-flex xs12>
-                    <v-text-field v-model="editedItem.password" :type="show1 ? 'text': 'password'" label="Password"></v-text-field>
+                    <v-text-field v-model="password" :type="show1 ? 'text': 'password'" label="Password"></v-text-field>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -158,10 +158,13 @@
                     //  Object.assign(this.dataItems[this.editedIndex], this.editedItem)
 
                 } else {
-                    this.addedItems = this.editedItem
-                    this.addedItems.password = ''
+                      this.addedItems = this.editedItem
+                    this.editedItem.password = this.password
                     axios.post('/api/usercreate',this.editedItem)
-                    .then(()=> this.dataItems.push(this.addedItems))
+                    .then(()=> {
+                       this.addedItems.password = ''
+                     this.dataItems.push(this.addedItems)
+                    })
                 }
                 this.close()
         }
