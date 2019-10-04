@@ -38,7 +38,7 @@ img.preview {
 <template>
 <div>
       <v-toolbar flat color="white">
-        <v-toolbar-title>Customer Tracking</v-toolbar-title>
+        <v-toolbar-title>My Tracking</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
       <v-spacer></v-spacer>
@@ -112,30 +112,20 @@ img.preview {
                 </div>
             </v-dialog>
             <v-data-table :headers="paymentHeader" :items="paymentItems" class="elevation-1" loading="true">
-               <template v-slot:item.balance="{ item }" > 
-                <v-chip :color="getColor(item.payment_percent)" > {{ item.balance }}</v-chip> 
-              </template>
                <template v-slot:item.upload_pic="{ item }" > 
                  <v-chip small class="mr-2 v_img" @click="preview_receipt(item)" >  View Receipt </v-chip>
               </template>
               
                 <template v-slot:item.approve_pay="{ item }">
                   <v-chip v-if="item.approve_pay==0" dark color="red">Pending for Approval</v-chip>
-                  <v-icon v-else color="green" class="mr-2">check_circle</v-icon>
+                  <v-chip v-else dark color="green">Approved</v-chip>
                 </template>
 
-                 <template v-slot:item.pay_action="{ item }">
-                  <v-icon v-if="item.approve_pay==0" small class="mr-2" @click="editItem(item,2)"> edit </v-icon>
-                  <!-- <v-icon v-if="item.approve_pay==0" small> delete </v-icon> -->
-                </template>
             </v-data-table>
         </v-dialog>
       <!-- END MODAL FOR PAYMENT TRACKING -->
       </v-toolbar>
       <v-data-table :headers="headers" :items="dataItems" :search="search" class="elevation-1" >
-          <template v-slot:item.payment_percent="{ item }" > 
-            <v-chip :color="getColor(item.payment_percent)" > {{ item.payment_percent }}</v-chip> 
-        </template>
         <template v-slot:item.payment_tracking="{ item }">
           <v-chip small class="mr-2" @click="trackingPayment(item)" > View</v-chip>
         </template>
