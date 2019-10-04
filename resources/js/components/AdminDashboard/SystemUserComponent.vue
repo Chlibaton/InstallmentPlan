@@ -103,7 +103,8 @@
       editedItem: {
       },
       defaultItem: {},
-      toBeUpdated:{}
+      toBeUpdated:{},
+      date3:new Date().toISOString().substr(0, 10),
     }),
 
     computed: {
@@ -149,6 +150,7 @@
         if(this.$refs.form.validate()){
               if (this.editedIndex > -1) {
                   this.toBeUpdated = this.dataItems[this.editedIndex]
+                  this.editedItem.password = this.password
                  axios.put('/api/userupdate',this.editedItem)
                  .then((res)=>this.editedItem = Object.assign(this.toBeUpdated, res.data))
                    .catch(function (error) {

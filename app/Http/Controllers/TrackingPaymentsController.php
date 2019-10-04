@@ -151,10 +151,6 @@ class TrackingPaymentsController extends Controller
             {
                 $extension = 'png';
             }
-
-            if(TrackingPayments::where('upload_pic', $request->upload_pic)->exists())
-                $result = false;
-            else {
                 //generate random strings
                 $length= 10;
                 $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -172,7 +168,6 @@ class TrackingPaymentsController extends Controller
                     'upload_pic' => $filename,
                 ]);
                 return $filename;
-            }
         }
 
     }

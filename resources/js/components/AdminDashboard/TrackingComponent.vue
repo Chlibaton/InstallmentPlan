@@ -356,7 +356,11 @@ img.preview {
       preview_receipt(item){
         this.preview_image = true
         console.log(item)
-        this.dataImage = '/img/pay_rcpt/'+item.upload_pic
+         if(item.upload_pic == null){
+          this.dataImage = '/img/no-image.jpg'
+        }else{
+          this.dataImage = '/img/pay_rcpt/'+item.upload_pic
+        }
       },
       getbalance(){
         //auto compute balance 

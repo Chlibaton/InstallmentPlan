@@ -37,7 +37,7 @@ class UserController extends Controller
             'address' => $data['address'],
             'mobileno' => $data['mobileno'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'password' => Hash::make('vydomingo101'),
         ]);
     }
 
