@@ -47,7 +47,7 @@ img.preview {
             <!-- MODAL FOR TRACKING DETAILS -->
             <v-dialog v-model="trackingAdd" > 
               <template v-slot:activator="{ on }">
-              <v-btn color="primary" class="mb-2" v-on="on">Update Tracking</v-btn>
+              <v-btn color="primary" class="mb-2" v-on="on">Update Payment</v-btn>
               </template>
               <v-form ref="form" lazy-validation  @submit.prevent class="bg-light"> 
                    <v-card-title>
@@ -126,6 +126,11 @@ img.preview {
       <!-- END MODAL FOR PAYMENT TRACKING -->
       </v-toolbar>
       <v-data-table :headers="headers" :items="dataItems" :search="search" class="elevation-1" >
+          <template v-slot:top>
+          <div class="radiOPTS">
+            <label class='bg-warning textpads'><b>*NOTE</b> PLEASE WAIT 1-2 DAYS FOR THE VALIDATION OF YOUR PAYMENT UPDATES.</label>
+          </div>
+        </template>
         <template v-slot:item.payment_tracking="{ item }">
           <v-chip small class="mr-2" @click="trackingPayment(item)" > View</v-chip>
         </template>
@@ -329,6 +334,7 @@ img.preview {
         if(this.$refs.form.validate()){
           if(a == 2){
             // SAVE TRACKING PAYMENTS
+             this.editedPaymentItems.remarks = 'none'
               this.editedPaymentItems.balance = this.item_balance
               this.editedPaymentItems.partial_payment = this.down_payment
               this.editedPaymentItems.date_of_payment = this.date3
