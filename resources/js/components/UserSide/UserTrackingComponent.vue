@@ -38,9 +38,9 @@ img.preview {
 <template>
 <div>
       <v-toolbar flat color="white">
-        <v-toolbar-title>My Tracking</v-toolbar-title>
+        <v-toolbar-title>My Order</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
-        <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
+        <!-- <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field> -->
       <v-spacer></v-spacer>
         <!-- MODAL FOR PAYMENT TRACKING -->
         <v-dialog v-model="tracking" light>

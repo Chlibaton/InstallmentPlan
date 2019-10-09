@@ -191,7 +191,12 @@
         </v-list-item>
         <v-list-item v-if="role==0" class='navContent' href='/mytracking'>
           <v-list-item-content>
-            <v-list-item-title class='navList'>My Tracking</v-list-item-title>
+            <v-list-item-title class='navList'>My Orders</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+         <v-list-item v-if="role==0" class='navContent' href='/orderhistory'>
+          <v-list-item-content>
+            <v-list-item-title class='navList'>Order History</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item v-if="role==0" class='navContent' href="/changepassword">

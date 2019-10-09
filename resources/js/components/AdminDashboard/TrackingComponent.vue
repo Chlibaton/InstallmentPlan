@@ -30,7 +30,9 @@ img.preview {
     max-width: 600px;
     margin: auto;
 }
-
+ th {
+  font-size: 17px !important;
+}
 
 </style>
 

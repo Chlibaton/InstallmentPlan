@@ -38,6 +38,7 @@ Route::post('/updatebalance/{id}','TrackingPaymentsController@updatebalance');
 
 //customer tracking
 Route::get('/customertracking/{id}','TrackingController@customertracking');
+Route::get('/orderHistory/{id}','TrackingController@orderHistory');
 Route::put('/u_u_receipt','TrackingPaymentsController@updateImage');
 
 // collection Report 

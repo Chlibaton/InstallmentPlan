@@ -27,7 +27,15 @@ class TrackingController extends Controller
     }
     //user side Data
     public function customertracking($id){
-        $result = Tracking::where('user_id',$id)->orderBy('id','desc')->get()->all();
+        $result = Tracking::where('user_id',$id)
+        ->where('payment_percent','!=','100%')
+        ->orderBy('id','desc')->get()->all();
+        return $result;
+    }
+    public function orderHistory($id){
+        $result = Tracking::where('user_id',$id)
+        ->where('payment_percent','100%')
+        ->orderBy('id','desc')->get()->all();
         return $result;
     }
 

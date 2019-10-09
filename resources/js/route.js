@@ -5,7 +5,9 @@ const tracking = require('./components/AdminDashboard/TrackingComponent.vue').de
 const collectionReport = require('./components/AdminDashboard/CollectionReportComponent.vue').default;
 const historyLogs = require('./components/AdminDashboard/HistoryLogsComponent.vue').default;
 const emailtemplate = require('./components/AdminDashboard/EmailTemplateComponent.vue').default;
+
 const usertracking = require('./components/UserSide/UserTrackingComponent.vue').default;
+const orderhistory = require('./components/UserSide/OrderHistoryComponent.vue').default;
 const changepass = require('./components/UserSide/ChangePasswordComponent.vue').default;
 
 const landingPage = require('./components/Landing/HomeComponent.vue').default;
@@ -56,6 +58,11 @@ export default{
         { path: '/mytracking', name:'mytracking', component: usertracking, 
         meta: { 
             title: "Tracking" 
+            } 
+        },
+        { path: '/orderhistory', name:'orderhistory', component: orderhistory, 
+        meta: { 
+            title: "orderhistory" 
             } 
         },
         { path: '/changepassword', name:'changepassword', component: changepass, 

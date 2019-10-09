@@ -269,7 +269,8 @@ p.l-row-address>span:nth-child(2) {
             <b-row class="m-row">
                 <b-col md="7" class="t-row-2">
                     <div class="embed-responsive embed-responsive-16by9">
-                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/8EFp46Bw6MA?autoplay=1&loop=1&playlist=8EFp46Bw6MA&mute=1" allowfullscreen></iframe>
+                        <img class="embed-responsive-item" src="/img/PACKAGE_1.jpg" alt="">
+                        <!-- <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/8EFp46Bw6MA?autoplay=1&loop=1&playlist=8EFp46Bw6MA&mute=1" allowfullscreen></iframe> -->
                     </div>
                 </b-col>
                 <b-col md="5" class="t-row-2">
