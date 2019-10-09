@@ -71,7 +71,7 @@ img.preview {
                     <v-text-field v-model="editedItem.address" label="Address" filled readonly></v-text-field>
                   </v-flex>
                    <v-flex xs12>
-                    <v-text-field v-model="editedItem.ordered_product" label="Ordered Product" :rules="ruleRequired"></v-text-field>
+                    <v-text-field v-model="editedItem.ordered_product" label="Ordered Product" :rules="ruleRequired" placeholder="Example: (Men's Class Ring)"></v-text-field>
                   </v-flex>
                   <v-flex xs6>
                     <!-- <v-text-field v-model="editedItem.payment_date" label="Payment Date" ></v-text-field> -->
@@ -190,11 +190,15 @@ img.preview {
                  <label small class="mr-2 v_img" @click="preview_receipt(item)" >  View Receipt </label>
               </template>
               
-                <template v-slot:item.approve_pay="{ item }">
+                <!-- <template v-slot:item.approve_pay="{ item }">
                   <v-icon v-if="item.created_at==true" dark color="red">block</v-icon>
                   <label v-if="item.created_at==true" class="text-danger">Previous Payment not Settled</label>
                   <v-icon v-else :color="ApproveColor(item.approve_pay)" class="mr-2" @click="approve_payment(item)" >check_circle</v-icon>
-                </template>
+                </template> -->
+                  <template v-slot:item.approve_pay="{ item }">
+                    <v-chip v-if="item.approve_pay==0" dark color="red">Pending for Approval</v-chip>
+                    <v-chip v-else dark color="green">Approved</v-chip>
+                  </template>
 
                  <template v-slot:item.pay_action="{ item }">
                   <v-icon v-if="item.approve_pay==0" small class="mr-2" @click="editItem(item,2)"> edit </v-icon>
@@ -240,28 +244,27 @@ img.preview {
       menu2:false,
       menu3:false,
       headers: [
+        { text: 'Date Ordered', value: 'payment_date', },
         { text: 'Name', value: 'name',  },
-        { text: 'Address', value: 'address',  },
+        // { text: 'Address', value: 'address',  },
         { text: 'Contact', value: 'contact',  },
         { text: 'Email', value: 'email',  },
-        { text: 'Ordered Product', value: 'ordered_product',  },
-        { text: 'Payment Date', value: 'payment_date', },
-        { text: 'Due Date', value: 'due_date', },
-        { text: 'Total Price', value: 'total_price', },
+        { text: 'Product/Item', value: 'ordered_product',  },
+        { text: 'Total Contract Price', value: 'total_price', },
         { text: 'Balance', value: 'balance', },
+        { text: 'Due Date', value: 'due_date', },
         { text: 'Payment Percent', value: 'payment_percent', },
         { text: 'Payment history', value: 'payment_tracking', sortable: false },
         { text: 'Actions', value: 'action', sortable: false },
       ],
       paymentHeader:[
-        { text: 'Date of Payment', value: 'date_of_payment',  },
-        { text: 'Ordered Product', value: 'ordered_product',  },
-        { text: 'Product Price', value: 'product_price',  },
-        { text: 'Partial Payment', value: 'partial_payment',  },
+        { text: 'Product/Item', value: 'ordered_product',  },
+        { text: 'Total Contract Price', value: 'product_price',  },
+        { text: 'Payment Date', value: 'date_of_payment',  },
+        { text: 'Partial Payment/s', value: 'partial_payment',  },
         { text: 'Balance', value: 'balance',  },
-        { text: 'Remittance Details', value: 'remittance_details', },
+        { text: 'Remittance Number', value: 'remittance_details', },
         { text: 'Proof of Payment', value: 'upload_pic', },
-        { text: 'Remarks', value: 'remarks', },
         { text: 'Approve Payment', value: 'approve_pay', },
         { text: 'Actions', value: 'pay_action', sortable: false },
       ],

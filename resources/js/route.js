@@ -3,10 +3,13 @@ const systemUser = require('./components/AdminDashboard/SystemUserComponent.vue'
 const superAdmin = require('./components/AdminDashboard/SuperAdminComponent.vue').default;
 const tracking = require('./components/AdminDashboard/TrackingComponent.vue').default;
 const collectionReport = require('./components/AdminDashboard/CollectionReportComponent.vue').default;
+const completedOrder = require('./components/AdminDashboard/CompletedOrdersComponent.vue').default;
+
 const historyLogs = require('./components/AdminDashboard/HistoryLogsComponent.vue').default;
 const emailtemplate = require('./components/AdminDashboard/EmailTemplateComponent.vue').default;
 
 const usertracking = require('./components/UserSide/UserTrackingComponent.vue').default;
+const partialpayment = require('./components/UserSide/PartialPaymentComponent.vue').default;
 const orderhistory = require('./components/UserSide/OrderHistoryComponent.vue').default;
 const changepass = require('./components/UserSide/ChangePasswordComponent.vue').default;
 
@@ -60,6 +63,11 @@ export default{
             title: "Tracking" 
             } 
         },
+        { path: '/partialpayment', name:'partialpayment', component: partialpayment, 
+        meta: { 
+            title: "partialpayment" 
+            } 
+        },
         { path: '/orderhistory', name:'orderhistory', component: orderhistory, 
         meta: { 
             title: "orderhistory" 
@@ -70,6 +78,12 @@ export default{
             title: "Change Password" 
             } 
         },
+        { path: '/completedorder', name:'completedOrder', component: completedOrder, 
+        meta: { 
+            title: "completedOrder" 
+            } 
+        },
+
         
     ]
 }

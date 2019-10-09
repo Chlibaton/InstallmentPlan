@@ -30,6 +30,19 @@ img.preview {
     max-width: 600px;
     margin: auto;
 }
+.prod_name{
+  font-size:25px;
+  position: relative;
+  top: 5px;
+    color:#ccc5c5;
+}
+.due_date{
+   font-size:25px;
+  position: relative;
+    top: 5px;
+    color:#ccc5c5;
+}
+
 
 
 </style>
@@ -40,18 +53,18 @@ img.preview {
       <v-toolbar flat color="white">
         <v-toolbar-title>My Order</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
+        <label class='prod_name'>{{ProductName}}</label>
+         <div class="flex-grow-1"></div>
+         <label class='due_date'> {{DueDate}}</label>
         <!-- <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field> -->
-      <v-spacer></v-spacer>
-        <!-- MODAL FOR PAYMENT TRACKING -->
-        <v-dialog v-model="tracking" light>
             <!-- MODAL FOR TRACKING DETAILS -->
             <v-dialog v-model="trackingAdd" > 
               <template v-slot:activator="{ on }">
-              <v-btn color="primary" class="mb-2" v-on="on">Update Payment</v-btn>
+              <!-- <v-btn color="primary" class="mb-2" v-on="on">Add Partial Payment</v-btn> -->
               </template>
               <v-form ref="form" lazy-validation  @submit.prevent class="bg-light"> 
                    <v-card-title>
-                    <span class="headline">Update Payment</span>
+                    <span class="headline">Partial Payment</span>
                   </v-card-title>
                   <v-card-text>
                     <v-container grid-list-md>
@@ -72,19 +85,22 @@ img.preview {
                             <v-text-field v-model="editedPaymentItems.product_price" label="Product Price" filled readonly></v-text-field>
                          </v-flex>
                           <v-flex xs6 >
-                            <v-text-field v-model="down_payment" @keyup='getbalance' label="Partial Payment" v-mask="mask"></v-text-field>
+                            <v-text-field v-model="down_payment" @keyup='getbalance' label="Partial Payment In Pesos" placeholder="Enter the amount in pesos" v-mask="mask" outlined></v-text-field>
                          </v-flex>
                           <v-flex xs6>
                             <v-text-field v-model="item_balance" label="Balance" filled readonly></v-text-field>
                          </v-flex>
                            <v-flex xs12>
-                            <v-text-field v-model="editedPaymentItems.remittance_details" label="Remittance Details"></v-text-field>
+                            <v-text-field v-model="moneyRemUsed" label="Money Remittance Used (Western Union, Palawan, Cebuana, M lhuillier, LBC, 7-11, Bayad Center, Any Bank Etc..)" placeholder="Enter the money Remittance that you used here" outlined></v-text-field>
+                         </v-flex>
+                           <v-flex xs12>
+                            <v-text-field v-model="editedPaymentItems.remittance_details" label="Remittance Number" placeholder="Enter the remittance/reference number here" outlined></v-text-field>
                          </v-flex>
                         <!-- <v-flex xs12>
                           <v-text-field v-model="editedPaymentItems.upload_pic" label="Proof of Payment"></v-text-field>
                         </v-flex> -->
                         <v-flex xs12>
-                            <v-label>Upload Photo</v-label>
+                            <v-label>Upload Payment Receipt</v-label>
                             <input type="file" @change="uploadImage" accept="image/*">
                         </v-flex>
                         <!-- <v-flex xs12>
@@ -111,32 +127,24 @@ img.preview {
                   <v-btn color="blue darken-1" text @click="close(3)">Close</v-btn>
                 </div>
             </v-dialog>
-            <v-data-table :headers="paymentHeader" :items="paymentItems" class="elevation-1" loading="true">
-               <template v-slot:item.upload_pic="{ item }" > 
-                 <v-chip small class="mr-2 v_img" @click="preview_receipt(item)" >  View Receipt </v-chip>
-              </template>
-              
-                <template v-slot:item.approve_pay="{ item }">
-                  <v-chip v-if="item.approve_pay==0" dark color="red">Pending for Approval</v-chip>
-                  <v-chip v-else dark color="green">Approved</v-chip>
-                </template>
-
-            </v-data-table>
-        </v-dialog>
       <!-- END MODAL FOR PAYMENT TRACKING -->
       </v-toolbar>
-      <v-data-table :headers="headers" :items="dataItems" :search="search" class="elevation-1" >
+      <v-data-table :headers="paymentHeader" :items="paymentItems" :search="search" class="elevation-1" >
           <template v-slot:top>
           <div class="radiOPTS">
             <label class='bg-warning textpads'><b>*NOTE</b> PLEASE WAIT 1-2 DAYS FOR THE VALIDATION OF YOUR PAYMENT UPDATES.</label>
           </div>
         </template>
-        <template v-slot:item.payment_tracking="{ item }">
-          <v-chip small class="mr-2" @click="trackingPayment(item)" > View</v-chip>
+          <template v-slot:item.dateOrdered="{ item }" > 
+            <label class="mr-2 v_img"> {{dateOrdered}} </label>
         </template>
-        <template v-slot:item.action="{ item }">
-          <v-icon small class="mr-2" @click="editItem(item)" > edit </v-icon>
-          <v-icon small  @click="deleteItem(item)" > delete </v-icon>
+        <template v-slot:item.upload_pic="{ item }" > 
+            <v-chip  class="mr-2 v_img" @click="preview_receipt(item)" >  View Receipt </v-chip>
+        </template>
+              
+        <template v-slot:item.approve_pay="{ item }">
+          <v-chip v-if="item.approve_pay==0" dark color="red">Pending for Approval</v-chip>
+          <v-chip v-else dark color="green">Approved</v-chip>
         </template>
         
   </v-data-table>
@@ -158,7 +166,7 @@ img.preview {
       menu3:false,
       headers: [
         { text: 'Date Ordered', value: 'payment_date', },
-        { text: 'Prdouct/Item', value: 'ordered_product',  },
+        { text: 'Product/Item', value: 'ordered_product',  },
         { text: 'Total Contract Price', value: 'total_price', },
         { text: 'Balance', value: 'balance', },
         { text: 'Due Date', value: 'due_date', },
@@ -166,10 +174,11 @@ img.preview {
         { text: 'Payment history', value: 'payment_tracking', sortable: false },
       ],
       paymentHeader:[
-        { text: 'Prdouct/Item', value: 'ordered_product',  },
+         {text: 'Date Ordered', value: 'dateOrdered', },
+        { text: 'Product/Item', value: 'ordered_product',  },
         { text: 'Total Contract Price', value: 'product_price',  },
         { text: 'Payment Date', value: 'date_of_payment',  },
-        { text: 'Partial Payment', value: 'partial_payment',  },
+        { text: 'Partial Payment/s', value: 'partial_payment',  },
         { text: 'Balance', value: 'balance',  },
         { text: 'Remittance Number', value: 'remittance_details', },
         { text: 'Proof of Payment', value: 'upload_pic', },
@@ -202,6 +211,10 @@ img.preview {
         address:'',
         user_id:'',
       },
+      dateOrdered:'',
+      ProductName:'',
+      DueDate:'',
+      moneyRemUsed:'',
     }),
     
     computed: {
@@ -231,9 +244,23 @@ img.preview {
               this.customerDetails.user_id= response.data.id
                 axios.get('/api/customertracking/'+this.customerDetails.user_id)
                 .then((response)=>{
+                  this.editedPaymentItems.tracking_id =  response.data[0]['id']
+                  this.editedPaymentItems.ordered_product =  response.data[0]['ordered_product']
+                  this.editedPaymentItems.balance =  response.data[0]['pre_balance']
+                  this.editedPaymentItems.product_price =  response.data[0]['total_price']
+                  this.item_balance = this.editedPaymentItems.balance
+                  this.dateOrdered = this.formatDate(response.data[0]['payment_date'])
+                  this.ProductName = 'Kind of Order: '+response.data[0]['ordered_product']
+                  this.DueDate = 'Three(3) Months Due Date: '+this.formatDate(response.data[0]['due_date'])
                     this.dataItems = response.data
+                      axios.get('/api/trackingpaymentinit/'+this.editedPaymentItems.tracking_id)
+                      .then((res)=>{
+                          this.paymentItems = res.data
+                      })
                 })
+
         })
+         
     },
 //methods
 
@@ -335,6 +362,7 @@ img.preview {
           if(a == 2){
             // SAVE TRACKING PAYMENTS
              this.editedPaymentItems.remarks = 'none'
+              this.editedPaymentItems.remittance_details += '-'+this.moneyRemUsed
               this.editedPaymentItems.balance = this.item_balance
               this.editedPaymentItems.partial_payment = this.down_payment
               this.editedPaymentItems.date_of_payment = this.date3
@@ -387,6 +415,7 @@ img.preview {
                         })
                     this.down_payment=''
                   }
+              
               this.close(2)
           }
         }
@@ -422,7 +451,20 @@ img.preview {
             break
         }
       },
-       
+      formatDate(genDate) {
+          var monthNames = [
+            "January", "February", "March",
+            "April", "May", "June", "July",
+            "August", "September", "October",
+            "November", "December"
+          ];
+          var date = new Date(genDate);
+          var day = date.getDate();
+          var monthIndex = date.getMonth();
+          var year = date.getFullYear();
+
+          return monthNames[monthIndex]+ ' ' + day + ', ' + year;
+        }
     },
    
    

@@ -141,12 +141,11 @@
 <v-app>
       <header class="m-header">
           <div class="m-h-img">
-              <img src="img/vy-logo-header.png" alt="">
+              <img src="img/vy-logo-header2.png" alt="">
           </div>
           <div class="m-title">
-              <p>V.Y Domingo Jewellers</p>
-              <p>• Manufacturer • Wholesaler • Designer</p>
-              <p>Factory Since 1928</p>
+              <p>V.Y. Domingo Jewellers Incorporated</p>
+              <p>• Manufacturer • Wholesaler • Designers</p>
           </div>
       </header>
        <!-- <v-app-bar class='v-header' dark prominent absolute >
@@ -169,9 +168,19 @@
             <v-list-item-title class='navList'>System Users</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-         <v-list-item v-if="role==1"  class='navContent' href='/tracking'>
+         <v-list-item v-if="role==2"  class='navContent' href='/systemuser'>
+          <v-list-item-content>
+            <v-list-item-title class='navList'>Add Customer</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+         <v-list-item v-if="role==1 || role==2"  class='navContent' href='/tracking'>
           <v-list-item-content>
             <v-list-item-title class='navList'>Tracking</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+           <v-list-item v-if="role==1 || role==2"  class='navContent' href='/completedorder'>
+          <v-list-item-content>
+            <v-list-item-title class='navList'>Completed Orders</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item v-if="role==1"   class='navContent' href='/collectionreport'>
@@ -179,7 +188,7 @@
             <v-list-item-title class='navList'>Collection Report</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item v-if="role==1" class='navContent' href='/emailtemplate'>
+        <v-list-item v-if="role==1 || role==2" class='navContent' href='/emailtemplate'>
           <v-list-item-content>
             <v-list-item-title class='navList'>Set Email Template</v-list-item-title>
           </v-list-item-content>
@@ -191,7 +200,12 @@
         </v-list-item>
         <v-list-item v-if="role==0" class='navContent' href='/mytracking'>
           <v-list-item-content>
-            <v-list-item-title class='navList'>My Orders</v-list-item-title>
+            <v-list-item-title class='navList'>My Order</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+           <v-list-item v-if="role==0" class='navContent'  href='/partialpayment'>
+          <v-list-item-content>
+            <v-list-item-title class='navList'>Make Partial Payments</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
          <v-list-item v-if="role==0" class='navContent' href='/orderhistory'>

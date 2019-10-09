@@ -253,12 +253,11 @@ p.l-row-address>span:nth-child(2) {
     <div>
         <header class="m-header">
             <div class="m-h-img">
-                <img src="img/vy-logo-header.png" alt="">
+                <img src="img/vy-logo-header2.png" alt="">
             </div>
             <div class="m-title">
-                <p>V.Y Domingo Jewellers</p>
-                <p>• Manufacturer • Wholesaler • Designer</p>
-                <p>Factory Since 1928</p>
+                <p>V.Y Domingo Jewellers Incorporated</p>
+                <p>• Manufacturer • Wholesaler • Designers</p>
             </div>
         </header>
         <b-container class="vy-main-cont">
@@ -428,6 +427,8 @@ export default {
                 .then((response) => {
                     if(response.data.role == 1){
                         location.href = "/";
+                    }else if(response.data.role == 2){
+                        location.href = "/tracking";
                     }else{
                         location.href = "/mytracking";
                     }
@@ -458,7 +459,8 @@ export default {
             let _self = this;
             axios.post('/register', _self.signUpDetails)
             .then((response) => {
-                location.reload();
+                location.href = "/mytracking";
+                // location.reload();
             })
             .catch((error)=> {
                 var errors = error.response;

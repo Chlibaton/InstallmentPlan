@@ -40,8 +40,8 @@ img.preview {
       <v-toolbar flat color="white">
         <v-toolbar-title>Order History</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
-        <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
-      <v-spacer></v-spacer>
+        <div class="flex-grow-1"></div>
+        <v-text-field  v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
       </v-toolbar>
       <v-data-table :headers="headers" :items="dataItems" :search="search" class="elevation-1" >
     </v-data-table>
@@ -54,12 +54,11 @@ img.preview {
       search: '',
       headers: [
         { text: 'Date Ordered', value: 'payment_date', },
-        { text: 'Prdouct/Item', value: 'ordered_product',  },
+        { text: 'Product/Item', value: 'ordered_product',  },
         { text: 'Total Contract Price', value: 'total_price', },
         { text: 'Balance', value: 'balance', },
         { text: 'Due Date', value: 'due_date', },
         { text: 'Payment Percent', value: 'payment_percent', },
-        { text: 'Payment history', value: 'payment_tracking', sortable: false },
       ],
       dataItems:[],
       editedIndex: -1,
