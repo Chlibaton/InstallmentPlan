@@ -178,6 +178,11 @@
             <v-list-item-title class='navList'>Tracking</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+          <v-list-item v-if="role==1 || role==3"  class='navContent' href='/accounting'>
+          <v-list-item-content>
+            <v-list-item-title class='navList'>List of Installments</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
            <v-list-item v-if="role==1 || role==2"  class='navContent' href='/completedorder'>
           <v-list-item-content>
             <v-list-item-title class='navList'>Completed Orders</v-list-item-title>

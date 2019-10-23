@@ -5,6 +5,9 @@ const tracking = require('./components/AdminDashboard/TrackingComponent.vue').de
 const collectionReport = require('./components/AdminDashboard/CollectionReportComponent.vue').default;
 const completedOrder = require('./components/AdminDashboard/CompletedOrdersComponent.vue').default;
 
+// accounting
+const accounting = require('./components/AdminDashboard/AccountingComponent.vue').default;
+
 const historyLogs = require('./components/AdminDashboard/HistoryLogsComponent.vue').default;
 const emailtemplate = require('./components/AdminDashboard/EmailTemplateComponent.vue').default;
 
@@ -41,6 +44,11 @@ export default{
         { path: '/tracking', name:'tracking', component: tracking, 
         meta: { 
             title: "Tracking of Payments" 
+            } 
+        },
+        { path: '/accounting', name:'accounting', component: accounting, 
+        meta: { 
+            title: "accounting" 
             } 
         },
         { path: '/collectionreport', name:'collectionReport', component: collectionReport, 
